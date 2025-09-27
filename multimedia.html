@@ -391,6 +391,9 @@
     
     <!-- Sección de videos -->
     <section class="multimedia" id="videos">
+      <!-- Canvas para las partículas de estrellas -->
+      <canvas id="particles"></canvas>
+      
       <h2 class="section-title">Videos</h2>
       <div class="multimedia-grid">
         <!-- Cortometraje El Libro Maldito -->
@@ -528,6 +531,75 @@
           this.style.transform = 'translateY(0) scale(1)';
         });
       });
+
+      // Sistema de partículas para estrellas
+      const canvas = document.getElementById('particles');
+      const ctx = canvas.getContext('2d');
+      
+      // Ajustar el tamaño del canvas al contenedor
+      function resizeCanvas() {
+        canvas.width = canvas.parentElement.clientWidth;
+        canvas.height = canvas.parentElement.clientHeight;
+      }
+      
+      // Inicializar el tamaño del canvas
+      resizeCanvas();
+      window.addEventListener('resize', resizeCanvas);
+      
+      // Configuración de las partículas
+      const particles = [];
+      const particleCount = 150;
+      
+      // Crear partículas
+      for (let i = 0; i < particleCount; i++) {
+        particles.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          radius: Math.random() * 1.5 + 0.5,
+          speed: Math.random() * 0.5 + 0.1,
+          opacity: Math.random() * 0.5 + 0.3,
+          twinkleSpeed: Math.random() * 0.05 + 0.01,
+          twinkleDirection: Math.random() > 0.5 ? 1 : -1
+        });
+      }
+      
+      // Dibujar partículas
+      function drawParticles() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        particles.forEach(particle => {
+          // Efecto de parpadeo (twinkle)
+          particle.opacity += particle.twinkleSpeed * particle.twinkleDirection;
+          
+          if (particle.opacity <= 0.2) {
+            particle.twinkleDirection = 1;
+            particle.opacity = 0.2;
+          } else if (particle.opacity >= 0.8) {
+            particle.twinkleDirection = -1;
+            particle.opacity = 0.8;
+          }
+          
+          // Dibujar la partícula
+          ctx.beginPath();
+          ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(255, 255, 255, ${particle.opacity})`;
+          ctx.fill();
+          
+          // Mover la partícula (movimiento sutil)
+          particle.y += particle.speed;
+          
+          // Si la partícula sale de la pantalla, reiniciarla en la parte superior
+          if (particle.y > canvas.height) {
+            particle.y = 0;
+            particle.x = Math.random() * canvas.width;
+          }
+        });
+        
+        requestAnimationFrame(drawParticles);
+      }
+      
+      // Iniciar la animación
+      drawParticles();
     });
   </script>
 </body>
