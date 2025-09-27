@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portafolio 2025 - REKO</title>
+  <!-- Favicon -->
+  <link rel="icon" href="imagen/responsive 2@72x.png" type="image/png">
+
+  <style>
+    /* Variables de colores y estilos */
+    :root {
+      --primary-color: #110c0f;
+      --secondary-color: #f5f5f5;
+      --accent-color: #ff6b6b;
+      --text-color: #333;
+      --light-text: #fff;
+      --spacing-sm: 1rem;
+      --spacing-md: 2rem;
+      --spacing-lg: 4rem;
+      --border-radius: 8px;
+      --transition: all 0.3s ease;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', 'Segoe UI', sans-serif;
+      line-height: 1.6;
+      color: var(--text-color);
+      background-color: var(--secondary-color);
+    }
+
+    /* Pantalla de carga del video */
+    #intro-video {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: black;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+    #intro-video video {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+    #content { display: none; } /* Se oculta hasta que acabe el video */
+
+    /* Header */
+    header {
+      background-color: var(--primary-color);
+      color: var(--light-text);
+      padding: var(--spacing-sm) var(--spacing-md);
+      position: sticky; top: 0; z-index: 1000;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    .nav-container {
+      display: flex; justify-content: space-between; align-items: center;
+      max-width: 1200px; margin: 0 auto;
+    }
+    .logo {
+      font-size: 1.8rem; font-weight: 700; letter-spacing: 2px;
+      display: flex; align-items: center;
+    }
+    .logo img { width: 40px; margin-right: 8px; }
+    .logo span { color: var(--accent-color); }
+
+    nav ul { display: flex; list-style: none; }
+    nav ul li { margin-left: var(--spacing-md); }
+    nav ul li a {
+      color: var(--light-text); text-decoration: none;
+      font-weight: 500; padding: 0.5rem 1rem;
+      border-radius: var(--border-radius);
+      transition: var(--transition);
+    }
+    nav ul li a:hover { background-color: rgba(255, 255, 255, 0.1); }
+
+    /* Botón menú móvil */
+    .mobile-menu-btn {
+      display: none; background: none; border: none;
+      color: white; font-size: 2rem; cursor: pointer;
+    }
+
+    /* Sidebar móvil */
+    .sidebar {
+      position: fixed; top: 0; left: -100%;
+      width: 70%; max-width: 280px; height: 100%;
+      background: #000; color: white;
+      transition: var(--transition);
+      padding: 2rem 1rem; z-index: 2000;
+    }
+    .sidebar.active { left: 0; }
+    .sidebar .logo { justify-content: center; margin-bottom: 2rem; }
+    .sidebar .logo img { width: 100px; }
+    .sidebar ul { list-style: none; text-align: center; }
+    .sidebar ul li { margin: 1rem 0; }
+    .sidebar ul li a {
+      color: white; text-decoration: none; font-size: 1.2rem;
+      display: block; padding: 0.5rem 0;
+    }
+
+    /* Hero */
+    .hero {
+      background: linear-gradient(135deg, var(--primary-color) 0%, #ffbc21 100%);
+      color: var(--light-text);
+      padding: var(--spacing-lg) var(--spacing-md);
+      text-align: center;
+      min-height: 80vh;
+      display: flex; flex-direction: column; justify-content: center; align-items: center;
+    }
+    .hero h1 { font-size: 4rem; margin-bottom: var(--spacing-sm); font-weight: 800; letter-spacing: 3px; }
+    .hero h2 { font-size: 2.5rem; font-weight: 300; margin-bottom: var(--spacing-md); color: var(--accent-color); }
+    .hero p { font-size: 1.2rem; max-width: 600px; margin: 0 auto var(--spacing-md); opacity: 0.9; }
+    .cta-button {
+      display: inline-block; background-color: var(--accent-color);
+      color: var(--light-text); padding: 0.8rem 2rem;
+      border-radius: 50px; text-decoration: none; font-weight: 600;
+      transition: var(--transition); margin-top: var(--spacing-sm);
+    }
+    .cta-button:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(255,107,107,0.3); }
+
+    /* Sección ¿Quién soy? */
+.quien-soy {
+  background: 
+    linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7)), 
+    url('imagen/Imagen de WhatsApp 2025-09-26 a las 01.37.14_bac9813f.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-attachment: fixed;
+  color: var(--light-text);
+  padding: var(--spacing-lg) var(--spacing-md);
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  text-align: center;
+}
+
+.quien-soy-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-lg);
+  align-items: start; /* Cambiado de center a start para mejor control */
+}
+
+.quien-soy-titulo {
+  text-align: center;
+  grid-column: 1 / -1; /* Ocupa ambas columnas */
+}
+
+.quien-soy-titulo img {
+  max-width: 520px;
+  margin-bottom: 2rem;
+}
+
+.quien-soy-foto {
+  position: relative;
+  width: 390px;
+  height: 550px;
+  margin: 0 auto;
+  border-radius: 50%;
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  /* Eliminado margin-top negativo */
+  align-self: start; /* Mantiene la imagen en su posición */
+}
+
+/* Imágenes dentro del círculo */
+.quien-soy-foto .foto {
+  position: absolute;
+  width: 100%;
+  height: 110%;
+  object-fit: cover;
+  top: 0;
+  left: 0;
+  transition: opacity 0.5s ease;
+}
+
+/* Mostrar la principal por defecto */
+.foto-principal { opacity: 1; }
+
+/* Ocultar la alternativa */
+.foto-hover { opacity: 0; }
+
+/* Al pasar el mouse, cambiar */
+.quien-soy-foto:hover .foto-principal { opacity: 0; }
+.quien-soy-foto:hover .foto-hover { opacity: 1; }
+
+.quien-soy-texto {
+  background: rgba(255, 255, 255, 0.1);
+  padding: var(--spacing-md);
+  border-radius: var(--border-radius);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  margin-top: 3rem; /* Ajustado para bajar solo el texto */
+  align-self: start; /* Mantiene el texto alineado con la parte superior */
+}
+
+.quien-soy-texto p {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  margin-bottom: var(--spacing-sm);
+  text-align: justify;
+}
+
+.quien-soy-texto p:first-child {
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+/* RESPONSIVE PARA MÓVIL */
+@media (max-width: 768px) {
+  .quien-soy-container {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-md);
+    text-align: center;
+  }
+  
+  .quien-soy-titulo img {
+    max-width: 280px;
+    margin-bottom: 1rem;
+  }
+  
+  .quien-soy-foto {
+    width: 280px;
+    height: 320px;
+    order: 2;
+  }
+  
+  .quien-soy-texto {
+    margin-top: 0;
+    order: 1;
+    padding: var(--spacing-sm);
+  }
+  
+  .quien-soy-texto p {
+    text-align: center;
+    font-size: 1rem;
+  }
+}
+
+    /* Sección de proyectos */
+    .projects {
+      padding: var(--spacing-lg) var(--spacing-md);
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(135deg, #e8f4f8 0%, #ffffff 50%, #f0f8ff 100%);
+    }
+    
+    /* Canvas para partículas koi/dragón */
+    #koi-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      pointer-events: none;
+      opacity: 0.7;
+    }
+    
+    .projects-content {
+      position: relative;
+      z-index: 2;
+    }
+    
+    .section-title {
+      text-align: center;
+      margin-bottom: var(--spacing-sm);
+      font-size: 2.5rem;
+      position: relative;
+      color: var(--primary-color);
+    }
+    .section-title::after {
+      content: '';
+      display: block;
+      width: 80px;
+      height: 4px;
+      background: linear-gradient(90deg, #ff6b6b, #ffbc21);
+      margin: 0.5rem auto;
+    }
+    
+    .koi-legend {
+      text-align: center;
+      margin-bottom: var(--spacing-lg);
+      font-style: italic;
+      color: #2c3e50;
+      font-size: 1.2rem;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+      position: relative;
+      z-index: 2;
+      font-weight: 500;
+      text-shadow: 1px 1px 2px rgba(255,255,255,0.8);
+    }
+    
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: var(--spacing-md);
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Efecto de agua en los contenedores */
+    .project-card {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 
+        0 8px 32px rgba(31, 38, 135, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      cursor: pointer;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      position: relative;
+      transform-style: preserve-3d;
+      perspective: 1000px;
+    }
+
+    .project-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, 
+        rgba(255, 255, 255, 0.1) 0%,
+        rgba(255, 255, 255, 0.05) 50%,
+        rgba(255, 255, 255, 0.1) 100%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: 1;
+    }
+
+    .project-card:hover::before {
+      opacity: 1;
+    }
+
+    .project-card::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+      transform: scale(0);
+      transition: transform 0.6s ease;
+      z-index: 1;
+    }
+
+    .project-card:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 
+        0 20px 40px rgba(31, 38, 135, 0.2),
+        0 0 80px rgba(255, 107, 107, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+    }
+
+    .project-card:hover::after {
+      transform: scale(1);
+    }
+
+    /* Efecto de distorsión de agua al hacer hover */
+   /* Imagen de fondo que ocupa todo el contenedor */
+.project-bg-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: all 0.5s ease;
+}
+
+/* Overlay para mejor legibilidad */
+.image-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(78, 205, 196, 0.3) 0%, rgba(68, 160, 141, 0.3) 100%);
+  transition: all 0.3s ease;
+}
+
+/* Efectos hover */
+.project-card:hover .project-bg-image {
+  transform: scale(1.05);
+}
+
+.project-card:hover .image-overlay {
+  background: linear-gradient(135deg, rgba(255, 107, 107, 0.2) 0%, rgba(255, 188, 33, 0.2) 100%);
+}
+
+
+    .project-image::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, 
+        transparent, 
+        rgba(255, 255, 255, 0.4), 
+        transparent);
+      transition: left 0.6s ease;
+    }
+
+    .project-card:hover .project-image::before {
+      left: 100%;
+    }
+
+    .project-card:hover .project-image {
+      background: linear-gradient(135deg, #ff6b6b 0%, #ffbc21 100%);
+      transform: translateZ(50px) scale(1.05);
+    }
+
+    .project-content {
+      padding: var(--spacing-sm);
+      position: relative;
+      z-index: 2;
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(5px);
+      transform: translateZ(20px);
+    }
+
+    .project-content h3 {
+      margin-bottom: 0.5rem;
+      font-size: 1.3rem;
+      color: var(--primary-color);
+      background: linear-gradient(135deg, #2c3e50, #3498db);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .project-content p {
+      color: #666;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    /* Footer personalizado con imagen */
+    footer {
+      background: 
+        linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.9)),
+        url('imagen/footer@72x.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      color: var(--light-text);
+      padding: var(--spacing-lg) var(--spacing-md);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      min-height: 400px; /* Asegura que el footer tenga suficiente altura */
+      display: flex;
+      align-items: center;
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+      width: 100%;
+    }
+
+    footer h2 {
+      font-size: 2.5rem;
+      margin-bottom: var(--spacing-sm);
+      background: linear-gradient(45deg, #ff6b6b, #ffbc21);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    footer p {
+      margin-bottom: var(--spacing-sm);
+      font-size: 1.1rem;
+      opacity: 0.9;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: var(--spacing-md);
+      margin: var(--spacing-md) 0;
+      flex-wrap: wrap;
+    }
+
+    .social-links a {
+      color: var(--light-text);
+      font-size: 1.8rem;
+      transition: var(--transition);
+      padding: 10px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .social-links a:hover {
+      color: var(--accent-color);
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-3px);
+    }
+
+    .copyright {
+      margin-top: var(--spacing-md);
+      opacity: 0.7;
+      font-size: 0.9rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+      padding-top: var(--spacing-sm);
+    }
+
+    /* Efecto de partículas en el footer */
+    .footer-particles {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* ========== RESPONSIVE PARA TELÉFONO ========== */
+    @media (max-width: 768px) {
+      nav ul { display: none; }
+      .mobile-menu-btn { display: block; }
+      
+      .hero h1 { font-size: 2.5rem; }
+      .hero h2 { font-size: 1.8rem; }
+      .hero p { font-size: 1rem; padding: 0 1rem; }
+      
+      /* Sección ¿Quién soy? - Correcciones para móvil */
+      .quien-soy {
+        background-size: cover;
+        background-attachment: scroll; /* Mejor rendimiento en móvil */
+        padding: var(--spacing-md) var(--spacing-sm);
+        min-height: auto;
+      }
+      
+      .quien-soy-container {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-md);
+        text-align: center;
+      }
+      
+      .quien-soy-titulo img {
+        max-width: 280px;
+        margin-bottom: 1rem;
+        margin-top: 0;
+      }
+      
+      .quien-soy-foto {
+        width: 280px;
+        height: 320px;
+        margin: 0 auto 1.5rem auto;
+        margin-top: 0; /* Eliminamos el margen negativo en móvil */
+        order: 2; /* Cambiamos el orden para que la foto vaya después del texto */
+      }
+      
+      .quien-soy-texto {
+        padding: var(--spacing-sm);
+        margin-top: 0; /* Eliminamos el margen superior en móvil */
+        order: 1; /* El texto va primero en móvil */
+      }
+      
+      .quien-soy-texto p {
+        font-size: 1rem;
+        text-align: center; /* Centramos el texto en móvil */
+      }
+      
+      .nav-container { 
+        flex-direction: column; 
+        text-align: center;
+      }
+      
+      nav ul { 
+        margin-top: var(--spacing-sm); 
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      
+      nav ul li { 
+        margin: 0.3rem; 
+      }
+      
+      .projects-grid {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-sm);
+      }
+      
+      .project-card:hover {
+        transform: translateY(-5px) scale(1.01);
+      }
+
+      .social-links {
+        gap: var(--spacing-sm);
+      }
+
+      .social-links a {
+        width: 45px;
+        height: 45px;
+        font-size: 1.5rem;
+      }
+
+      footer {
+        padding: var(--spacing-md) var(--spacing-sm);
+        min-height: 350px;
+      }
+      
+      footer h2 {
+        font-size: 2rem;
+      }
+      
+      footer p {
+        font-size: 1rem;
+        padding: 0 1rem;
+      }
+      
+      .section-title {
+        font-size: 2rem;
+      }
+      
+      .koi-legend {
+        font-size: 1rem;
+        padding: 0 1rem;
+      }
+    }
+
+    /* Ajustes adicionales para pantallas muy pequeñas */
+    @media (max-width: 480px) {
+      .hero h1 { font-size: 2rem; }
+      .hero h2 { font-size: 1.5rem; }
+      
+      .quien-soy-titulo img {
+        max-width: 220px;
+      }
+      
+      .quien-soy-foto {
+        width: 220px;
+        height: 260px;
+      }
+      
+      .quien-soy-texto p {
+        font-size: 0.9rem;
+      }
+      
+      footer h2 {
+        font-size: 1.8rem;
+      }
+      
+      .section-title {
+        font-size: 1.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Pantalla de video -->
+  <div id="intro-video">
+    <video autoplay muted playsinline id="logoVideo">
+      <source src="imagen/logo reko.mp4" type="video/mp4">
+      Tu navegador no soporta el video.
+    </video>
+  </div>
+
+  <!-- Contenido principal -->
+  <div id="content">
+    <!-- Header -->
+    <header>
+      <div class="nav-container">
+        <div class="logo"><img src="imagen/responsive 2@72x.png" alt="Logo">EKO<span></span></div>
+        <button class="mobile-menu-btn" onclick="toggleMenu()">☰</button>
+        <nav>
+          <ul>
+            <li><a href="index.html">Página Principal</a></li>
+            <li><a href="publicidad.html">Publicidad y Redes Sociales</a></li>
+            <li><a href="ilustracion.html">Ilustración</a></li>
+            <li><a href="multimedia.html">Multimedia</a></li>
+            <li><a href="web.html">Web</a></li>
+            <li><a href="cv.html">CV</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Sidebar móvil -->
+    <div class="sidebar" id="sidebar">
+      <div class="logo"><img src="imagen/responsive 2@72x.png" alt="Logo">RE<span>KO</span></div>
+      <ul>
+        <li><a href="index.html">Página Principal</a></li>
+        <li><a href="publicidad.html">Publicidad y Redes Sociales</a></li>
+        <li><a href="ilustracion.html">Ilustración</a></li>
+        <li><a href="multimedia.html">Multimedia</a></li>
+        <li><a href="web.html">Web</a></li>
+        <li><a href="cv.html">CV</a></li>
+      </ul>
+    </div>
+    
+
+    <!-- Hero -->
+    <section class="hero" id="inicio">
+      <h1>PORTAFOLIO 2025</h1>
+      <h2>REKO</h2>
+      <p>Diseño y desarrollo de experiencias digitales innovadoras que conectan marcas con su audiencia.</p>
+      <a href="#proyectos" class="cta-button">Ver Proyectos</a>
+    </section>
+    
+    <section class="quien-soy" id="quien-soy">
+      <div class="quien-soy-container">
+        
+        <!-- Imagen "¿Quién soy?" más arriba -->
+        <div class="quien-soy-titulo">
+          <img src="imagen/a.d 1.0@72x.png" alt="¿Quién soy?">
+        </div>
+    
+        <!-- Texto (ahora a la izquierda) -->
+        <div class="quien-soy-texto">
+          <p><strong>Soy Rebeca, estudiante de Diseño Gráfico Web Multimedia en la Universidad Francisco Gavidia.</strong></p>
+          <p> En este portafolio presento mi estilo, mi identidad y mi visión creativa, con un enfoque en el área multimedia, explorando recursos audiovisuales e interactivos que transmiten ideas de forma dinámica y atractiva, y a su vez integrando el área web con propuestas funcionales e intuitivas.</p>
+          <P> De esta experiencia surge Reko, mi marca personal, inspirada en la historia del pez koi que, con esfuerzo y perseverancia, logra transformarse en dragón. Ese significado representa mi propio proceso de crecimiento, superación y evolución dentro del diseño web multimedia, proyectando cada proyecto como un paso más en esa transformación.</P>
+        </div>
+    
+        <!-- Contenedor redondo con efecto hover (ahora a la derecha) -->
+        <div class="quien-soy-foto">
+          <img src="imagen/Screenshot_20250125-035046_Instagram-Photoroom.png" 
+               alt="Foto principal"
+               class="foto foto-principal">
+          <img src="imagen/Screenshot_20250125-034529_Instagram-Photoroom.png" 
+               alt="Foto alternativa"
+               class="foto foto-hover">
+        </div>
+      </div>
+    </section>
+    
+    <!-- Sección de proyectos -->
+    <section class="projects" id="proyectos">
+      <canvas id="koi-canvas"></canvas>
+      <div class="projects-content">
+        <h2 class="section-title">Proyectos</h2>
+        <div class="koi-legend">
+          "Como el koi que nada contra la corriente y se transforma en dragón, cada proyecto es un viaje de crecimiento y superación"
+        </div>
+        <div class="projects-grid">
+          <!-- Publicidad y Redes Sociales -->
+          <div class="project-card" onclick="window.location.href='publicidad.html'">
+            <div class="project-image">📢</div>
+            <div class="project-content">
+              <h3>Publicidad y Redes Sociales</h3>
+              <p>Campañas publicitarias creativas y estrategias de redes sociales para engagement y conversión.</p>
+            </div>
+          </div>
+
+          <!-- Ilustración -->
+          <div class="project-card" onclick="window.location.href='ilustracion.html'">
+            <div class="project-image">🎨</div>
+            <div class="project-content">
+              <h3>Ilustración</h3>
+              <p>Arte digital, ilustraciones personalizadas y diseño gráfico para diversos proyectos creativos.</p>
+            </div>
+          </div>
+
+          <div class="project-card" onclick="window.location.href='fotografia.html'">
+            <div class="project-image">
+              <img src="imagen/p.f@72x.png" alt="Multimedia" class="project-bg-image">
+              <div class="image-overlay"></div>
+            </div>
+            <div class="project-content">
+              <h3>fotografia</h3>
+              <p>Producción audiovisual, animaciones y contenido multimedia para experiencias impactantes.</p>
+            </div>
+          </div>
+
+          <!-- Multimedia -->
+<!-- Multimedia - Versión mejorada -->
+<div class="project-card" onclick="window.location.href='multimedia.html'">
+  <div class="project-image">
+    <img src="imagen/p.m@72x.png" alt="Multimedia" class="project-bg-image">
+    <div class="image-overlay"></div>
+  </div>
+  <div class="project-content">
+    <h3>Multimedia</h3>
+    <p>Producción audiovisual, animaciones y contenido multimedia para experiencias impactantes.</p>
+  </div>
+</div>
+
+          <!-- Web -->
+          <div class="project-card" onclick="window.location.href='web.html'">
+            <div class="project-image">🌐</div>
+            <div class="project-content">
+              <h3>Web</h3>
+              <p>Diseño y desarrollo de sitios web responsivos, aplicaciones web y experiencias digitales.</p>
+            </div>
+          </div>
+
+          <!-- CV -->
+          <div class="project-card" onclick="window.location.href='cv.html'">
+            <div class="project-image">📄</div>
+            <div class="project-content">
+              <h3>Currículum</h3>
+              <p>Mi experiencia profesional, habilidades y trayectoria en el mundo del diseño y desarrollo.</p>
+            </div>
+          </div>
+
+          <!-- Proyecto Extra -->
+          <div class="project-card" onclick="window.location.href='publicidad.html'">
+            <div class="project-image">💡</div>
+            <div class="project-content">
+              <h3>Proyectos Integrales</h3>
+              <p>Soluciones completas que combinan todas las áreas para resultados extraordinarios.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer con imagen personalizada -->
+    <footer id="contacto">
+      <div class="footer-particles" id="footer-particles"></div>
+      <div class="footer-content">
+        <h2>Contacto</h2>
+        <p>¿Tienes un proyecto en mente? Hablemos sobre cómo puedo ayudarte a hacerlo realidad.</p>
+        
+        <div class="social-links">
+          <a href="#" title="Email">📧</a>
+          <a href="#" title="LinkedIn">💼</a>
+          <a href="#" title="Twitter">🐦</a>
+          <a href="#" title="Instagram">📷</a>
+          <a href="#" title="Behance">🎨</a>
+        </div>
+        
+        <p class="copyright">© 2025 REKO Portafolio. Todos los derechos reservados.</p>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    function toggleMenu() {
+      document.getElementById("sidebar").classList.toggle("active");
+    }
+  
+    // Ocultar video y mostrar contenido
+    const video = document.getElementById("logoVideo");
+  
+    // Función para ocultar el video y mostrar el contenido
+    function hideIntroVideo() {
+      document.getElementById("intro-video").style.display = "none";
+      document.getElementById("content").style.display = "block";
+      initKoiParticles(); // Iniciar partículas koi después de que cargue el contenido
+    }
+  
+    // Cuando el video termine
+    video.onended = hideIntroVideo;
+  
+    // Cuando el usuario haga clic en el video
+    video.addEventListener("click", hideIntroVideo);
+
+    // Hacer las tarjetas de proyectos clickeables
+    document.addEventListener('DOMContentLoaded', function() {
+      const projectCards = document.querySelectorAll('.project-card');
+      projectCards.forEach(card => {
+        card.addEventListener('click', function() {
+          const link = this.getAttribute('onclick').match(/'(.*?)'/)[1];
+          window.location.href = link;
+        });
+      });
+    });
+
+    // Sistema de partículas koi/dragón
+    function initKoiParticles() {
+      const canvas = document.getElementById('koi-canvas');
+      const ctx = canvas.getContext('2d');
+      const projectsSection = document.querySelector('.projects');
+      
+      // Ajustar tamaño del canvas
+      function resizeCanvas() {
+        canvas.width = projectsSection.offsetWidth;
+        canvas.height = projectsSection.offsetHeight;
+      }
+      
+      resizeCanvas();
+      window.addEventListener('resize', resizeCanvas);
+      
+      // Partículas koi/dragón
+      const koiParticles = [];
+      const particleCount = 15;
+      
+      // Colores inspirados en koi (naranja, blanco, rojo) y dragón (dorado, rojo)
+      const koiColors = [
+        '#FF6B35', // Naranja koi
+        '#FFA500', // Naranja dorado
+        '#DC143C', // Rojo carmesí
+        '#FFD700', // Dorado dragón
+        '#FFFFFF', // Blanco koi
+        '#FF4500', // Rojo anaranjado
+        '#FF8C00'  // Naranja oscuro
+      ];
+      
+      class KoiParticle {
+        constructor() {
+          this.reset();
+          this.type = Math.random() > 0.7 ? 'dragon' : 'koi'; // 30% probabilidad de ser dragón
+        }
+        
+        reset() {
+          this.x = Math.random() * canvas.width;
+          this.y = Math.random() * canvas.height;
+          this.size = this.type === 'dragon' ? Math.random() * 8 + 4 : Math.random() * 6 + 2;
+          this.speedX = Math.random() * 2 - 1;
+          this.speedY = Math.random() * 2 - 1;
+          this.color = koiColors[Math.floor(Math.random() * koiColors.length)];
+          this.opacity = Math.random() * 0.4 + 0.3;
+          this.life = Math.random() * 200 + 100;
+          this.wave = 0;
+          this.waveSpeed = Math.random() * 0.05 + 0.02;
+        }
+        
+        update() {
+          this.x += this.speedX;
+          this.y += this.speedY + Math.sin(this.wave) * 0.5; // Movimiento ondulante
+          this.wave += this.waveSpeed;
+          this.life--;
+          
+          // Rebote en los bordes con efecto de río
+          if (this.x < -20) this.x = canvas.width + 20;
+          if (this.x > canvas.width + 20) this.x = -20;
+          if (this.y < -20) this.y = canvas.height + 20;
+          if (this.y > canvas.height + 20) this.y = -20;
+          
+          // Transformación de koi a dragón
+          if (this.life < 50 && this.type === 'koi') {
+            this.type = 'dragon';
+            this.size *= 1.5;
+            this.color = '#FFD700'; // Se vuelve dorado
+          }
+          
+          if (this.life <= 0) {
+            this.reset();
+          }
+        }
+        
+        draw() {
+          ctx.save();
+          ctx.globalAlpha = this.opacity;
+          ctx.fillStyle = this.color;
+          
+          if (this.type === 'dragon') {
+            // Forma de dragón (más alargada)
+            ctx.beginPath();
+            ctx.ellipse(this.x, this.y, this.size * 1.5, this.size * 0.8, 0, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // Detalles de dragón
+            ctx.strokeStyle = this.color;
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(this.x + this.size * 1.2, this.y);
+            ctx.lineTo(this.x + this.size * 2, this.y - this.size * 0.5);
+            ctx.lineTo(this.x + this.size * 2, this.y + this.size * 0.5);
+            ctx.closePath();
+            ctx.stroke();
+          } else {
+            // Forma de koi (más redondeada)
+            ctx.beginPath();
+            ctx.ellipse(this.x, this.y, this.size, this.size * 0.6, 0, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // Aleta de koi
+            ctx.beginPath();
+            ctx.moveTo(this.x - this.size, this.y);
+            ctx.lineTo(this.x - this.size * 1.5, this.y - this.size * 0.8);
+            ctx.lineTo(this.x - this.size * 1.5, this.y + this.size * 0.8);
+            ctx.closePath();
+            ctx.fill();
+          }
+          
+          ctx.restore();
+        }
+      }
+      
+      // Crear partículas koi
+      for (let i = 0; i < particleCount; i++) {
+        koiParticles.push(new KoiParticle());
+      }
+      
+      // Animación
+      function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        // Fondo acuático sutil
+        const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+        gradient.addColorStop(0, 'rgba(78, 205, 196, 0.05)');
+        gradient.addColorStop(1, 'rgba(255, 215, 0, 0.03)');
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        
+        // Dibujar ondas de agua sutiles
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
+        ctx.lineWidth = 1;
+        for (let i = 0; i < 5; i++) {
+          ctx.beginPath();
+          ctx.arc(canvas.width * 0.2, canvas.height * 0.3, 50 + i * 30, 0, Math.PI * 2);
+          ctx.stroke();
+          
+          ctx.beginPath();
+          ctx.arc(canvas.width * 0.8, canvas.height * 0.7, 40 + i * 25, 0, Math.PI * 2);
+          ctx.stroke();
+        }
+        
+        // Actualizar y dibujar partículas koi
+        koiParticles.forEach(particle => {
+          particle.update();
+          particle.draw();
+        });
+        
+        requestAnimationFrame(animate);
+      }
+      
+      animate();
+    }
+  </script>
+</body>
+</html>

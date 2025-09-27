@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Multimedia - REKO</title>
+  <!-- Favicon -->
+  <link rel="icon" href="imagen/responsive 2@72x.png" type="image/png">
+
+  <style>
+    /* Variables de colores y estilos */
+    :root {
+      --primary-color: #110c0f;
+      --secondary-color: #f5f5f5;
+      --accent-color: #ff6b6b;
+      --text-color: #333;
+      --light-text: #fff;
+      --spacing-sm: 1rem;
+      --spacing-md: 2rem;
+      --spacing-lg: 4rem;
+      --border-radius: 8px;
+      --transition: all 0.3s ease;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', 'Segoe UI', sans-serif;
+      line-height: 1.6;
+      color: var(--text-color);
+      background-color: var(--secondary-color);
+    }
+
+    /* Header */
+    header {
+      background-color: var(--primary-color);
+      color: var(--light-text);
+      padding: var(--spacing-sm) var(--spacing-md);
+      position: sticky; top: 0; z-index: 1000;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    .nav-container {
+      display: flex; justify-content: space-between; align-items: center;
+      max-width: 1200px; margin: 0 auto;
+    }
+    .logo {
+      font-size: 1.8rem; font-weight: 700; letter-spacing: 2px;
+      display: flex; align-items: center;
+    }
+    .logo img { width: 40px; margin-right: 8px; }
+    .logo span { color: var(--accent-color); }
+
+    nav ul { display: flex; list-style: none; }
+    nav ul li { margin-left: var(--spacing-md); }
+    nav ul li a {
+      color: var(--light-text); text-decoration: none;
+      font-weight: 500; padding: 0.5rem 1rem;
+      border-radius: var(--border-radius);
+      transition: var(--transition);
+    }
+    nav ul li a:hover { background-color: rgba(255, 255, 255, 0.1); }
+
+    /* Botón menú móvil */
+    .mobile-menu-btn {
+      display: none; background: none; border: none;
+      color: white; font-size: 2rem; cursor: pointer;
+    }
+
+    /* Sidebar móvil */
+    .sidebar {
+      position: fixed; top: 0; left: -100%;
+      width: 70%; max-width: 280px; height: 100%;
+      background: #000; color: white;
+      transition: var(--transition);
+      padding: 2rem 1rem; z-index: 2000;
+    }
+    .sidebar.active { left: 0; }
+    .sidebar .logo { justify-content: center; margin-bottom: 2rem; }
+    .sidebar .logo img { width: 100px; }
+    .sidebar ul { list-style: none; text-align: center; }
+    .sidebar ul li { margin: 1rem 0; }
+    .sidebar ul li a {
+      color: white; text-decoration: none; font-size: 1.2rem;
+      display: block; padding: 0.5rem 0;
+    }
+
+    /* Hero */
+    .hero {
+      background: 
+        linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7)), 
+        url('imagen/p.m@72x.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      color: var(--light-text);
+      padding: var(--spacing-lg) var(--spacing-md);
+      text-align: center;
+      min-height: 60vh;
+      display: flex; flex-direction: column; justify-content: center; align-items: center;
+    }
+    .hero h1 { font-size: 4rem; margin-bottom: var(--spacing-sm); font-weight: 800; letter-spacing: 3px; }
+    .hero h2 { font-size: 2.5rem; font-weight: 300; margin-bottom: var(--spacing-md); color: var(--accent-color); }
+    .hero p { font-size: 1.2rem; max-width: 600px; margin: 0 auto var(--spacing-md); opacity: 0.9; }
+
+    /* Sección Multimedia */
+    .multimedia {
+      padding: var(--spacing-lg) var(--spacing-md);
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .section-title {
+      text-align: center;
+      margin-bottom: var(--spacing-lg);
+      font-size: 2.5rem;
+      position: relative;
+      color: var(--primary-color);
+    }
+    .section-title::after {
+      content: '';
+      display: block;
+      width: 80px;
+      height: 4px;
+      background: linear-gradient(90deg, #ff6b6b, #ffbc21);
+      margin: 0.5rem auto;
+    }
+    
+    .multimedia-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: var(--spacing-md);
+      margin-bottom: var(--spacing-lg);
+    }
+
+    .video-card {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 
+        0 8px 32px rgba(31, 38, 135, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+    }
+
+    .video-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 
+        0 20px 40px rgba(31, 38, 135, 0.2),
+        0 0 80px rgba(255, 107, 107, 0.1);
+    }
+
+    .video-container {
+      position: relative;
+      width: 100%;
+      height: 0;
+      padding-bottom: 56.25%; /* Relación de aspecto 16:9 */
+    }
+
+    .video-container iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    .video-content {
+      padding: var(--spacing-sm);
+      background: rgba(255, 255, 255, 0.9);
+    }
+
+    .video-content h3 {
+      margin-bottom: 0.5rem;
+      font-size: 1.3rem;
+      color: var(--primary-color);
+      background: linear-gradient(135deg, #2c3e50, #3498db);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .video-content p {
+      color: #666;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    /* Footer personalizado con imagen */
+    footer {
+      background: 
+        linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.9)),
+        url('imagen/footer@72x.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      color: var(--light-text);
+      padding: var(--spacing-lg) var(--spacing-md);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    footer h2 {
+      font-size: 2.5rem;
+      margin-bottom: var(--spacing-sm);
+      background: linear-gradient(45deg, #ff6b6b, #ffbc21);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    footer p {
+      margin-bottom: var(--spacing-sm);
+      font-size: 1.1rem;
+      opacity: 0.9;
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: var(--spacing-md);
+      margin: var(--spacing-md) 0;
+    }
+
+    .social-links a {
+      color: var(--light-text);
+      font-size: 1.8rem;
+      transition: var(--transition);
+      padding: 10px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .social-links a:hover {
+      color: var(--accent-color);
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-3px);
+    }
+
+    .copyright {
+      margin-top: var(--spacing-md);
+      opacity: 0.7;
+      font-size: 0.9rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+      padding-top: var(--spacing-sm);
+    }
+
+    /* Efecto de partículas en el footer */
+    .footer-particles {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      nav ul { display: none; }
+      .mobile-menu-btn { display: block; }
+      
+      .hero h1 { font-size: 2.5rem; }
+      .hero h2 { font-size: 1.8rem; }
+      
+      .multimedia-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .nav-container { flex-direction: column; }
+      nav ul { margin-top: var(--spacing-sm); }
+      nav ul li { margin: 0 0.5rem; }
+
+      .social-links {
+        gap: var(--spacing-sm);
+      }
+
+      .social-links a {
+        width: 45px;
+        height: 45px;
+        font-size: 1.5rem;
+      }
+
+      footer h2 {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Contenido principal -->
+  <div id="content">
+    <!-- Header -->
+    <header>
+      <div class="nav-container">
+        <div class="logo"><img src="imagen/responsive 2@72x.png" alt="Logo">RE<span>KO</span></div>
+        <button class="mobile-menu-btn" onclick="toggleMenu()">☰</button>
+        <nav>
+          <ul>
+            <li><a href="index.html">Página Principal</a></li>
+            <li><a href="publicidad.html">Publicidad y Redes Sociales</a></li>
+            <li><a href="ilustracion.html">Ilustración</a></li>
+            <li><a href="multimedia.html" class="active">Multimedia</a></li>
+            <li><a href="web.html">Web</a></li>
+            <li><a href="cv.html">CV</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Sidebar móvil -->
+    <div class="sidebar" id="sidebar">
+      <div class="logo"><img src="imagen/responsive 2@72x.png" alt="Logo">RE<span>KO</span></div>
+      <ul>
+        <li><a href="index.html">Página Principal</a></li>
+        <li><a href="publicidad.html">Publicidad y Redes Sociales</a></li>
+        <li><a href="ilustracion.html">Ilustración</a></li>
+        <li><a href="multimedia.html" class="active">Multimedia</a></li>
+        <li><a href="web.html">Web</a></li>
+        <li><a href="cv.html">CV</a></li>
+      </ul>
+    </div>
+    
+
+    <!-- Hero -->
+    <section class="hero" id="inicio">
+      <h1>MULTIMEDIA</h1>
+      <h2>Producción Audiovisual</h2>
+      <p>Explora mis trabajos en producción de video, audio y animación.</p>
+    </section>
+    
+    <!-- Sección de videos -->
+    <section class="multimedia" id="videos">
+      <h2 class="section-title">Videos</h2>
+      <div class="multimedia-grid">
+        <!-- Cortometraje El Libro Maldito -->
+        <div class="video-card">
+          <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/Bn9VNZO4bGM" title="Cortometraje El Libro Maldito" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+          <div class="video-content">
+            <h3>Cortometraje El Libro Maldito</h3>
+            <p>Un thriller sobrenatural que explora los límites entre la realidad y la ficción.</p>
+          </div>
+        </div>
+
+        <!-- Entrevista en Akihabara manga café -->
+        <div class="video-card">
+          <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/aFo2WR_3cz0" title="Entrevista en Akihabara manga café, San Salvador" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+          <div class="video-content">
+            <h3>Entrevista en Akihabara manga café, San Salvador</h3>
+            <p>Un vistazo a la cultura del manga y anime en El Salvador.</p>
+          </div>
+        </div>
+
+        <!-- Intro de corto Spaghetti Western -->
+        <div class="video-card">
+          <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/iOEqOGp7cZQ" title="Intro de corto Spaghetti Western" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+          <div class="video-content">
+            <h3>Intro de corto Spaghetti Western</h3>
+            <p>Una introducción cinematográfica con estilo western italiano.</p>
+          </div>
+        </div>
+
+        <!-- Recursos con aplicación de Chroma Key (Jason) -->
+        <div class="video-card">
+          <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/TJImt6yTEH0" title="Recursos con aplicación de Chroma Key (Jason)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+          <div class="video-content">
+            <h3>Recursos con aplicación de Chroma Key (Jason)</h3>
+            <p>Demostración de técnicas de chroma key y efectos especiales.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sección de audio -->
+      <h2 class="section-title">Audio</h2>
+      <div class="multimedia-grid">
+        <!-- Programa de radio -->
+        <div class="video-card">
+          <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/UJAiKiTDdxw" title="Programa de radio" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+          <div class="video-content">
+            <h3>Programa de radio</h3>
+            <p>Producción y edición de un programa de radio con segmentos variados.</p>
+          </div>
+        </div>
+
+        <!-- Cuento los 3 cerditos audio en 8D -->
+        <div class="video-card">
+          <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/LzbD22TGOPo" title="Cuento los 3 cerditos audio en 8D" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+          <div class="video-content">
+            <h3>Cuento los 3 cerditos audio en 8D</h3>
+            <p>Una experiencia auditiva inmersiva con tecnología de audio 8D.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sección de Logos -->
+      <h2 class="section-title">Logos Animados</h2>
+      <div class="multimedia-grid">
+        <!-- Animación del logo REKO -->
+        <div class="video-card">
+          <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/-vgbB8oegkk" title="Animación del logo REKO" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+          <div class="video-content">
+            <h3>Animación del logo REKO</h3>
+            <p>Animación profesional del logo personal con efectos visuales.</p>
+          </div>
+        </div>
+
+        <!-- Logo interactivo Nike -->
+        <div class="video-card">
+          <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/TiZQ4N857I0" title="Logo interactivo Nike" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+          <div class="video-content">
+            <h3>Logo interactivo Nike</h3>
+            <p>Recreación interactiva del famoso logo de Nike con animación.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer con imagen personalizada -->
+    <footer id="contacto">
+      <div class="footer-particles" id="footer-particles"></div>
+      <div class="footer-content">
+        <h2>Contacto</h2>
+        <p>¿Tienes un proyecto multimedia en mente? Hablemos sobre cómo puedo ayudarte a hacerlo realidad.</p>
+        
+        <div class="social-links">
+          <a href="#" title="Email">📧</a>
+          <a href="#" title="LinkedIn">💼</a>
+          <a href="#" title="Twitter">🐦</a>
+          <a href="#" title="Instagram">📷</a>
+          <a href="#" title="Behance">🎨</a>
+        </div>
+        
+        <p class="copyright">© 2025 REKO Portafolio. Todos los derechos reservados.</p>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    function toggleMenu() {
+      document.getElementById("sidebar").classList.toggle("active");
+    }
+
+    // Hacer las tarjetas de video más interactivas
+    document.addEventListener('DOMContentLoaded', function() {
+      const videoCards = document.querySelectorAll('.video-card');
+      videoCards.forEach(card => {
+        card.addEventListener('mouseenter', function() {
+          this.style.transform = 'translateY(-5px) scale(1.02)';
+        });
+        
+        card.addEventListener('mouseleave', function() {
+          this.style.transform = 'translateY(0) scale(1)';
+        });
+      });
+    });
+  </script>
+</body>
+</html>
