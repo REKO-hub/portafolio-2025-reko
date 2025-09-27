@@ -20,6 +20,9 @@
       --spacing-lg: 4rem;
       --border-radius: 8px;
       --transition: all 0.3s ease;
+      --purple-dark: #2d1b69;
+      --purple-medium: #5a3d8c;
+      --purple-light: #8a6dcc;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -127,10 +130,10 @@
     /* Sección Multimedia con partículas */
     .multimedia {
       padding: var(--spacing-lg) var(--spacing-md);
-      max-width: 1200px;
+      max-width: 100%; /* Cambiado para que ocupe todo el ancho */
       margin: 0 auto;
       position: relative;
-      background: black; /* Fondo negro para las partículas */
+      background: linear-gradient(135deg, #1a1038 0%, #2d1b69 50%, #1a1038 100%); /* Fondo morado degradado */
       overflow: hidden;
     }
 
@@ -170,6 +173,9 @@
       margin-bottom: var(--spacing-lg);
       position: relative;
       z-index: 1;
+      max-width: 1200px; /* Limitar el contenido pero no el fondo */
+      margin-left: auto;
+      margin-right: auto;
     }
 
     .video-card {
@@ -532,7 +538,7 @@
         });
       });
 
-      // Sistema de partículas para estrellas
+      // Sistema de partículas para estrellas moradas
       const canvas = document.getElementById('particles');
       const ctx = canvas.getContext('2d');
       
@@ -548,24 +554,36 @@
       
       // Configuración de las partículas
       const particles = [];
-      const particleCount = 150;
+      const particleCount = 200; // Aumentado para un efecto más denso
       
       // Crear partículas
       for (let i = 0; i < particleCount; i++) {
         particles.push({
           x: Math.random() * canvas.width,
           y: Math.random() * canvas.height,
-          radius: Math.random() * 1.5 + 0.5,
-          speed: Math.random() * 0.5 + 0.1,
-          opacity: Math.random() * 0.5 + 0.3,
-          twinkleSpeed: Math.random() * 0.05 + 0.01,
-          twinkleDirection: Math.random() > 0.5 ? 1 : -1
+          radius: Math.random() * 2 + 0.5,
+          speed: Math.random() * 0.8 + 0.2,
+          opacity: Math.random() * 0.6 + 0.2,
+          twinkleSpeed: Math.random() * 0.03 + 0.01,
+          twinkleDirection: Math.random() > 0.5 ? 1 : -1,
+          color: Math.random() > 0.7 ? '#8a6dcc' : (Math.random() > 0.5 ? '#5a3d8c' : '#a78bfa') // Variedad de tonos morados
         });
       }
       
       // Dibujar partículas
       function drawParticles() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        // Dibujar un gradiente suave de fondo
+        const gradient = ctx.createRadialGradient(
+          canvas.width/2, canvas.height/2, 0,
+          canvas.width/2, canvas.height/2, canvas.width/1.5
+        );
+        gradient.addColorStop(0, 'rgba(45, 27, 105, 0.8)');
+        gradient.addColorStop(1, 'rgba(26, 16, 56, 0.9)');
+        
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
         
         particles.forEach(particle => {
           // Efecto de parpadeo (twinkle)
@@ -579,10 +597,25 @@
             particle.opacity = 0.8;
           }
           
-          // Dibujar la partícula
+          // Dibujar la partícula con efecto de brillo
           ctx.beginPath();
           ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(255, 255, 255, ${particle.opacity})`;
+          
+          // Crear un gradiente para la partícula
+          const particleGradient = ctx.createRadialGradient(
+            particle.x, particle.y, 0,
+            particle.x, particle.y, particle.radius
+          );
+          particleGradient.addColorStop(0, particle.color);
+          particleGradient.addColorStop(1, 'rgba(138, 109, 204, 0.3)');
+          
+          ctx.fillStyle = particleGradient;
+          ctx.fill();
+          
+          // Añadir un pequeño efecto de brillo
+          ctx.beginPath();
+          ctx.arc(particle.x - particle.radius/3, particle.y - particle.radius/3, particle.radius/3, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
           ctx.fill();
           
           // Mover la partícula (movimiento sutil)
