@@ -3,24 +3,667 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ilustración - REKO</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Ilustración - EKO</title>
+  <!-- Favicon -->
+  <link rel="icon" href="imagen/responsive 2@72x.png" type="image/png">
+
+  <style>
+    /* Variables de colores y estilos */
+    :root {
+      --primary-color: #110c0f;
+      --secondary-color: #f5f5f5;
+      --accent-color: #ff6b6b;
+      --text-color: #333;
+      --light-text: #fff;
+      --spacing-sm: 1rem;
+      --spacing-md: 2rem;
+      --spacing-lg: 4rem;
+      --border-radius: 8px;
+      --transition: all 0.3s ease;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', 'Segoe UI', sans-serif;
+      line-height: 1.6;
+      color: var(--text-color);
+      background-color: var(--secondary-color);
+    }
+
+    /* Header */
+    header {
+      background-color: var(--primary-color);
+      color: var(--light-text);
+      padding: var(--spacing-sm) var(--spacing-md);
+      position: sticky; top: 0; z-index: 1000;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    .nav-container {
+      display: flex; justify-content: space-between; align-items: center;
+      max-width: 1200px; margin: 0 auto;
+    }
+    .logo {
+      font-size: 1.8rem; font-weight: 700; letter-spacing: 2px;
+      display: flex; align-items: center;
+    }
+    .logo img { width: 40px; margin-right: 8px; }
+    .logo span { color: var(--accent-color); }
+
+    nav ul { display: flex; list-style: none; }
+    nav ul li { margin-left: var(--spacing-md); }
+    nav ul li a {
+      color: var(--light-text); text-decoration: none;
+      font-weight: 500; padding: 0.5rem 1rem;
+      border-radius: var(--border-radius);
+      transition: var(--transition);
+    }
+    nav ul li a:hover { background-color: rgba(255, 255, 255, 0.1); }
+
+    /* Botón menú móvil */
+    .mobile-menu-btn {
+      display: none; background: none; border: none;
+      color: white; font-size: 2rem; cursor: pointer;
+    }
+
+    /* Sidebar móvil */
+    .sidebar {
+      position: fixed; top: 0; left: -100%;
+      width: 70%; max-width: 280px; height: 100%;
+      background: #000; color: white;
+      transition: var(--transition);
+      padding: 2rem 1rem; z-index: 2000;
+    }
+    .sidebar.active { left: 0; }
+    .sidebar .logo { justify-content: center; margin-bottom: 2rem; }
+    .sidebar .logo img { width: 100px; }
+    .sidebar ul { list-style: none; text-align: center; }
+    .sidebar ul li { margin: 1rem 0; }
+    .sidebar ul li a {
+      color: white; text-decoration: none; font-size: 1.2rem;
+      display: block; padding: 0.5rem 0;
+    }
+
+    /* Hero - Imagen principal */
+    .hero {
+      background: 
+        linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.5)), 
+        url('imagen/Imagen de WhatsApp 2025-09-27 a las 02.12.08_ff5d7f22.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      color: var(--light-text);
+      padding: var(--spacing-lg) var(--spacing-md);
+      text-align: center;
+      min-height: 60vh;
+      display: flex; 
+      flex-direction: column; 
+      justify-content: center; 
+      align-items: center;
+      position: relative;
+    }
+    .hero h1 { 
+      font-size: 3rem; 
+      margin-bottom: var(--spacing-sm); 
+      font-weight: 800; 
+      letter-spacing: 3px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    }
+    .hero h2 { 
+      font-size: 2rem; 
+      font-weight: 300; 
+      margin-bottom: var(--spacing-md); 
+      color: var(--accent-color);
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+    }
+    .hero p { 
+      font-size: 1.1rem; 
+      max-width: 600px; 
+      margin: 0 auto var(--spacing-md); 
+      opacity: 0.9;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+    }
+
+    /* Sección Ilustración */
+    .ilustracion {
+      padding: var(--spacing-lg) var(--spacing-md);
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .section-title {
+      text-align: center;
+      margin-bottom: var(--spacing-lg);
+      font-size: 2.5rem;
+      position: relative;
+      color: var(--primary-color);
+    }
+    .section-title::after {
+      content: '';
+      display: block;
+      width: 80px;
+      height: 4px;
+      background: linear-gradient(90deg, #ff6b6b, #ffbc21);
+      margin: 0.5rem auto;
+    }
+    
+    .ilustracion-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: var(--spacing-md);
+      margin-bottom: var(--spacing-lg);
+    }
+
+    .ilustracion-card {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 
+        0 8px 32px rgba(31, 38, 135, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      cursor: pointer;
+    }
+
+    .ilustracion-card:hover {
+      transform: translateY(-5px) scale(1.02);
+      box-shadow: 
+        0 20px 40px rgba(31, 38, 135, 0.2),
+        0 0 80px rgba(255, 107, 107, 0.1);
+    }
+
+    .ilustracion-container {
+      position: relative;
+      width: 100%;
+      height: 300px;
+      overflow: hidden;
+      background: #f0f0f0;
+    }
+
+    .ilustracion-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .ilustracion-card:hover .ilustracion-container img {
+      transform: scale(1.1);
+    }
+
+    .ilustracion-content {
+      padding: var(--spacing-sm);
+      background: rgba(255, 255, 255, 0.9);
+    }
+
+    .ilustracion-content h3 {
+      margin-bottom: 0.5rem;
+      font-size: 1.3rem;
+      color: var(--primary-color);
+      background: linear-gradient(135deg, #2c3e50, #3498db);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .ilustracion-content p {
+      color: #666;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    /* Modal para vista ampliada */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 3000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.9);
+      animation: fadeIn 0.3s;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .modal-content {
+      margin: auto;
+      display: block;
+      max-width: 90%;
+      max-height: 90%;
+      margin-top: 2%;
+      border-radius: 10px;
+      box-shadow: 0 0 30px rgba(255,255,255,0.1);
+    }
+
+    .close {
+      position: absolute;
+      top: 15px;
+      right: 35px;
+      color: #f1f1f1;
+      font-size: 40px;
+      font-weight: bold;
+      transition: 0.3s;
+      cursor: pointer;
+    }
+
+    .close:hover {
+      color: var(--accent-color);
+    }
+
+    /* Indicador de imagen faltante */
+    .image-error {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      color: #999;
+      font-size: 0.9rem;
+      text-align: center;
+      padding: 1rem;
+    }
+
+           /* Footer personalizado con imagen - CORREGIDO */
+           footer {
+      background: 
+        linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.9)),
+        url('imagen/footer@72x.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      color: var(--light-text);
+      padding: var(--spacing-lg) 0;
+      text-align: center;
+      position: statix;
+      overflow: hidden;
+      min-height:  400px;
+      display: flex;
+      align-items: center;
+      width: 100vw; /* Usar viewport width */
+      margin-left: calc(-50vw + 50%); /* Centrado forzado */
+      left: 0;
+      right: 1;
+      box-sizing: border-box;
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      padding: 0 var(--spacing-md);
+      box-sizing: border-box;
+    }
+
+    footer h2 {
+      font-size: 2.5rem;
+      margin-bottom: var(--spacing-sm);
+      background: linear-gradient(45deg, #ff6b6b, #ffbc21);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    footer p {
+      margin-bottom: var(--spacing-sm);
+      font-size: 1.1rem;
+      opacity: 0.9;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+      padding: 0 var(--spacing-md); /* Padding para texto en móviles */
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: var(--spacing-md);
+      margin: var(--spacing-md) 0;
+      flex-wrap: wrap;
+    }
+
+    .social-links a {
+      color: var(--light-text);
+      font-size: 1.8rem;
+      transition: var(--transition);
+      padding: 10px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .social-links a:hover {
+      color: var(--accent-color);
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-3px);
+    }
+
+    .copyright {
+      margin-top: var(--spacing-md);
+      opacity: 0.7;
+      font-size: 0.9rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+      padding-top: var(--spacing-sm);
+    }
+
+    /* Efecto de partículas en el footer */
+    .footer-particles {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      padding: 0 var(--spacing-md);
+      box-sizing: border-box;
+    }
+
+    footer h2 {
+      font-size: 2.5rem;
+      margin-bottom: var(--spacing-sm);
+      background: linear-gradient(45deg, #ff6b6b, #ffbc21);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    footer p {
+      margin-bottom: var(--spacing-sm);
+      font-size: 1.1rem;
+      opacity: 0.9;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+      padding: 0 var(--spacing-md); /* Padding para texto en móviles */
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: var(--spacing-md);
+      margin: var(--spacing-md) 0;
+      flex-wrap: wrap;
+    }
+
+    .social-links a {
+      color: var(--light-text);
+      font-size: 1.8rem;
+      transition: var(--transition);
+      padding: 10px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .social-links a:hover {
+      color: var(--accent-color);
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-3px);
+    }
+
+    .copyright {
+      margin-top: var(--spacing-md);
+      opacity: 0.7;
+      font-size: 0.9rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+      padding-top: var(--spacing-sm);
+    }
+
+    /* Efecto de partículas en el footer */
+    .footer-particles {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      nav ul { display: none; }
+      .mobile-menu-btn { display: block; }
+      
+      .hero h1 { font-size: 2.5rem; }
+      .hero h2 { font-size: 1.8rem; }
+      
+      .ilustracion-grid {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-sm);
+      }
+      
+      .nav-container { flex-direction: column; }
+      nav ul { margin-top: var(--spacing-sm); }
+      nav ul li { margin: 0 0.5rem; }
+
+      .social-links {
+        gap: var(--spacing-sm);
+      }
+
+      .social-links a {
+        width: 45px;
+        height: 45px;
+        font-size: 1.5rem;
+      }
+
+      footer h2 {
+        font-size: 2rem;
+      }
+
+      .modal-content {
+        max-width: 95%;
+        max-height: 80%;
+      }
+
+      .close {
+        font-size: 30px;
+        top: 10px;
+        right: 20px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero {
+        min-height: 50vh;
+        padding: var(--spacing-md) var(--spacing-sm);
+      }
+      
+      .hero h1 { font-size: 2rem; }
+      .hero h2 { font-size: 1.5rem; }
+      .hero p { font-size: 1rem; }
+    }
+  </style>
 </head>
 <body>
-  <div class="sidebar">
-    <h2>Menú</h2>
-    <ul>
-      <li><a href="index.html">Página Principal</a></li>
-      <li><a href="publicidad.html">Publicidad y Redes Sociales</a></li>
-      <li><a href="ilustracion.html">Ilustración</a></li>
-      <li><a href="multimedia.html">Multimedia</a></li>
-      <li><a href="web.html">Web</a></li>
-      <li><a href="cv.html">CV</a></li>
-    </ul>
+  <!-- Contenido principal -->
+  <div id="content">
+    <!-- Header -->
+    <header>
+      <div class="nav-container">
+        <div class="logo"><img src="imagen/responsive 2@72x.png" alt="Logo">EKO</div>
+        <button class="mobile-menu-btn" onclick="toggleMenu()">☰</button>
+        <nav>
+          <ul>
+            <li><a href="index.html">Página Principal</a></li>
+            <li><a href="publicidad.html">Publicidad y Redes Sociales</a></li>
+            <li><a href="ilustracion.html" class="active">Ilustración</a></li>
+            <li><a href="multimedia.html">Multimedia</a></li>
+            <li><a href="Fotografias.html">Fotografías</a></li>
+            <li><a href="web.html">Web</a></li>
+            <li><a href="cv.html">CV</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Sidebar móvil -->
+    <div class="sidebar" id="sidebar">
+      <div class="logo"><img src="imagen/responsive 2@72x.png" alt="Logo">EKO</div>
+      <ul>
+        <li><a href="index.html">Página Principal</a></li>
+        <li><a href="publicidad.html">Publicidad y Redes Sociales</a></li>
+        <li><a href="ilustracion.html" class="active">Ilustración</a></li>
+        <li><a href="multimedia.html">Multimedia</a></li>
+        <li><a href="Fotografias.html">Fotografías</a></li>
+        <li><a href="web.html">Web</a></li>
+        <li><a href="cv.html">CV</a></li>
+      </ul>
+    </div>
+    
+
+    <!-- Hero -->
+    <section class="hero" id="inicio">
+      <h1>ILUSTRACIÓN</h1>
+      <h2>Arte Digital</h2>
+      <p>Explora mis creaciones de ilustración digital donde la imaginación cobra vida a través del color y la forma.</p>
+    </section>
+    
+    <!-- Sección de ilustraciones -->
+    <section class="ilustracion" id="galeria">
+      <h2 class="section-title">Galería de Ilustraciones</h2>
+      <div class="ilustracion-grid">
+        <!-- Ilustración 1 -->
+        <div class="ilustracion-card" onclick="openModal('imagen/Imagen de WhatsApp 2025-09-27 a las 02.12.08_ff5d7f22.jpg')">
+          <div class="ilustracion-container">
+            <img src="imagen/Imagen de WhatsApp 2025-09-27 a las 02.12.08_ff5d7f22.jpg" alt="Ilustración Digital 1" loading="lazy" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'image-error\'>Imagen no encontrada<br>Ilustración 1</div>';">
+          </div>
+          <div class="ilustracion-content">
+            <h3>Composición Abstracta</h3>
+            <p>Ilustración digital que explora formas orgánicas y colores vibrantes en una composición equilibrada.</p>
+          </div>
+        </div>
+
+        <!-- Ilustración 2 -->
+        <div class="ilustracion-card" onclick="openModal('imagen/Imagen de WhatsApp 2025-09-27 a las 02.12.08_f7fc193a.jpg')">
+          <div class="ilustracion-container">
+            <img src="imagen/Imagen de WhatsApp 2025-09-27 a las 02.12.08_f7fc193a.jpg" alt="Ilustración Digital 2" loading="lazy" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'image-error\'>Imagen no encontrada<br>Ilustración 2</div>';">
+          </div>
+          <div class="ilustracion-content">
+            <h3>Personaje Fantástico</h3>
+            <p>Creación de personaje con elementos surrealistas y paleta de colores armoniosa.</p>
+          </div>
+        </div>
+
+        <!-- Espacio para futuras ilustraciones -->
+        <div class="ilustracion-card" style="cursor: default;">
+          <div class="ilustracion-container" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; align-items: center; justify-content: center;">
+            <div style="text-align: center; color: white; padding: 2rem;">
+              <h3 style="font-size: 2rem; margin-bottom: 1rem;">+</h3>
+              <p>Próximamente<br>nuevas ilustraciones</p>
+            </div>
+          </div>
+          <div class="ilustracion-content">
+            <h3>En Desarrollo</h3>
+            <p>Nuevos proyectos de ilustración digital en proceso creativo.</p>
+          </div>
+        </div>
+      </div>
+
+     
+
+    <!-- Modal para vista ampliada -->
+    <div id="myModal" class="modal">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <img class="modal-content" id="img01">
+    </div>
+
+          
+          <p class="copyright">© 2025 REKO Portafolio. Todos los derechos reservados.</p>
+        </div>
+      </footer>
   </div>
-  <main>
-    <h1>Ilustración</h1>
-    <p>Aquí mostrarás tus ilustraciones.</p>
-  </main>
+  <script>
+    function toggleMenu() {
+      document.getElementById("sidebar").classList.toggle("active");
+    }
+
+    // Funcionalidad del modal para imágenes
+    function openModal(imageSrc) {
+      const modal = document.getElementById("myModal");
+      const modalImg = document.getElementById("img01");
+      modal.style.display = "block";
+      modalImg.src = imageSrc;
+    }
+
+    function closeModal() {
+      document.getElementById("myModal").style.display = "none";
+    }
+
+    // Cerrar modal al hacer clic fuera de la imagen
+    window.onclick = function(event) {
+      const modal = document.getElementById("myModal");
+      if (event.target == modal) {
+        closeModal();
+      }
+    }
+
+    // Hacer las tarjetas de ilustraciones más interactivas
+    document.addEventListener('DOMContentLoaded', function() {
+      const ilustracionCards = document.querySelectorAll('.ilustracion-card');
+      ilustracionCards.forEach(card => {
+        // Solo agregar efecto hover a las tarjetas con imágenes reales
+        if (!card.querySelector('.ilustracion-container').innerHTML.includes('En Desarrollo')) {
+          card.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-5px) scale(1.02)';
+          });
+          
+          card.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0) scale(1)';
+          });
+        }
+      });
+    });
+
+    // Verificar estado de las imágenes al cargar
+    window.addEventListener('load', function() {
+      const images = document.querySelectorAll('.ilustracion-container img');
+      images.forEach(img => {
+        if (!img.complete || img.naturalHeight === 0) {
+          console.log('Imagen no cargada:', img.src);
+        }
+      });
+    });
+  </script>
+  
+      <!-- Footer con imagen personalizada -->
+      <footer id="contacto">
+        <div class="footer-particles" id="footer-particles"></div>
+        <div class="footer-content">
+          <h2>Contacto</h2>
+          <p>¿Tienes un proyecto en mente? Hablemos sobre cómo puedo ayudarte a hacerlo realidad.</p>
+          
+          <div class="social-links">
+            <a href="#" title="Email">📧</a>
+            <a href="#" title="LinkedIn">💼</a>
+            <a href="#" title="Twitter">🐦</a>
+            <a href="#" title="Instagram">📷</a>
+            <a href="#" title="Behance">🎨</a>
+          </div>
 </body>
 </html>

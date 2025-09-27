@@ -103,13 +103,23 @@
 
     /* Hero */
     .hero {
-      background: linear-gradient(135deg, var(--primary-color) 0%, #ffbc21 100%);
-      color: var(--light-text);
-      padding: var(--spacing-lg) var(--spacing-md);
-      text-align: center;
-      min-height: 80vh;
-      display: flex; flex-direction: column; justify-content: center; align-items: center;
-    }
+    background: 
+        linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.5)), 
+        url('imagen/p.m@72x.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    color: var(--light-text);
+    padding: var(--spacing-lg) var(--spacing-md);
+    text-align: center;
+    min-height: 100vh;
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center;
+    position: relative;
+}
     .hero h1 { font-size: 4rem; margin-bottom: var(--spacing-sm); font-weight: 800; letter-spacing: 3px; }
     .hero h2 { font-size: 2.5rem; font-weight: 300; margin-bottom: var(--spacing-md); color: var(--accent-color); }
     .hero p { font-size: 1.2rem; max-width: 600px; margin: 0 auto var(--spacing-md); opacity: 0.9; }
@@ -696,11 +706,11 @@
         <button class="mobile-menu-btn" onclick="toggleMenu()">☰</button>
         <nav>
           <ul>
-            <li><a href="index.html">Página Principal</a></li>
+            
             <li><a href="publicidad.html">Publicidad y Redes Sociales</a></li>
             <li><a href="ilustracion.html">Ilustración</a></li>
             <li><a href="multimedia.html">Multimedia</a></li>
-            <li><a href="fotografias.html" class="active">Fotografías</a></li>
+            <li><a href="Fotografias.html" class="active">Fotografías</a></li>
             <li><a href="web.html">Web</a></li>
             <li><a href="cv.html">CV</a></li>
           </ul>
@@ -710,31 +720,45 @@
 
     <!-- Sidebar móvil -->
     <div class="sidebar" id="sidebar">
-<<<<<<< HEAD
-      <div class="logo"><img src="imagen/responsive 2@72x.png" alt="Logo">EKO</div>
-=======
       <div class="logo"><img src="imagen/responsive 2@72x.png" alt="Logo">EKO<span></span></div>
->>>>>>> a7e6c82553bf0f8397f8edaa9fcfb7b669ba1706
       <ul>
-        <li><a href="index.html">Página Principal</a></li>
+        
         <li><a href="publicidad.html">Publicidad y Redes Sociales</a></li>
         <li><a href="ilustracion.html">Ilustración</a></li>
         <li><a href="multimedia.html">Multimedia</a></li>
-        <li><a href="fotografias.html" class="active">Fotografías</a></li>
+        <li><a href="Fotografias.html" class="active">Fotografías</a></li>
         <li><a href="web.html">Web</a></li>
         <li><a href="cv.html">CV</a></li>
       </ul>
     </div>
     
 
-    <!-- Hero -->
-    <section class="hero" id="inicio">
-      <h1>PORTAFOLIO 2025</h1>
-      
-      <p>Diseño y desarrollo de experiencias digitales innovadoras que conectan marcas con su audiencia.</p>
-      <a href="#proyectos" class="cta-button">Ver Proyectos</a>
-    </section>
-    
+   
+     <!-- Hero -->
+     <section class="hero" id="inicio" style="
+     background: 
+         linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.5)), 
+         url('imagen/PORTADA REKO@72x-100.jpg');
+     background-size: cover;
+     background-position: center;
+     background-repeat: no-repeat;
+     background-attachment: fixed;
+     color: var(--light-text);
+     padding: var(--spacing-lg) var(--spacing-md);
+     text-align: center;
+     min-height: 100vh;
+     display: flex; 
+     flex-direction: column; 
+     justify-content: center; 
+     align-items: center;
+     position: relative;
+ ">
+   <h1>PORTAFOLIO 2025</h1>
+   <h2></h2>
+   <p></p>
+   <a href="#proyectos" class="cta-button">Ver Proyectos</a>
+ </section>
+
     <section class="quien-soy" id="quien-soy">
       <div class="quien-soy-container">
         
