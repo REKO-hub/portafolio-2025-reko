@@ -3,11 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fotografías - REKO</title>
+  <title>Portafolio 2025 - REKO</title>
+  <!-- Favicon -->
   <link rel="icon" href="imagen/responsive 2@72x.png" type="image/png">
-  
+
   <style>
-    /* Variables de colores y estilos para coincidir con el index */
+    /* Variables de colores y estilos */
+    /* Variables de colores y estilos */
 :root {
   --primary-color: #110c0f;
   --secondary-color: #f5f5f5;
@@ -19,6 +21,9 @@
   --spacing-lg: 4rem;
   --border-radius: 8px;
   --transition: all 0.3s ease;
+  --azul-profundo: #0b1d3a;
+  --oro-brillante: #f5b32f;
+  --rojo-fuego: #d94f30;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -32,7 +37,245 @@ body {
   text-rendering: optimizeLegibility;
 }
 
-/* HEADER MEJORADO - IGUAL AL INDEX */
+/* Pantalla de carga del video */
+#intro-video {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+#intro-video video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* Tutorial interactivo */
+#tutorial-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.85);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 9998;
+  backdrop-filter: blur(5px);
+}
+
+#tutorial-container {
+  background: rgba(214, 214, 214, 0.95);
+  border-radius: 20px;
+  padding: 3rem;
+  max-width: 600px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  position: relative;
+  transform: translateY(20px);
+  opacity: 0;
+  transition: all 0.5s ease;
+}
+
+#tutorial-container.active {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.tutorial-title {
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
+  background: linear-gradient(135deg, #ff6b6b, #ffbc21);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.tutorial-text {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+  color: #444;
+}
+
+.tutorial-highlight {
+  background: linear-gradient(135deg, #ff6b6b, #ffbc21);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 600;
+}
+
+.tutorial-btn {
+  background: linear-gradient(135deg, #ff6b6b, #ffbc21);
+  color: white;
+  border: none;
+  padding: 0.8rem 2rem;
+  border-radius: 50px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+  margin: 0.5rem;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.tutorial-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(255, 107, 107, 0.6);
+}
+
+.tutorial-btn.secondary {
+  background: rgba(255, 255, 255, 0.2);
+  color: #333;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.tutorial-btn.secondary:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-3px);
+}
+
+.tutorial-step {
+  display: none;
+}
+
+.tutorial-step.active {
+  display: block;
+}
+
+/* Avatar del tutorial */
+.tutorial-avatar {
+  position: fixed;
+  bottom: 30px;
+  left: 30px;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  z-index: 9999;
+  display: none;
+  animation: float 4s ease-in-out infinite;
+}
+
+.tutorial-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Tooltip del avatar */
+.avatar-tooltip {
+  position: fixed;
+  bottom: 120px;
+  left: 30px;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 15px;
+  padding: 1.5rem;
+  max-width: 300px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  z-index: 9999;
+  transform: translateY(20px);
+  opacity: 0;
+  transition: all 0.5s ease;
+}
+
+.avatar-tooltip.active {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.avatar-tooltip h3 {
+  margin-bottom: 0.5rem;
+  color: #ff6b6b;
+}
+
+.avatar-tooltip p {
+  margin-bottom: 1rem;
+  line-height: 1.5;
+}
+
+.avatar-tooltip .tutorial-btn {
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  margin: 0 0.25rem;
+}
+
+/* Efecto de iluminación de secciones */
+.section-highlight {
+  position: relative;
+  z-index: 9997;
+  transition: all 0.5s ease;
+}
+
+.section-highlight::before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  right: -10px;
+  bottom: -10px;
+  border-radius: 15px;
+  background: rgba(255, 107, 107, 0.2);
+  box-shadow: 0 0 30px rgba(255, 107, 107, 0.5);
+  z-index: -1;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 20px rgba(255, 107, 107, 0.5); }
+  50% { box-shadow: 0 0 40px rgba(255, 107, 107, 0.8); }
+  100% { box-shadow: 0 0 20px rgba(255, 107, 107, 0.5); }
+}
+
+/* MEJORAS PARA EL TUTORIAL - CORREGIDO */
+.tutorial-active::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(5px);
+  z-index: 9995;
+  pointer-events: none;
+}
+
+.tutorial-active .section-highlight {
+  position: relative;
+  z-index: 9996;
+  transform: scale(1.02);
+  transition: all 0.5s ease;
+  animation: highlightPulse 2s infinite;
+}
+
+@keyframes highlightPulse {
+  0% { box-shadow: 0 0 0 0 rgba(255, 107, 107, 0.7); }
+  70% { box-shadow: 0 0 0 15px rgba(255, 107, 107, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(255, 107, 107, 0); }
+}
+
+/* MEJORA: Resaltar la sección activa durante el tutorial */
+.section-highlight {
+  opacity: 1 !important;
+  filter: none !important;
+  pointer-events: auto !important;
+  z-index: 9996;
+  transform: scale(1.02);
+  transition: all 0.5s ease;
+}
+
+/* HEADER MEJORADO - MÁS INTERACTIVO */
 header {
   background-color: var(--primary-color);
   color: var(--light-text);
@@ -44,10 +287,11 @@ header {
   transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
+/* Efecto de header que se reduce al hacer scroll */
 header.scrolled {
   padding: 0.5rem var(--spacing-md);
   backdrop-filter: blur(10px);
-  background-color:#4b0a0a;
+  background-color: #090211;
 }
 
 .nav-container {
@@ -57,6 +301,8 @@ header.scrolled {
   max-width: 1200px; 
   margin: 0 auto;
   transition: all 0.4s ease;
+  width: 100%;
+  padding: 0 2rem;
 }
 
 header.scrolled .nav-container {
@@ -69,6 +315,7 @@ header.scrolled .nav-container {
   letter-spacing: 2px;
   display: flex; 
   align-items: center;
+  animation: float 6s ease-in-out infinite;
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
@@ -135,6 +382,8 @@ nav ul li a {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  font-size: 1.4rem;
+  font-weight: 600;
 }
 
 /* Iconos para los enlaces del menú */
@@ -358,48 +607,6 @@ nav ul li a.active ~ ::after {
   transform: translateX(10px);
 }
 
-/* HERO SECTION CORREGIDO */
-.hero {
-  background: url('imagen/p.f@72x.png');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment:  fixed;
-  color: var(--light-text);
-  text-align: center;
-  height: 100vh;
-  display: flex; 
-  flex-direction: column; 
-  justify-content: center; 
-  align-items: center;
-  position: relative;
-  overflow: hidden;
-  margin: 0;
-  padding: 0;
-}
-
-.hero-content {
-  max-width: 800px;
-  padding: 0 var(--spacing-md);
-}
-
-.hero h1 { 
-  font-size: 3.5rem; 
-  margin-bottom: var(--spacing-sm); 
-  font-weight: 800; 
-  animation: float 4s ease-in-out infinite;
-  line-height: 1.2;
-}
-
-.hero p { 
-  font-size: 1.2rem; 
-  max-width: 600px; 
-  margin: 0 auto; 
-  opacity: 0.9; 
-  animation: float 5s ease-in-out infinite 0.5s;
-  line-height: 1.5;
-}
-
 /* Botón cerrar sidebar MEJORADO */
 .close-sidebar {
   position: absolute;
@@ -453,14 +660,284 @@ nav ul li a.active ~ ::after {
   100% { transform: translateY(0px); }
 }
 
-/* ========== GALERÍA 3D INTERACTIVA ========== */
+/* Hero - CORRECCIÓN ESPECÍFICA PARA IPHONE */
+.hero {
+  background: url('imagen/PORTADA REKO@72x-100.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  color: var(--light-text);
+  padding: var(--spacing-lg) var(--spacing-md);
+  text-align: center;
+  min-height: 100vh;
+  display: flex; 
+  flex-direction: column; 
+  justify-content: center; 
+  align-items: center;
+  position: relative;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.4) 100%);
+  z-index: 1;
+}
+
+.hero h1 { 
+  font-size: 4rem; 
+  margin-bottom: var(--spacing-sm); 
+  font-weight: 800; 
+  letter-spacing: 3px; 
+  position: relative;
+  z-index: 2;
+  animation: float 4s ease-in-out infinite;
+  text-shadow: 0 5px 15px rgba(0,0,0,0.5);
+}
+.hero h2 { 
+  font-size: 2.5rem; 
+  font-weight: 300; 
+  margin-bottom: var(--spacing-md); 
+  color: var(--accent-color); 
+  position: relative;
+  z-index: 2;
+  animation: float 5s ease-in-out infinite 0.5s;
+}
+.hero p { 
+  font-size: 1.2rem; 
+  max-width: 600px; 
+  margin: 0 auto var(--spacing-md); 
+  opacity: 0.9; 
+  position: relative;
+  z-index: 2;
+}
+.cta-button {
+  display: inline-block; 
+  background-color: var(--accent-color);
+  color: var(--light-text); 
+  padding: 0.8rem 2rem;
+  border-radius: 50px; 
+  text-decoration: none; 
+  font-weight: 600;
+  transition: var(--transition); 
+  margin-top: var(--spacing-sm);
+  position: relative;
+  z-index: 2;
+  animation: float 3s ease-in-out infinite 1s;
+  box-shadow: 0 5px 15px rgba(255,107,107,0.4);
+  overflow: hidden;
+  -webkit-tap-highlight-color: transparent;
+}
+.cta-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+  transition: left 0.5s;
+}
+.cta-button:hover::before {
+  left: 100%;
+}
+.cta-button:hover { 
+  transform: translateY(-3px) scale(1.05); 
+  box-shadow: 0 10px 25px rgba(255,107,107,0.6); 
+}
+
+/* Botón para volver arriba */
+.back-to-top {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  background-color: var(--accent-color);
+  color: white;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  font-size: 1.5rem;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  transition: var(--transition);
+  z-index: 100;
+  opacity: 0;
+  visibility: hidden;
+  -webkit-tap-highlight-color: transparent;
+}
+.back-to-top.visible {
+  opacity: 1;
+  visibility: visible;
+}
+.back-to-top:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 15px rgba(0,0,0,0.4);
+}
+
+/* Sección ¿Quién soy? MEJORADA */
+.quien-soy {
+  background: 
+    linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7)), 
+    url('imagen/Imagen de WhatsApp 2025-09-26 a las 01.37.14_bac9813f.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-attachment: scroll;
+  color: var(--light-text);
+  padding: var(--spacing-lg) var(--spacing-md);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  text-align: center;
+  overflow: hidden;
+}
+
+.quien-soy::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at 30% 50%, transparent 0%, rgba(0,0,0,0.6) 100%);
+  z-index: 1;
+}
+
+.quien-soy-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-lg);
+  align-items: center;
+  position: relative;
+  z-index: 2;
+}
+
+.quien-soy-titulo {
+  text-align: center;
+  grid-column: 1 / -1;
+  animation: float 6s ease-in-out infinite;
+  margin-bottom: 3rem;
+}
+
+.quien-soy-titulo img {
+  max-width: 520px;
+  margin-bottom: 2rem;
+  filter: drop-shadow(0 5px 15px rgba(0,0,0,0.5));
+}
+
+.quien-soy-foto {
+  position: relative;
+  width: 390px;
+  height: 550px;
+  margin: 0 auto;
+  border-radius: 20px;
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+  align-self: start;
+  animation: float 8s ease-in-out infinite 1s;
+  transition: var(--transition);
+  transform-style: preserve-3d;
+  perspective: 1000px;
+}
+.quien-soy-foto:hover {
+  transform: scale(1.03) rotateY(5deg);
+  box-shadow: 0 25px 60px rgba(0,0,0,0.7);
+}
+
+/* Imágenes dentro del contenedor */
+.quien-soy-foto .foto {
+  position: absolute;
+  width: 100%;
+  height: 110%;
+  object-fit: cover;
+  top: 0;
+  left: 0;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  border-radius: 20px;
+}
+
+/* Mostrar la principal por defecto */
+.foto-principal { opacity: 1; }
+
+/* Ocultar la alternativa */
+.foto-hover { opacity: 0; transform: scale(1.1); }
+
+/* Al pasar el mouse, cambiar */
+.quien-soy-foto:hover .foto-principal { opacity: 0; transform: scale(1.1); }
+.quien-soy-foto:hover .foto-hover { opacity: 1; transform: scale(1); }
+
+.quien-soy-texto {
+  background: rgba(255, 255, 255, 0.15);
+  padding: var(--spacing-md);
+  border-radius: 20px;
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  align-self: start;
+  animation: float 7s ease-in-out infinite 0.5s;
+  transition: var(--transition);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.quien-soy-texto::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(255,107,107,0.1) 0%, rgba(255,188,33,0.1) 100%);
+  z-index: -1;
+}
+
+.quien-soy-texto:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 45px rgba(0,0,0,0.4);
+}
+
+.quien-soy-texto p {
+  font-size: 1.2rem;
+  line-height: 1.8;
+  margin-bottom: var(--spacing-sm);
+  text-align: justify;
+  position: relative;
+  z-index: 1;
+}
+
+.quien-soy-texto p:first-child {
+  font-weight: bold;
+  font-size: 1.4rem;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  background: linear-gradient(135deg, #ff6b6b, #ffbc21);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ========== SECCIÓN DE PROYECTOS MEJORADA ========== */
+/* Sección de proyectos con carrusel 3D */
 .projects {
   width: 100%;
   padding: var(--spacing-lg) 5vw;
   margin: 0;
   position: relative;
   overflow: hidden;
-  background: linear-gradient(135deg, #a70b0b 0%, #350303 50%, #180002 100%);
+  background: linear-gradient(135deg, #090211 0%, #18062e 50%, #120018 100%);
   box-shadow: inset 0 0 80px rgba(0, 0, 0, 0.4);
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
@@ -498,7 +975,6 @@ nav ul li a.active ~ ::after {
   color: var(--secondary-color);
   animation: float 5s ease-in-out infinite;
 }
-
 .section-title::after {
   content: '';
   display: block;
@@ -525,218 +1001,202 @@ nav ul li a.active ~ ::after {
   animation: float 6s ease-in-out infinite 0.3s;
 }
 
-/* Filtros de categorías */
-.category-filters {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 1rem;
-  margin-bottom: var(--spacing-lg);
-}
-
-.category-filter {
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  color: white;
-  padding: 0.8rem 1.5rem;
-  border-radius: 30px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  backdrop-filter: blur(10px);
-  font-weight: 500;
-  -webkit-tap-highlight-color: transparent;
-}
-
-.category-filter:hover {
-  background: rgba(255, 255, 255, 0.2);
-  transform: translateY(-3px);
-}
-
-.category-filter.active {
-  background: linear-gradient(135deg, #ff6b6b, #ffbc21);
-  box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
-}
-
-/* Galería 3D interactiva */
-.interactive-gallery {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 2rem;
-  perspective: 1000px;
-}
-
-.gallery-item {
+/* Contenedor del carrusel 3D */
+.carousel-3d-container {
   position: relative;
-  height: 350px;
-  border-radius: 20px;
-  overflow: hidden;
+  width: 100%;
+  height: 600px;
+  perspective: 2000px;
+  margin: 4rem auto;
+  cursor: grab;
+  user-select: none;
+}
+
+.carousel-3d-container.dragging {
+  cursor: grabbing;
+}
+
+.carousel-3d {
+  width: 100%;
+  height: 100%;
+  position: relative;
   transform-style: preserve-3d;
-  transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  cursor: pointer;
+  transition: transform 0.8s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.carousel-item {
+  position: absolute;
+  width: 380px;
+  height: 500px;
+  left: 50%;
+  top: 50%;
+  margin-left: -190px;
+  margin-top: -250px;
+  border-radius: 25px;
+  overflow: hidden;
   box-shadow: 
-    0 15px 35px rgba(0, 0, 0, 0.5),
-    0 0 50px rgba(255, 107, 107, 0.2);
+    0 25px 50px rgba(0, 0, 0, 0.5),
+    0 0 100px rgba(255, 107, 107, 0.2);
+  transition: all 0.8s cubic-bezier(0.65, 0, 0.35, 1);
+  cursor: pointer;
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(15px);
   border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
-.gallery-item:hover {
-  transform: translateY(-15px) rotateX(5deg) rotateY(5deg) scale(1.05);
+.carousel-item.active {
+  transform: translateZ(200px) scale(1.1);
+  z-index: 10;
   box-shadow: 
-    0 25px 50px rgba(0, 0, 0, 0.6),
-    0 0 80px rgba(255, 107, 107, 0.4);
+    0 35px 70px rgba(0, 0, 0, 0.6),
+    0 0 120px rgba(255, 107, 107, 0.4);
 }
 
-.gallery-item img {
+.carousel-item.prev {
+  transform: translateX(-320px) translateZ(-100px) rotateY(15deg) scale(0.9);
+  opacity: 0.7;
+}
+
+.carousel-item.next {
+  transform: translateX(320px) translateZ(-100px) rotateY(-15deg) scale(0.9);
+  opacity: 0.7;
+}
+
+.carousel-item.far-prev {
+  transform: translateX(-550px) translateZ(-200px) rotateY(25deg) scale(0.8);
+  opacity: 0.4;
+}
+
+.carousel-item.far-next {
+  transform: translateX(550px) translateZ(-200px) rotateY(-25deg) scale(0.8);
+  opacity: 0.4;
+}
+
+.carousel-item.hidden {
+  opacity: 0;
+  transform: translateX(0) translateZ(-300px) scale(0.7);
+}
+
+/* Contenido de las tarjetas del carrusel */
+.carousel-image {
+  height: 60%;
+  overflow: hidden;
+  position: relative;
+}
+
+.carousel-image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.5s ease;
+  transition: transform 0.8s ease;
 }
 
-.gallery-item:hover img {
-  transform: scale(1.1);
+.carousel-item.active .carousel-image img {
+  transform: scale(1.05);
 }
 
-.item-overlay {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
-  padding: 2rem 1.5rem 1.5rem;
-  transform: translateY(100%);
-  transition: all 0.4s ease;
-  backdrop-filter: blur(5px);
+.carousel-content {
+  padding: 1.5rem;
+  height: 40%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: rgba(255, 255, 255, 0.95);
 }
 
-.gallery-item:hover .item-overlay {
-  transform: translateY(0);
-}
-
-.item-title {
-  color: white;
-  font-size: 1.3rem;
-  font-weight: 600;
+.carousel-content h3 {
+  font-size: 1.5rem;
   margin-bottom: 0.5rem;
+  background: linear-gradient(135deg, #2c3e50, #3498db);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
-.item-description {
-  color: rgba(255, 255, 255, 0.8);
-  font-size: 0.9rem;
-  line-height: 1.4;
+.carousel-content p {
+  color: #666;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin-bottom: 1rem;
 }
 
-.item-category {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  background: rgba(255, 255, 255, 0.2);
+.carousel-btn {
+  display: inline-block;
+  background: linear-gradient(135deg, #ff6b6b, #ffbc21);
   color: white;
-  padding: 0.3rem 0.8rem;
-  border-radius: 20px;
-  font-size: 0.8rem;
-  backdrop-filter: blur(10px);
+  padding: 0.6rem 1.2rem;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: 600;
+  text-align: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+  -webkit-tap-highlight-color: transparent;
 }
 
-/* Modal para vista ampliada */
-.modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.9);
+.carousel-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(255, 107, 107, 0.6);
+}
+
+/* Controles del carrusel */
+.carousel-controls {
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 3000;
-  opacity: 0;
-  visibility: hidden;
-  transition: all 0.4s ease;
+  gap: 2rem;
+  margin-top: 2rem;
 }
 
-.modal.active {
-  opacity: 1;
-  visibility: visible;
-}
-
-.modal-content {
-  position: relative;
-  max-width: 90%;
-  max-height: 90%;
-  transform: scale(0.8);
-  transition: transform 0.4s ease;
-}
-
-.modal.active .modal-content {
-  transform: scale(1);
-}
-
-.modal img {
-  max-width: 100%;
-  max-height: 80vh;
-  border-radius: 15px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-}
-
-.modal-close {
-  position: absolute;
-  top: -40px;
-  right: 0;
+.carousel-nav {
   background: rgba(255, 255, 255, 0.2);
   border: none;
-  color: white;
-  font-size: 1.5rem;
-  width: 40px;
-  height: 40px;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
   transition: all 0.3s ease;
   backdrop-filter: blur(10px);
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
   -webkit-tap-highlight-color: transparent;
 }
 
-.modal-close:hover {
-  background: var(--accent-color);
-  transform: rotate(90deg);
+.carousel-nav:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.1);
 }
 
-/* Botón para volver arriba */
-.back-to-top {
-  position: fixed;
-  bottom: 2rem;
-  right: 2rem;
-  background-color: var(--accent-color);
-  color: white;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
+.carousel-nav svg {
+  width: 28px;
+  height: 28px;
+  fill: white;
+}
+
+.carousel-indicators {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  text-decoration: none;
-  font-size: 1.5rem;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-  transition: var(--transition);
-  z-index: 100;
-  opacity: 0;
-  visibility: hidden;
+  gap: 1rem;
+}
+
+.carousel-indicator {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  cursor: pointer;
+  transition: all 0.3s ease;
   -webkit-tap-highlight-color: transparent;
 }
 
-.back-to-top.visible {
-  opacity: 1;
-  visibility: visible;
+.carousel-indicator.active {
+  background: var(--accent-color);
+  transform: scale(1.3);
+  box-shadow: 0 0 10px rgba(255, 107, 107, 0.7);
 }
 
-.back-to-top:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 6px 15px rgba(0,0,0,0.4);
-}
-
-/* Footer personalizado con imagen - IGUAL AL INDEX */
+/* Footer personalizado con imagen */
 footer {
   background: 
     linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.9)),
@@ -807,7 +1267,6 @@ footer p {
   overflow: hidden;
   -webkit-tap-highlight-color: transparent;
 }
-
 .social-links a:nth-child(2) { animation-delay: 0.2s; }
 .social-links a:nth-child(3) { animation-delay: 0.4s; }
 .social-links a:nth-child(4) { animation-delay: 0.6s; }
@@ -823,7 +1282,6 @@ footer p {
   background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
   transition: left 0.5s;
 }
-
 .social-links a:hover::before {
   left: 100%;
 }
@@ -855,21 +1313,12 @@ footer p {
   z-index: 1;
 }
 
-/* Partículas Koi para la sección de proyectos */
-.koi-particles {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 1;
-  opacity: 0.6;
-}
-
 /* ========== RESPONSIVE PARA TELÉFONO ========== */
 @media (max-width: 768px) {
-  nav ul { display: none; }
+  nav ul { 
+    display: none; 
+  }
+  
   .mobile-menu-btn { 
     display: flex;
   }
@@ -891,49 +1340,154 @@ footer p {
     width: 35px;
   }
   
-  /* HERO RESPONSIVE CORREGIDO - FOTOGRAFÍA */
+  /* Menú responsive - tamaño de texto reducido */
+  nav ul li a {
+    font-size: 0.9rem;
+    padding: 0.7rem 1rem;
+  }
+  
+  /* CORRECCIÓN ESPECÍFICA PARA LA IMAGEN DE PORTADA EN MÓVIL */
   .hero {
-    background: url('imagen/hsw@72x.png');
+    background: url('imagen/p.a.rsive@72x.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     background-attachment: fixed;
     color: var(--light-text);
-    padding: var(--spacing-lg) var(--spacing-md);
+    padding: var(--spacing-md) var(--spacing-sm);
     text-align: center;
+    min-height: 100vh;
     display: flex; 
     flex-direction: column; 
     justify-content: center; 
     align-items: center;
     position: relative;
-    height: 70vh;
-    margin: 0;
-    padding: 0;
-  }
-  
-  .hero-content {
-    padding: 0 1rem;
   }
   
   .hero h1 { 
-    font-size: 2.5rem; 
+    font-size: 2.8rem; 
     margin-bottom: 1rem;
-    line-height: 1.2;
+    padding: 0 1rem;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+  }
+  
+  .hero h2 { 
+    font-size: 1.6rem; 
+    margin-bottom: 1.5rem;
+    padding: 0 1rem;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
   }
   
   .hero p { 
     font-size: 1rem; 
-    line-height: 1.4;
+    padding: 0 1.5rem;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
   }
   
-  /* Responsive para la galería 3D */
-  .interactive-gallery {
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 1.5rem;
+  /* Sección ¿Quién soy? - Correcciones para móvil */
+  .quien-soy {
+    background-size: cover;
+    background-attachment: scroll;
+    padding: var(--spacing-md) var(--spacing-sm);
+    min-height: auto;
   }
   
-  .gallery-item {
-    height: 300px;
+  .quien-soy-container {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-md);
+    text-align: center;
+  }
+  
+  .quien-soy-titulo img {
+    max-width: 250px;
+    margin-bottom: 1rem;
+    margin-top: 0;
+  }
+  
+  .quien-soy-foto {
+    width: 250px;
+    height: 320px;
+    margin: 0 auto 1.5rem auto;
+    margin-top: 0;
+    order: 2;
+  }
+  
+  .quien-soy-texto {
+    padding: 1.5rem;
+    margin-top: 0;
+    order: 1;
+  }
+  
+  .quien-soy-texto p {
+    font-size: 1rem;
+    text-align: center;
+  }
+  
+  .nav-container { 
+    flex-direction: row; 
+    text-align: center;
+  }
+  
+  nav ul { 
+    margin-top: var(--spacing-sm); 
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  nav ul li { 
+    margin: 0.3rem; 
+  }
+  
+  /* Responsive para el carrusel 3D */
+  .carousel-3d-container {
+    height: 450px;
+    perspective: 1200px;
+  }
+  
+  .carousel-item {
+    width: 280px;
+    height: 380px;
+    margin-left: -140px;
+    margin-top: -190px;
+  }
+  
+  .carousel-item.prev {
+    transform: translateX(-200px) translateZ(-80px) rotateY(15deg) scale(0.9);
+  }
+  
+  .carousel-item.next {
+    transform: translateX(200px) translateZ(-80px) rotateY(-15deg) scale(0.9);
+  }
+  
+  .carousel-item.far-prev {
+    transform: translateX(-300px) translateZ(-150px) rotateY(25deg) scale(0.8);
+  }
+  
+  .carousel-item.far-next {
+    transform: translateX(300px) translateZ(-150px) rotateY(-25deg) scale(0.8);
+  }
+  
+  .carousel-content h3 {
+    font-size: 1.3rem;
+  }
+  
+  .carousel-content p {
+    font-size: 0.9rem;
+  }
+  
+  .carousel-btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+  }
+  
+  .carousel-nav {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .carousel-nav svg {
+    width: 24px;
+    height: 24px;
   }
 
   .section-title {
@@ -984,8 +1538,36 @@ footer p {
     height: 45px;
     font-size: 1.2rem;
   }
+  
+  /* Tutorial en móvil */
+  #tutorial-container {
+    padding: 2rem 1.5rem;
+  }
+  
+  .tutorial-title {
+    font-size: 2rem;
+  }
+  
+  .tutorial-text {
+    font-size: 1rem;
+  }
+  
+  /* Avatar en móvil */
+  .tutorial-avatar {
+    width: 60px;
+    height: 60px;
+    bottom: 20px;
+    left: 20px;
+  }
+  
+  .avatar-tooltip {
+    bottom: 90px;
+    left: 20px;
+    max-width: 250px;
+    padding: 1rem;
+  }
 
-  /* Footer responsive adicional */
+  /* RESPONSIVE PARA FOOTER EN TELÉFONO - AÑADIDO */
   .footer-content {
     padding: 0 1rem;
   }
@@ -1006,81 +1588,147 @@ footer p {
     margin-top: 1.5rem;
     padding-top: 1rem;
   }
+  
+  /* SUBIR EL BOTÓN VER PROYECTO */
+  .carousel-content {
+    padding: 0.8rem 1rem !important;
+    height: 42% !important;
+    justify-content: flex-start !important;
+  }
+  
+  .carousel-btn {
+    margin-top: 0.5rem !important;
+    margin-bottom: 0.5rem !important;
+    padding: 0.6rem 1rem !important;
+    font-size: 0.85rem !important;
+    min-height: 36px !important;
+  }
+  
+  .carousel-content h3 {
+    font-size: 1.1rem !important;
+    margin-bottom: 0.4rem !important;
+    line-height: 1.2 !important;
+  }
+  
+  .carousel-content p {
+    font-size: 0.8rem !important;
+    line-height: 1.3 !important;
+    margin-bottom: 0.5rem !important;
+    flex-grow: 0 !important;
+    max-height: 60px !important;
+    overflow: hidden !important;
+  }
 }
 
-@media (max-width: 480px) {
+/* Ajustes adicionales para pantallas muy pequeñas */
+@media (max-width: 390px) {
   .hero h1 { 
-    font-size: 2rem; 
+    font-size: 2.5rem; 
     padding: 0 0.5rem;
   }
   
-  .hero p { 
-    font-size: 0.9rem; 
+  .hero h2 { 
+    font-size: 1.4rem; 
     padding: 0 0.5rem;
+  }
+  
+  .quien-soy-titulo img {
+    max-width: 220px;
+  }
+  
+  .quien-soy-foto {
+    width: 220px;
+    height: 280px;
+  }
+  
+  .quien-soy-texto p {
+    font-size: 0.9rem;
+  }
+  
+  /* Ajustes adicionales para el carrusel en móvil pequeño */
+  .carousel-3d-container {
+    height: 420px;
+  }
+  
+  .carousel-item {
+    width: 260px;
+    height: 360px;
+    margin-left: -130px;
+    margin-top: -180px;
+  }
+  
+  .carousel-item.prev {
+    transform: translateX(-180px) translateZ(-80px) rotateY(15deg) scale(0.9);
+  }
+  
+  .carousel-item.next {
+    transform: translateX(180px) translateZ(-80px) rotateY(-15deg) scale(0.9);
+  }
+  
+  .carousel-item.far-prev {
+    transform: translateX(-280px) translateZ(-150px) rotateY(25deg) scale(0.8);
+  }
+  
+  .carousel-item.far-next {
+    transform: translateX(280px) translateZ(-150px) rotateY(-25deg) scale(0.8);
+  }
+  
+  footer h2 {
+    font-size: 1.8rem;
   }
   
   .section-title {
     font-size: 1.8rem;
   }
   
-  /* Ajustes adicionales para la galería en móvil pequeño */
-  .interactive-gallery {
-    grid-template-columns: 1fr;
-    gap: 1rem;
+  .carousel-content {
+    height: 45% !important;
+    padding: 0.6rem 0.8rem !important;
   }
   
-  .gallery-item {
-    height: 250px;
-  }
-
-  /* Footer responsive para pantallas muy pequeñas */
-  footer {
-    padding: var(--spacing-sm) 0.5rem;
-    min-height: 300px;
-    background: 
-      linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.9)),
-      url('imagen/responsive footer@72x.png');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: scroll;
+  .carousel-btn {
+    padding: 0.5rem 0.8rem !important;
+    font-size: 0.8rem !important;
+    min-height: 32px !important;
+    margin-top: 0.3rem !important;
   }
   
-  .social-links {
-    gap: 0.5rem;
+  .carousel-content h3 {
+    font-size: 1rem !important;
+    margin-bottom: 0.3rem !important;
   }
   
-  .social-links a {
-    width: 35px;
-    height: 35px;
-    font-size: 1.1rem;
+  .carousel-content p {
+    font-size: 0.75rem !important;
+    margin-bottom: 0.3rem !important;
+    max-height: 50px !important;
   }
   
-  footer p {
-    font-size: 0.9rem;
-    padding: 0 0.5rem;
+  /* Reducir altura del carrusel para que todo quede visible */
+  .carousel-3d-container {
+    height: 400px !important;
+  }
+  
+  .carousel-item {
+    height: 340px !important;
+    margin-top: -170px !important;
   }
 }
 
 /* Corrección específica para Safari iOS */
 @supports (-webkit-touch-callout: none) {
-  .hero, .projects, footer {
+  .hero, .quien-soy, footer {
     background-attachment: scroll;
   }
   
   /* Asegurar que las animaciones funcionen en iOS */
-  .logo, .hero h1, .hero p {
+  .logo, .hero h1, .hero h2, .cta-button {
     animation-duration: 6s;
   }
   
   /* Mejorar rendimiento en iOS */
-  .gallery-item {
+  .carousel-3d {
     -webkit-transform-style: preserve-3d;
-  }
-  
-  /* Optimizar para dispositivos táctiles */
-  .gallery-item, .category-filter, .modal-close, .back-to-top {
-    -webkit-tap-highlight-color: transparent;
   }
 }
   
