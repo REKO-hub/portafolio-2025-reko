@@ -413,13 +413,9 @@
       100% { transform: translateY(0px); }
     }
 
-    /* HERO SECTION CORREGIDO */
+    /* ========== HERO SECTION COMPLETAMENTE CORREGIDA ========== */
     .hero {
-      background: url('imagen/P.IL@72x.png');
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      background-attachment: fixed;
+      background: url('imagen/P.IL@72x.png') center/cover no-repeat;
       color: var(--light-text);
       text-align: center;
       height: 100vh;
@@ -436,6 +432,8 @@
     .hero-content {
       max-width: 800px;
       padding: 0 var(--spacing-md);
+      position: relative;
+      z-index: 2;
     }
 
     .hero h1 { 
@@ -444,6 +442,7 @@
       font-weight: 800; 
       animation: float 4s ease-in-out infinite;
       line-height: 1.2;
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.8);
     }
 
     .hero p { 
@@ -453,6 +452,7 @@
       opacity: 0.9; 
       animation: float 5s ease-in-out infinite 0.5s;
       line-height: 1.5;
+      text-shadow: 1px 1px 4px rgba(0,0,0,0.7);
     }
 
     /* ========== GALERÍA 3D INTERACTIVA ========== */
@@ -852,18 +852,6 @@
       z-index: 1;
     }
 
-    /* Partículas Koi para la sección de proyectos */
-    .koi-particles {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 1;
-      opacity: 0.6;
-    }
-
     /* ========== RESPONSIVE PARA TABLET ========== */
     @media (max-width: 1024px) {
       .hero {
@@ -906,30 +894,36 @@
         width: 35px;
       }
       
-      /* HERO RESPONSIVE CORREGIDO */
+      /* HERO RESPONSIVE COMPLETAMENTE CORREGIDO */
       .hero {
-        background: url('imagen/ILUSTRACION@72x.png');
-        background-size: cover;
-        background-position: center;
-        background-attachment: fixed;
+        background: url('imagen/ILUSTRACION@72x.png') center/cover no-repeat !important;
         height: 100vh;
+        min-height: -webkit-fill-available;
         margin: 0;
         padding: 0;
+        position: relative;
       }
+      
+      /* Fondo de respaldo en caso de que la imagen no cargue */
+  
       
       .hero-content {
         padding: 0 1rem;
+        position: relative;
+        z-index: 2;
       }
       
       .hero h1 { 
         font-size: 2.5rem; 
         margin-bottom: 1rem;
         line-height: 1.2;
+        text-shadow: 2px 2px 6px rgba(0,0,0,0.8);
       }
       
       .hero p { 
         font-size: 1rem; 
         line-height: 1.4;
+        text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
       }
       
       /* Responsive para la galería 3D */
@@ -949,6 +943,17 @@
       .koi-legend {
         font-size: 1.1rem;
         padding: 0 1rem;
+      }
+
+      /* Ajustes para filtros en móvil */
+      .category-filters {
+        gap: 0.7rem;
+        margin-bottom: var(--spacing-md);
+      }
+      
+      .category-filter {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.9rem;
       }
 
       .social-links {
@@ -1019,6 +1024,42 @@
       }
     }
 
+    /* ========== RESPONSIVE ESPECÍFICO PARA IPHONE ========== */
+    @media (max-width: 768px) and (orientation: portrait) {
+      .hero {
+        background: url('imagen/ILUSTRACION@72x.png') center/cover no-repeat !important;
+        height: 100vh;
+        min-height: -webkit-fill-available;
+      }
+      
+      .hero-content {
+        margin-top: -1rem;
+      }
+      
+      .hero h1 {
+        font-size: 2.2rem;
+      }
+      
+      .hero p {
+        font-size: 0.95rem;
+      }
+    }
+
+    @media (max-width: 768px) and (orientation: landscape) {
+      .hero {
+        height: 100vh;
+        min-height: 100vh;
+      }
+      
+      .hero h1 {
+        font-size: 2rem;
+      }
+      
+      .hero p {
+        font-size: 0.9rem;
+      }
+    }
+
     /* ========== RESPONSIVE PARA TELÉFONOS PEQUEÑOS ========== */
     @media (max-width: 480px) {
       .hero h1 { 
@@ -1041,6 +1082,16 @@
       
       .gallery-item {
         height: 250px;
+      }
+
+      /* Mejoras específicas para iPhone pequeño */
+      .category-filters {
+        gap: 0.5rem;
+      }
+      
+      .category-filter {
+        padding: 0.5rem 1rem;
+        font-size: 0.85rem;
       }
 
       /* Footer responsive para pantallas muy pequeñas */
@@ -1087,6 +1138,35 @@
       
       .gallery-item {
         height: 220px;
+      }
+      
+      /* Ajustes finales para iPhone muy pequeño */
+      .category-filters {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .category-filter {
+        width: 80%;
+        text-align: center;
+      }
+    }
+
+    /* ========== MEJORAS ESPECÍFICAS PARA SAFARI iOS ========== */
+    @supports (-webkit-touch-callout: none) {
+      body {
+        -webkit-font-smoothing: antialiased;
+        -webkit-overflow-scrolling: touch;
+      }
+      
+      .hero {
+        -webkit-backface-visibility: hidden;
+        -webkit-transform: translateZ(0);
+        background-attachment: scroll !important;
+      }
+      
+      .gallery-item {
+        -webkit-transform: translateZ(0);
       }
     }
   </style>
