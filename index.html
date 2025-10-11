@@ -120,11 +120,23 @@
       cursor: pointer;
       transition: all 0.3s ease;
       box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+      margin: 0.5rem;
     }
 
     .tutorial-btn:hover {
       transform: translateY(-3px);
       box-shadow: 0 8px 20px rgba(255, 107, 107, 0.6);
+    }
+
+    .tutorial-btn.secondary {
+      background: rgba(255, 255, 255, 0.2);
+      color: #333;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .tutorial-btn.secondary:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: translateY(-3px);
     }
 
     .tutorial-step {
@@ -275,7 +287,7 @@
     header.scrolled {
       padding: 0.5rem var(--spacing-md);
       backdrop-filter: blur(10px);
-      background-color: #000000;
+      background-color: #090211;
     }
 
     .nav-container {
@@ -912,44 +924,6 @@
       background-clip: text;
     }
 
-    .quien-soy-stats {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.5rem;
-      margin-top: 2rem;
-      text-align: center;
-    }
-
-    .stat-item {
-      background: rgba(255, 255, 255, 0.1);
-      padding: 1.5rem 1rem;
-      border-radius: 15px;
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      transition: var(--transition);
-    }
-
-    .stat-item:hover {
-      transform: translateY(-5px);
-      background: rgba(255, 255, 255, 0.15);
-    }
-
-    .stat-number {
-      font-size: 2.5rem;
-      font-weight: 700;
-      background: linear-gradient(135deg, #ff6b6b, #ffbc21);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      display: block;
-      margin-bottom: 0.5rem;
-    }
-
-    .stat-label {
-      font-size: 0.9rem;
-      opacity: 0.9;
-    }
-
     /* ========== SECCIÓN DE PROYECTOS MEJORADA ========== */
     /* Sección de proyectos con carrusel 3D */
     .projects {
@@ -1439,11 +1413,6 @@
         text-align: center;
       }
       
-      .quien-soy-stats {
-        grid-template-columns: 1fr;
-        gap: 1rem;
-      }
-      
       .nav-container { 
         flex-direction: row; 
         text-align: center;
@@ -1493,6 +1462,11 @@
       }
       
       .carousel-content p {
+        font-size: 0.9rem;
+      }
+      
+      .carousel-btn {
+        padding: 0.5rem 1rem;
         font-size: 0.9rem;
       }
       
@@ -1665,7 +1639,73 @@
       .section-title {
         font-size: 1.8rem;
       }
+  /* ========== SUBIR EL BOTÓN VER PROYECTO ========== */
+  @media (max-width: 768px) {
+    .carousel-content {
+      padding: 0.8rem 1rem !important;
+      height: 42% !important;
+      justify-content: flex-start !important;
     }
+    
+    .carousel-btn {
+      margin-top: 0.5rem !important;
+      margin-bottom: 0.5rem !important;
+      padding: 0.6rem 1rem !important;
+      font-size: 0.85rem !important;
+      min-height: 36px !important;
+    }
+    
+    .carousel-content h3 {
+      font-size: 1.1rem !important;
+      margin-bottom: 0.4rem !important;
+      line-height: 1.2 !important;
+    }
+    
+    .carousel-content p {
+      font-size: 0.8rem !important;
+      line-height: 1.3 !important;
+      margin-bottom: 0.5rem !important;
+      flex-grow: 0 !important;
+      max-height: 60px !important;
+      overflow: hidden !important;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .carousel-content {
+      height: 45% !important;
+      padding: 0.6rem 0.8rem !important;
+    }
+    
+    .carousel-btn {
+      padding: 0.5rem 0.8rem !important;
+      font-size: 0.8rem !important;
+      min-height: 32px !important;
+      margin-top: 0.3rem !important;
+    }
+    
+    .carousel-content h3 {
+      font-size: 1rem !important;
+      margin-bottom: 0.3rem !important;
+    }
+    
+    .carousel-content p {
+      font-size: 0.75rem !important;
+      margin-bottom: 0.3rem !important;
+      max-height: 50px !important;
+    }
+    
+    /* Reducir altura del carrusel para que todo quede visible */
+    .carousel-3d-container {
+      height: 400px !important;
+    }
+    
+    .carousel-item {
+      height: 340px !important;
+      margin-top: -170px !important;
+    }
+    }
+  }
   </style>
 </head>
 <body>
@@ -1695,6 +1735,8 @@
           Te guiaré a través de las diferentes secciones para que conozcas mi trabajo y filosofía creativa.
         </p>
         <button class="tutorial-btn" onclick="startInteractiveTutorial()">Comenzar Tour Interactivo</button>
+        <!-- BOTÓN OMITIR TUTORIAL AÑADIDO -->
+        <button class="tutorial-btn secondary" onclick="skipTutorial()">Omitir Tutorial</button>
       </div>
     </div>
   </div>
@@ -1776,21 +1818,7 @@
           <p>En este portafolio presento mi estilo, mi identidad y mi visión creativa, con un enfoque en el área multimedia, explorando recursos audiovisuales e interactivos que transmiten ideas de forma dinámica y atractiva, y a su vez integrando el área web con propuestas funcionales e intuitivas.</p>
           <p>De esta experiencia surge Reko, mi marca personal, inspirada en la historia del pez koi que, con esfuerzo y perseverancia, logra transformarse en dragón. Ese significado representa mi propio proceso de crecimiento, superación y evolución dentro del diseño web multimedia, proyectando cada proyecto como un paso más en esa transformación.</p>
           
-          <!-- Estadísticas -->
-          <div class="quien-soy-stats">
-            <div class="stat-item">
-              <span class="stat-number">15+</span>
-              <span class="stat-label">Proyectos Completados</span>
-            </div>
-            <div class="stat-item">
-              <span class="stat-number">3</span>
-              <span class="stat-label">Años de Experiencia</span>
-            </div>
-            <div class="stat-item">
-              <span class="stat-number">5</span>
-              <span class="stat-label">Especialidades</span>
-            </div>
-          </div>
+          <!-- ESTADÍSTICAS ELIMINADAS -->
         </div>
     
         <!-- Contenedor de foto con efecto hover (ahora a la derecha) -->
@@ -1892,6 +1920,25 @@
         message: '¿Te gusta lo que ves? ¡Contáctame! Estaré encantada de conversar sobre tus ideas y proyectos.'
       }
     ];
+    
+    // Función para omitir el tutorial
+    function skipTutorial() {
+      const tutorialOverlay = document.getElementById("tutorial-overlay");
+      const tutorialContainer = document.getElementById("tutorial-container");
+      
+      tutorialContainer.classList.remove("active");
+      setTimeout(() => {
+        tutorialOverlay.style.display = "none";
+        
+        // Inicializar el contenido principal
+        document.getElementById("content").style.display = "block";
+        initHeaderEffects(); // Inicializar efectos del header
+        initKoiParticles();
+        initFooterParticles();
+        initScrollEffects();
+        init3DCarousel();
+      }, 500);
+    }
     
     // Función mejorada para toggle del menú
     function toggleMenu() {
@@ -2096,7 +2143,7 @@
       }
     }
 
-// INICIALIZACIÓN DEL CARRUSEL 3D CON ARRASTRE CORREGIDO
+// INICIALIZACIÓN DEL CARRUSEL 3D CORREGIDA
 function init3DCarousel() {
   const carousel = document.getElementById('carousel3D');
   const carouselContainer = document.getElementById('carouselContainer');
@@ -2104,47 +2151,47 @@ function init3DCarousel() {
   const prevBtn = document.getElementById('carouselPrev');
   const nextBtn = document.getElementById('carouselNext');
   
-  // Datos de los proyectos
+  // Datos de los proyectos - SOLO 7 PROYECTOS
   const projects = [
     {
       title: "Publicidad y Redes Sociales",
-      description: "Campañas publicitarias creativas y estrategias de redes sociales para engagement y conversión.",
+      description: "Campañas publicitarias creativas y estrategias de redes sociales.",
       image: "imagen/publicidad/post  para marketplace/post 1 marketplace.png",
       link: "publicidad.html"
     },
     {
       title: "Ilustración",
-      description: "Arte digital, ilustraciones personalizadas y diseño gráfico para diversos proyectos creativos.",
+      description: "Arte digital, ilustraciones personalizadas y diseño gráfico.",
       image: "imagen/P.IL@72x.png",
       link: "ilustracion.html"
     },
     {
       title: "Fotografía",
-      description: "Producción audiovisual, animaciones y contenido multimedia para experiencias impactantes.",
+      description: "Producción audiovisual y contenido multimedia impactante.",
       image: "imagen/p.f@72x.png",
       link: "Fotografias.html"
     },
     {
       title: "Multimedia",
-      description: "Producción audiovisual, animaciones y contenido multimedia para experiencias impactantes.",
+      description: "Producción audiovisual, animaciones y contenido multimedia.",
       image: "imagen/23sdx@72x.png",
       link: "multimedia.html"
     },
     {
       title: "Web",
-      description: "Diseño y desarrollo de sitios web responsivos, aplicaciones web y experiencias digitales.",
+      description: "Diseño y desarrollo de sitios web responsivos.",
       image: "🌐",
       link: "web.html"
     },
     {
       title: "Currículum",
-      description: "Mi experiencia profesional, habilidades y trayectoria en el mundo del diseño y desarrollo.",
+      description: "Mi experiencia profesional y trayectoria.",
       image: "📄",
       link: "cv.html"
     },
     {
       title: "Proyectos Integrales",
-      description: "Soluciones completas que combinan todas las áreas para resultados extraordinarios.",
+      description: "Soluciones completas combinando todas las áreas.",
       image: "💡",
       link: "publicidad.html"
     }
@@ -2157,7 +2204,11 @@ function init3DCarousel() {
   let dragDistance = 0;
   const dragThreshold = 50;
   
-  // Crear elementos del carrusel
+  // Limpiar contenedores existentes
+  carousel.innerHTML = '';
+  indicatorsContainer.innerHTML = '';
+  
+  // Crear elementos del carrusel - SOLO 7 ELEMENTOS
   projects.forEach((project, index) => {
     const item = document.createElement('div');
     item.className = 'carousel-item';
@@ -2182,14 +2233,14 @@ function init3DCarousel() {
     // Hacer clicable toda la tarjeta
     item.addEventListener('click', (e) => {
       // Prevenir navegación si estamos arrastrando
-      if (!isDragging) {
+      if (!isDragging && Math.abs(dragDistance) < 10) {
         window.location.href = project.link;
       }
     });
     
     carousel.appendChild(item);
     
-    // Crear indicadores
+    // Crear indicadores - SOLO 7 INDICADORES
     const indicator = document.createElement('div');
     indicator.className = 'carousel-indicator';
     if (index === 0) indicator.classList.add('active');
@@ -2209,7 +2260,7 @@ function init3DCarousel() {
       // Remover todas las clases de posición
       item.classList.remove('active', 'prev', 'next', 'far-prev', 'far-next', 'hidden');
       
-      // Asignar clases según la posición
+      // Asignar clases según la posición - SOLO PARA 7 ELEMENTOS
       if (position === 0) {
         item.classList.add('active');
       } else if (position === 1) {
@@ -2249,9 +2300,16 @@ function init3DCarousel() {
     goToSlide(currentIndex - 1);
   }
   
-  // Event listeners para las flechas
-  prevBtn.addEventListener('click', prevSlide);
-  nextBtn.addEventListener('click', nextSlide);
+  // Event listeners para las flechas - CORREGIDOS
+  prevBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    prevSlide();
+  });
+  
+  nextBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    nextSlide();
+  });
   
   // ========== FUNCIONALIDAD DE ARRASTRE ==========
   
