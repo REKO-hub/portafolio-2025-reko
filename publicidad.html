@@ -4,23 +4,1701 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Publicidad y Redes Sociales - REKO</title>
-  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Variables de colores y estilos para coincidir con el index */
+    :root {
+      --primary-color: #110c0f;
+      --secondary-color: #f5f5f5;
+      --accent-color: #ff6b6b;
+      --text-color: #333;
+      --light-text: #fff;
+      --spacing-sm: 1rem;
+      --spacing-md: 2rem;
+      --spacing-lg: 4rem;
+      --border-radius: 8px;
+      --transition: all 0.3s ease;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', 'Segoe UI', sans-serif;
+      line-height: 1.6;
+      color: var(--text-color);
+      background-color: var(--secondary-color);
+      overflow-x: hidden;
+    }
+
+    /* HEADER MEJORADO - IGUAL AL INDEX */
+    header {
+      background-color: var(--primary-color);
+      color: var(--light-text);
+      padding: var(--spacing-sm) var(--spacing-md);
+      position: sticky; 
+      top: 0; 
+      z-index: 1000;
+      box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    header.scrolled {
+      padding: 0.5rem var(--spacing-md);
+      backdrop-filter: blur(10px);
+      background-color: rgba(17, 12, 15, 0.95);
+    }
+
+    .nav-container {
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center;
+      max-width: 1200px; 
+      margin: 0 auto;
+      transition: all 0.4s ease;
+    }
+
+    header.scrolled .nav-container {
+      padding: 0.5rem 0;
+    }
+
+    .logo {
+      font-size: 1.8rem; 
+      font-weight: 700; 
+      letter-spacing: 2px;
+      display: flex; 
+      align-items: center;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    header.scrolled .logo {
+      font-size: 1.5rem;
+    }
+
+    .logo::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,107,107,0.3), transparent);
+      transition: left 0.6s ease;
+    }
+
+    .logo:hover::before {
+      left: 100%;
+    }
+
+    .logo img { 
+      width: 40px; 
+      margin-right: 8px; 
+      transition: all 0.3s ease;
+    }
+
+    header.scrolled .logo img {
+      width: 35px;
+    }
+
+    .logo span { 
+      color: var(--accent-color);
+      background: linear-gradient(135deg, #ff6b6b, #ffbc21);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      transition: all 0.3s ease;
+    }
+
+    /* NAVEGACIÓN MEJORADA */
+    nav ul { 
+      display: flex; 
+      list-style: none; 
+      gap: 1rem;
+    }
+
+    nav ul li { 
+      position: relative;
+    }
+
+    nav ul li a {
+      color: var(--light-text); 
+      text-decoration: none;
+      font-weight: 500; 
+      padding: 0.8rem 1.5rem;
+      border-radius: 25px;
+      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    /* Iconos para los enlaces del menú */
+    nav ul li a::before {
+      font-size: 1.2rem;
+      transition: all 0.3s ease;
+    }
+
+    nav ul li:nth-child(1) a::before {
+      content: '🏠';
+    }
+
+    nav ul li:nth-child(2) a::before {
+      content: '📢';
+    }
+
+    nav ul li:nth-child(3) a::before {
+      content: '🎨';
+    }
+
+    nav ul li:nth-child(4) a::before {
+      content: '🎥';
+    }
+
+    nav ul li:nth-child(5) a::before {
+      content: '📷';
+    }
+
+    /* Efecto de fondo animado */
+    nav ul li a::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+      transition: left 0.6s ease;
+    }
+
+    nav ul li a:hover::after {
+      left: 100%;
+    }
+
+    /* Efecto principal al hover */
+    nav ul li a:hover {
+      background: linear-gradient(135deg, rgba(255,107,107,0.2), rgba(255,188,33,0.1));
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 8px 25px rgba(255,107,107,0.3);
+      border: 1px solid rgba(255,107,107,0.3);
+    }
+
+    /* Efecto para enlace activo */
+    nav ul li a.active {
+      background: linear-gradient(135deg, #ff6b6b, #ffbc21);
+      color: white;
+      box-shadow: 0 5px 20px rgba(255,107,107,0.4);
+      transform: translateY(-2px);
+    }
+
+    /* Indicador de posición actual */
+    nav ul li a.active::before {
+      transform: scale(1.2) rotate(10deg);
+    }
+
+    /* Línea inferior animada */
+    nav ul li::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 50%;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, #ff6b6b, #ffbc21);
+      transition: all 0.4s ease;
+      transform: translateX(-50%);
+    }
+
+    nav ul li:hover::after {
+      width: 80%;
+    }
+
+    nav ul li a.active ~ ::after {
+      width: 80%;
+    }
+
+    /* Botón menú móvil MEJORADO */
+    .mobile-menu-btn {
+      display: none; 
+      background: none; 
+      border: none;
+      color: white; 
+      font-size: 2rem; 
+      cursor: pointer;
+      transition: var(--transition);
+      position: relative;
+      width: 40px;
+      height: 40px;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .mobile-menu-btn span {
+      display: block;
+      width: 25px;
+      height: 3px;
+      background: white;
+      margin: 3px 0;
+      transition: all 0.3s ease;
+      border-radius: 2px;
+    }
+
+    .mobile-menu-btn.active span:nth-child(1) {
+      transform: rotate(45deg) translate(6px, 6px);
+    }
+
+    .mobile-menu-btn.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .mobile-menu-btn.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(6px, -6px);
+    }
+
+    .mobile-menu-btn:hover {
+      transform: scale(1.1);
+    }
+
+    .mobile-menu-btn:hover span {
+      background: var(--accent-color);
+    }
+
+    /* Sidebar móvil MEJORADO */
+    .sidebar {
+      position: fixed; 
+      top: 0; 
+      left: -100%;
+      width: 85%; 
+      max-width: 320px; 
+      height: 100%;
+      background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+      color: white;
+      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      padding: 2rem 1.5rem; 
+      z-index: 2000;
+      box-shadow: 5px 0 25px rgba(0,0,0,0.5);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sidebar.active { 
+      left: 0; 
+    }
+
+    .sidebar .logo { 
+      justify-content: center; 
+      margin-bottom: 3rem;
+      font-size: 2rem;
+    }
+
+    .sidebar .logo img { 
+      width: 60px; 
+    }
+
+    .sidebar ul { 
+      list-style: none; 
+      text-align: left;
+      flex-grow: 1;
+    }
+
+    .sidebar ul li { 
+      margin: 1.5rem 0; 
+      position: relative;
+    }
+
+    .sidebar ul li a {
+      color: white; 
+      text-decoration: none; 
+      font-size: 1.3rem;
+      display: block; 
+      padding: 1rem 1.5rem;
+      transition: var(--transition);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .sidebar ul li a::before {
+      font-size: 1.5rem;
+    }
+
+    .sidebar ul li a::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,107,107,0.3), transparent);
+      transition: left 0.6s ease;
+    }
+
+    .sidebar ul li a:hover::after {
+      left: 100%;
+    }
+
+    .sidebar ul li a:hover {
+      color: var(--accent-color);
+      transform: translateX(10px);
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .sidebar ul li a.active {
+      background: linear-gradient(135deg, #ff6b6b, #ffbc21);
+      color: white;
+      transform: translateX(10px);
+    }
+
+    /* Botón cerrar sidebar MEJORADO */
+    .close-sidebar {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      background: rgba(255, 255, 255, 0.1);
+      border: none;
+      color: white;
+      font-size: 1.8rem;
+      cursor: pointer;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+    }
+
+    .close-sidebar:hover {
+      background: var(--accent-color);
+      transform: rotate(90deg) scale(1.1);
+    }
+
+    /* Overlay para sidebar */
+    .sidebar-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(5px);
+      z-index: 1999;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .sidebar-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* Animación de flotación */
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0px); }
+    }
+
+    /* Hero Section */
+    .hero {
+      background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), 
+                  url('https://images.unsplash.com/photo-1563986768609-322da13575f3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');
+                  background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      color: var(--light-text);
+      padding: var(--spacing-lg) var(--spacing-md);
+      text-align: center;
+      min-height: 100vh;
+      display: flex; 
+      flex-direction: column; 
+      justify-content: center; 
+      align-items: center;
+      position: relative;
+    }
+
+    .hero h1 { 
+      font-size: 3.5rem; 
+      margin-bottom: var(--spacing-sm); 
+      font-weight: 800; 
+      animation: float 4s ease-in-out infinite;
+    }
+    .hero p { 
+      font-size: 1.2rem; 
+      max-width: 600px; 
+      margin: 0 auto; 
+      opacity: 0.9; 
+      animation: float 5s ease-in-out infinite 0.5s;
+    }
+
+    /* ========== GALERÍA 3D INTERACTIVA ========== */
+    .projects {
+      width: 100%;
+      padding: var(--spacing-lg) 5vw;
+      margin: 0;
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(135deg, #270f0f 0%, #060208 50%, #120018 100%);
+      box-shadow: inset 0 0 80px rgba(0, 0, 0, 0.4);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      color: #070000;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+    }
+
+    /* Canvas para partículas koi/dragón */
+    #koi-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      pointer-events: none;
+      opacity: 0.7;
+    }
+
+    .projects-content {
+      position: relative;
+      z-index: 2;
+      max-width: 1400px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: var(--spacing-sm);
+      font-size: 3rem;
+      position: relative;
+      color: var(--secondary-color);
+      animation: float 5s ease-in-out infinite;
+    }
+    .section-title::after {
+      content: '';
+      display: block;
+      width: 120px;
+      height: 6px;
+      background: linear-gradient(90deg, #ff6b6b, #ffbc21);
+      margin: 1rem auto;
+      border-radius: 3px;
+    }
+
+    .koi-legend {
+      text-align: center;
+      margin-bottom: var(--spacing-lg);
+      font-style: italic;
+      color: #e0e0e0;
+      font-size: 1.4rem;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+      position: relative;
+      z-index: 2;
+      font-weight: 500;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+      animation: float 6s ease-in-out infinite 0.3s;
+    }
+
+    /* Filtros de categorías */
+    .category-filters {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: var(--spacing-lg);
+    }
+
+    .category-filter {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: white;
+      padding: 0.8rem 1.5rem;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+      font-weight: 500;
+    }
+
+    .category-filter:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-3px);
+    }
+
+    .category-filter.active {
+      background: linear-gradient(135deg, #ff6b6b, #ffbc21);
+      box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+    }
+
+    /* Galería 3D interactiva */
+    .interactive-gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 2rem;
+      perspective: 1000px;
+    }
+
+    .gallery-item {
+      position: relative;
+      height: 350px;
+      border-radius: 20px;
+      overflow: hidden;
+      transform-style: preserve-3d;
+      transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      cursor: pointer;
+      box-shadow: 
+        0 15px 35px rgba(0, 0, 0, 0.5),
+        0 0 50px rgba(255, 107, 107, 0.2);
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(15px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .gallery-item:hover {
+      transform: translateY(-15px) rotateX(5deg) rotateY(5deg) scale(1.05);
+      box-shadow: 
+        0 25px 50px rgba(0, 0, 0, 0.6),
+        0 0 80px rgba(255, 107, 107, 0.4);
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.1);
+    }
+
+    .item-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+      padding: 2rem 1.5rem 1.5rem;
+      transform: translateY(100%);
+      transition: all 0.4s ease;
+      backdrop-filter: blur(5px);
+    }
+
+    .gallery-item:hover .item-overlay {
+      transform: translateY(0);
+    }
+
+    .item-title {
+      color: white;
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .item-description {
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 0.9rem;
+      line-height: 1.4;
+    }
+
+    .item-category {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      backdrop-filter: blur(10px);
+    }
+
+    /* Modal para vista ampliada */
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.9);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 3000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.4s ease;
+    }
+
+    .modal.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-content {
+      position: relative;
+      max-width: 90%;
+      max-height: 90%;
+      transform: scale(0.8);
+      transition: transform 0.4s ease;
+    }
+
+    .modal.active .modal-content {
+      transform: scale(1);
+    }
+
+    .modal img {
+      max-width: 100%;
+      max-height: 80vh;
+      border-radius: 15px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: -40px;
+      right: 0;
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      color: white;
+      font-size: 1.5rem;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+    }
+
+    .modal-close:hover {
+      background: var(--accent-color);
+      transform: rotate(90deg);
+    }
+
+    /* Botón para volver arriba */
+    .back-to-top {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background-color: var(--accent-color);
+      color: white;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      font-size: 1.5rem;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      transition: var(--transition);
+      z-index: 100;
+      opacity: 0;
+      visibility: hidden;
+    }
+    .back-to-top.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+    .back-to-top:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 15px rgba(0,0,0,0.4);
+    }
+
+    /* Footer personalizado con imagen - IGUAL AL INDEX */
+    footer {
+      background: 
+        linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.9)),
+        url('imagen/footer@72x.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      color: var(--light-text);
+      padding: var(--spacing-lg) var(--spacing-md);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      min-height: 400px;
+      display: flex;
+      align-items: center;
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+      width: 100%;
+    }
+
+    footer h2 {
+      font-size: 2.5rem;
+      margin-bottom: var(--spacing-sm);
+      background: linear-gradient(45deg, #ff6b6b, #ffbc21);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: float 5s ease-in-out infinite;
+    }
+
+    footer p {
+      margin-bottom: var(--spacing-sm);
+      font-size: 1.1rem;
+      opacity: 0.9;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: var(--spacing-md);
+      margin: var(--spacing-md) 0;
+      flex-wrap: wrap;
+    }
+
+    .social-links a {
+      color: var(--light-text);
+      font-size: 1.8rem;
+      transition: var(--transition);
+      padding: 10px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: float 4s ease-in-out infinite;
+      position: relative;
+      overflow: hidden;
+    }
+    .social-links a:nth-child(2) { animation-delay: 0.2s; }
+    .social-links a:nth-child(3) { animation-delay: 0.4s; }
+    .social-links a:nth-child(4) { animation-delay: 0.6s; }
+    .social-links a:nth-child(5) { animation-delay: 0.8s; }
+
+    .social-links a::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+      transition: left 0.5s;
+    }
+    .social-links a:hover::before {
+      left: 100%;
+    }
+
+    .social-links a:hover {
+      color: var(--accent-color);
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-5px) scale(1.1);
+      box-shadow: 0 5px 15px rgba(255,107,107,0.4);
+    }
+
+    .copyright {
+      margin-top: var(--spacing-md);
+      opacity: 0.7;
+      font-size: 0.9rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+      padding-top: var(--spacing-sm);
+      animation: float 6s ease-in-out infinite 0.5s;
+    }
+
+    /* Efecto de partículas en el footer */
+    .footer-particles {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* Partículas Koi para la sección de proyectos */
+    .koi-particles {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.6;
+    }
+
+    /* ========== RESPONSIVE PARA TELÉFONO ========== */
+    @media (max-width: 768px) {
+      nav ul { display: none; }
+      .mobile-menu-btn { 
+        display: flex;
+      }
+      
+      /* Header responsive */
+      header.scrolled {
+        padding: 0.3rem var(--spacing-sm);
+      }
+      
+      .nav-container {
+        padding: 0.5rem 0;
+      }
+      
+      .logo {
+        font-size: 1.5rem;
+      }
+      
+      .logo img {
+        width: 35px;
+      }
+      
+      .hero h1 { font-size: 2.5rem; }
+      .hero p { font-size: 1rem; }
+      
+      /* Responsive para la galería 3D */
+      .interactive-gallery {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 1.5rem;
+      }
+      
+      .gallery-item {
+        height: 300px;
+      }
+
+      .section-title {
+        font-size: 2.2rem;
+      }
+      
+      .koi-legend {
+        font-size: 1.1rem;
+        padding: 0 1rem;
+      }
+
+      .social-links {
+        gap: var(--spacing-sm);
+      }
+
+      .social-links a {
+        width: 45px;
+        height: 45px;
+        font-size: 1.5rem;
+      }
+
+      footer {
+        padding: var(--spacing-md) var(--spacing-sm);
+        min-height: 350px;
+        background: 
+          linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.9)),
+          url('imagen/responsive footer@72x.png');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+      }
+      
+      footer h2 {
+        font-size: 2rem;
+      }
+      
+      footer p {
+        font-size: 1rem;
+        padding: 0 1rem;
+      }
+
+      /* Botón volver arriba en móvil */
+      .back-to-top {
+        bottom: 1rem;
+        right: 1rem;
+        width: 45px;
+        height: 45px;
+        font-size: 1.2rem;
+      }
+
+      /* Footer responsive adicional */
+      .footer-content {
+        padding: 0 1rem;
+      }
+      
+      .social-links {
+        gap: 0.8rem;
+        margin: 1.5rem 0;
+      }
+      
+      .social-links a {
+        width: 40px;
+        height: 40px;
+        font-size: 1.3rem;
+      }
+      
+      .copyright {
+        font-size: 0.8rem;
+        margin-top: 1.5rem;
+        padding-top: 1rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero h1 { 
+        font-size: 2rem; 
+        padding: 0 0.5rem;
+      }
+      
+      .hero p { 
+        font-size: 0.9rem; 
+        padding: 0 0.5rem;
+      }
+      
+      .section-title {
+        font-size: 1.8rem;
+      }
+      
+      /* Ajustes adicionales para la galería en móvil pequeño */
+      .interactive-gallery {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+      
+      .gallery-item {
+        height: 250px;
+      }
+
+      /* Footer responsive para pantallas muy pequeñas */
+      footer {
+        padding: var(--spacing-sm) 0.5rem;
+        min-height: 300px;
+        background: 
+          linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.9)),
+          url('imagen/responsive footer@72x.png');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+      }
+      
+      .social-links {
+        gap: 0.5rem;
+      }
+      
+      .social-links a {
+        width: 35px;
+        height: 35px;
+        font-size: 1.1rem;
+      }
+      
+      footer p {
+        font-size: 0.9rem;
+        padding: 0 0.5rem;
+      }
+    }
+  </style>
 </head>
 <body>
-  <div class="sidebar">
-    <h2>Menú</h2>
+  <!-- Overlay para sidebar -->
+  <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleMenu()"></div>
+
+  <!-- Header MEJORADO -->
+  <header id="header-section">
+    <div class="nav-container">
+      <div class="logo">
+        <img src="imagen/responsive 2@72x.png" alt="Logo">
+        <span></span>
+      </div>
+      
+      <!-- Botón menú móvil MEJORADO -->
+      <button class="mobile-menu-btn" id="mobileMenuBtn" onclick="toggleMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      
+      <nav>
+        <ul>
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="publicidad.html" class="active">Publicidad</a></li>
+          <li><a href="ilustracion.html">Ilustración</a></li>
+          <li><a href="multimedia.html">Multimedia</a></li>
+          <li><a href="Fotografias.html">Fotografías</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Sidebar móvil MEJORADO -->
+  <div class="sidebar" id="sidebar">
+    <button class="close-sidebar" onclick="toggleMenu()">✕</button>
+    <div class="logo">
+      <img src="imagen/responsive 2@72x.png" alt="Logo">
+      <span></span>
+    </div>
     <ul>
-      <li><a href="index.html">Página Principal</a></li>
-      <li><a href="publicidad.html">Publicidad y Redes Sociales</a></li>
-      <li><a href="ilustracion.html">Ilustración</a></li>
-      <li><a href="multimedia.html">Multimedia</a></li>
-      <li><a href="web.html">Web</a></li>
-      <li><a href="cv.html">CV</a></li>
+      <li><a href="index.html" onclick="toggleMenu()">🏠 Inicio</a></li>
+      <li><a href="publicidad.html" onclick="toggleMenu()" class="active">📢 Publicidad</a></li>
+      <li><a href="ilustracion.html" onclick="toggleMenu()">🎨 Ilustración</a></li>
+      <li><a href="multimedia.html" onclick="toggleMenu()">🎥 Multimedia</a></li>
+      <li><a href="Fotografias.html" onclick="toggleMenu()">📷 Fotografías</a></li>
     </ul>
+    
+    <!-- Información adicional en sidebar -->
+    <div class="sidebar-footer">
+      <p>© 2025 REKO Portafolio</p>
+    </div>
   </div>
-  <main>
-    <h1>Publicidad y Redes Sociales</h1>
-    <p>Aquí mostrarás tus proyectos de publicidad y redes sociales.</p>
-  </main>
+  
+  <!-- Botón para volver arriba -->
+  <a href="#hero" class="back-to-top" id="backToTop">↑</a>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <h1>Publicidad & Redes Sociales</h1>
+    <p></p>
+  </section>
+
+  <!-- Sección de Galería 3D Interactiva -->
+  <section class="projects" id="proyectos-section">
+    <canvas id="koi-canvas"></canvas>
+    <div class="projects-content">
+      <h2 class="section-title">Galería de Publicidad</h2>
+      <div class="koi-legend">
+        "Como el koi que nada contra la corriente y se transforma en dragón, cada proyecto es un viaje de crecimiento y superación"
+      </div>
+      
+      <!-- Filtros de categorías -->
+      <div class="category-filters" id="categoryFilters">
+        <button class="category-filter active" data-category="all">Todos</button>
+        <button class="category-filter" data-category="marketplace">Marketplace</button>
+        <button class="category-filter" data-category="productos">Productos</button>
+        <button class="category-filter" data-category="interactivos">Interactivos</button>
+        <button class="category-filter" data-category="memes">Memes</button>
+        <button class="category-filter" data-category="giveaway">Giveaway</button>
+        <button class="category-filter" data-category="carrusel">Carrusel</button>
+        <button class="category-filter" data-category="blog">Blog</button>
+      </div>
+      
+      <!-- Galería 3D interactiva -->
+      <div class="interactive-gallery" id="interactiveGallery">
+        <!-- Los elementos de la galería se generan dinámicamente con JavaScript -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Modal para vista ampliada -->
+  <div class="modal" id="imageModal">
+    <div class="modal-content">
+      <img id="modalImage" src="" alt="">
+      <button class="modal-close" id="modalClose">✕</button>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <canvas id="footer-canvas" class="footer-particles"></canvas>
+    <div class="footer-content">
+      <h2>Contacto</h2>
+            <p>¿Te gustaría comunicarte conmigo? Aquí están mis redes y un formulario de contacto.</p>
+          
+      <div class="social-links">
+        <a href="#" title="Email">📧</a>
+        <a href="#" title="LinkedIn">💼</a>
+        <a href="#" title="Twitter">🐦</a>
+        <a href="#" title="Instagram">📷</a>
+        <a href="#" title="Behance">🎨</a>
+      </div>
+      
+      <p class="copyright">© 2025 REKO Portafolio. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Función para toggle del menú
+    function toggleMenu() {
+      const sidebar = document.getElementById("sidebar");
+      const overlay = document.getElementById("sidebarOverlay");
+      const menuBtn = document.getElementById("mobileMenuBtn");
+      
+      sidebar.classList.toggle("active");
+      overlay.classList.toggle("active");
+      menuBtn.classList.toggle("active");
+      
+      // Prevenir scroll del body cuando el menú está abierto
+      document.body.style.overflow = sidebar.classList.contains("active") ? "hidden" : "";
+    }
+    
+    // Efecto de header al hacer scroll
+    function initHeaderEffects() {
+      const header = document.querySelector('header');
+      
+      window.addEventListener('scroll', function() {
+        if (window.scrollY > 100) {
+          header.classList.add('scrolled');
+        } else {
+          header.classList.remove('scrolled');
+        }
+      });
+    }
+    
+    // Cerrar sidebar al hacer clic fuera de él
+    document.addEventListener('click', function(event) {
+      const sidebar = document.getElementById('sidebar');
+      const menuBtn = document.getElementById('mobileMenuBtn');
+      const overlay = document.getElementById('sidebarOverlay');
+      
+      if (sidebar.classList.contains('active') && 
+          !sidebar.contains(event.target) && 
+          !menuBtn.contains(event.target)) {
+        toggleMenu();
+      }
+    });
+    
+    // Cerrar sidebar con tecla ESC
+    document.addEventListener('keydown', function(event) {
+      if (event.key === 'Escape') {
+        const sidebar = document.getElementById('sidebar');
+        if (sidebar.classList.contains('active')) {
+          toggleMenu();
+        }
+      }
+    });
+    
+    // INICIALIZACIÓN DE LA GALERÍA 3D INTERACTIVA
+    function initInteractiveGallery() {
+      const gallery = document.getElementById('interactiveGallery');
+      const categoryFilters = document.getElementById('categoryFilters');
+      const modal = document.getElementById('imageModal');
+      const modalImage = document.getElementById('modalImage');
+      const modalClose = document.getElementById('modalClose');
+      
+      // Imágenes de publicidad y redes sociales
+      const images = [
+        {
+          src: "imagen/publicidad/post  para marketplace/post 1 marketplace.png",
+          alt: "Post Marketplace 1",
+          title: "Diseño Marketplace 1",
+          description: "Post optimizado para ventas en marketplace",
+          category: "marketplace"
+        },
+        {
+          src: "imagen/publicidad/post  para marketplace/post 2 marketplace_1.png",
+          alt: "Post Marketplace 2",
+          title: "Diseño Marketplace 2",
+          description: "Publicación con elementos visuales atractivos",
+          category: "marketplace"
+        },
+        {
+          src: "imagen/publicidad/post  para marketplace/POST bolsas.png",
+          alt: "Post Bolsas",
+          title: "Promoción de Bolsas",
+          description: "Diseño especializado para productos de moda",
+          category: "marketplace"
+        },
+        {
+          src: "imagen/publicidad/post de productos/1.png",
+          alt: "Producto 1",
+          title: "Presentación Producto 1",
+          description: "Diseño limpio y profesional",
+          category: "productos"
+        },
+        {
+          src: "imagen/publicidad/post de productos/2.png",
+          alt: "Producto 2",
+          title: "Presentación Producto 2",
+          description: "Enfoque en características principales",
+          category: "productos"
+        },
+        {
+          src: "imagen/publicidad/post de productos/3.png",
+          alt: "Producto 3",
+          title: "Presentación Producto 3",
+          description: "Diseño con llamadas a la acción",
+          category: "productos"
+        },
+        {
+          src: "imagen/publicidad/post de productos/4.png",
+          alt: "Producto 4",
+          title: "Presentación Producto 4",
+          description: "Enfoque en beneficios para el cliente",
+          category: "productos"
+        },
+        {
+          src: "imagen/publicidad/post de productos/5.png",
+          alt: "Producto 5",
+          title: "Presentación Producto 5",
+          description: "Diseño con elementos de urgencia",
+          category: "productos"
+        },
+        {
+          src: "imagen/publicidad/post interactivos para redes/Recurso 1.png",
+          alt: "Interactivo 1",
+          title: "Contenido Interactivo 1",
+          description: "Diseño para aumentar engagement",
+          category: "interactivos"
+        },
+        {
+          src: "imagen/publicidad/post interactivos para redes/Recurso 2.png",
+          alt: "Interactivo 2",
+          title: "Contenido Interactivo 2",
+          description: "Elementos visuales para interacción",
+          category: "interactivos"
+        },
+        {
+          src: "imagen/publicidad/post interactivos para redes/Recurso 3.png",
+          alt: "Interactivo 3",
+          title: "Contenido Interactivo 3",
+          description: "Diseño para preguntas y respuestas",
+          category: "interactivos"
+        },
+        {
+          src: "imagen/publicidad/post de memes/post 7.png",
+          alt: "Meme 1",
+          title: "Contenido Viral 1",
+          description: "Meme para engagement en redes",
+          category: "memes"
+        },
+        {
+          src: "imagen/publicidad/post de memes/POST MEME ABRIL.png",
+          alt: "Meme Abril",
+          title: "Meme Temático Abril",
+          description: "Contenido relacionado con temporada",
+          category: "memes"
+        },
+        {
+          src: "imagen/publicidad/post de memes/post.png",
+          alt: "Meme 3",
+          title: "Contenido Viral 3",
+          description: "Meme para conectar con audiencia joven",
+          category: "memes"
+        },
+        {
+          src: "imagen/publicidad/post giveaway/1.png",
+          alt: "Giveaway 1",
+          title: "Campaña Giveaway 1",
+          description: "Diseño para concurso y premios",
+          category: "giveaway"
+        },
+        {
+          src: "imagen/publicidad/post giveaway/2.png",
+          alt: "Giveaway 2",
+          title: "Campaña Giveaway 2",
+          description: "Estrategia para aumentar seguidores",
+          category: "giveaway"
+        },
+        {
+          src: "imagen/publicidad/post giveaway/3.png",
+          alt: "Giveaway 3",
+          title: "Campaña Giveaway 3",
+          description: "Diseño con reglas claras y atractivas",
+          category: "giveaway"
+        },
+        {
+          src: "imagen/publicidad/propuestas de carrusell/post 3.png",
+          alt: "Carrusel 1",
+          title: "Carrusel Instagram 1",
+          description: "Serie de posts para contar una historia",
+          category: "carrusel"
+        },
+        {
+          src: "imagen/publicidad/propuestas de carrusell/POST DÍA 3 CARRUSELL.png",
+          alt: "Carrusel Día 3",
+          title: "Carrusel Día 3",
+          description: "Contenido secuencial para engagement",
+          category: "carrusel"
+        },
+        {
+          src: "imagen/publicidad/propuesta de blog para la empresa/blog propuesta rebeca.png",
+          alt: "Propuesta Blog",
+          title: "Blog Corporativo",
+          description: "Diseño y estructura para blog empresarial",
+          category: "blog"
+        }
+      ];
+      
+      let currentCategory = 'all';
+      
+      // Crear elementos de la galería
+      function createGalleryItems(category = 'all') {
+        gallery.innerHTML = '';
+        
+        const filteredImages = category === 'all' 
+          ? images 
+          : images.filter(img => img.category === category);
+        
+        filteredImages.forEach((image, index) => {
+          const item = document.createElement('div');
+          item.className = 'gallery-item';
+          item.setAttribute('data-category', image.category);
+          
+          // Añadir delay aleatorio para animación escalonada
+          const delay = Math.random() * 0.5;
+          item.style.animationDelay = `${delay}s`;
+          
+          item.innerHTML = `
+            <img src="${image.src}" alt="${image.alt}">
+            <div class="item-category">${getCategoryName(image.category)}</div>
+            <div class="item-overlay">
+              <h3 class="item-title">${image.title}</h3>
+              <p class="item-description">${image.description}</p>
+            </div>
+          `;
+          
+          // Añadir evento de clic para abrir modal
+          item.addEventListener('click', () => {
+            modalImage.src = image.src;
+            modalImage.alt = image.alt;
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+          });
+          
+          gallery.appendChild(item);
+        });
+      }
+      
+      // Obtener nombre de categoría
+      function getCategoryName(category) {
+        const names = {
+          'marketplace': 'Marketplace',
+          'productos': 'Productos',
+          'interactivos': 'Interactivos',
+          'memes': 'Memes',
+          'giveaway': 'Giveaway',
+          'carrusel': 'Carrusel',
+          'blog': 'Blog'
+        };
+        return names[category] || category;
+      }
+      
+      // Inicializar filtros de categoría
+      categoryFilters.addEventListener('click', (e) => {
+        if (e.target.classList.contains('category-filter')) {
+          // Remover clase active de todos los filtros
+          document.querySelectorAll('.category-filter').forEach(filter => {
+            filter.classList.remove('active');
+          });
+          
+          // Añadir clase active al filtro seleccionado
+          e.target.classList.add('active');
+          
+          // Actualizar categoría actual
+          currentCategory = e.target.getAttribute('data-category');
+          
+          // Recrear galería con la categoría seleccionada
+          createGalleryItems(currentCategory);
+        }
+      });
+      
+      // Cerrar modal
+      modalClose.addEventListener('click', () => {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+      });
+      
+      // Cerrar modal al hacer clic fuera de la imagen
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+          modal.classList.remove('active');
+          document.body.style.overflow = '';
+        }
+      });
+      
+      // Cerrar modal con tecla ESC
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('active')) {
+          modal.classList.remove('active');
+          document.body.style.overflow = '';
+        }
+      });
+      
+      // Inicializar galería
+      createGalleryItems();
+    }
+
+    // SISTEMA DE PARTÍCULAS KOI - PECES INTERACTIVOS CON MOUSE
+    function initKoiParticles() {
+      const canvas = document.getElementById('koi-canvas');
+      if (!canvas) return;
+      
+      const ctx = canvas.getContext('2d');
+      const projectsSection = document.querySelector('.projects');
+      
+      let koiParticles = [];
+      let mouse = { x: -100, y: -100 };
+      
+      // Seguir posición del mouse
+      canvas.addEventListener('mousemove', (e) => {
+        const rect = canvas.getBoundingClientRect();
+        mouse.x = e.clientX - rect.left;
+        mouse.y = e.clientY - rect.top;
+      });
+      
+      canvas.addEventListener('mouseleave', () => {
+        mouse.x = -100;
+        mouse.y = -100;
+      });
+      
+      // Ajustar tamaño del canvas
+      function resizeCanvas() {
+        if (!projectsSection) return;
+        canvas.width = projectsSection.offsetWidth;
+        canvas.height = projectsSection.offsetHeight;
+      }
+      
+      resizeCanvas();
+      window.addEventListener('resize', resizeCanvas);
+      
+      // Crear partículas koi para proyectos
+      for (let i = 0; i < 15; i++) {
+        koiParticles.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          size: Math.random() * 6 + 4,
+          speedX: (Math.random() - 0.5) * 1.5,
+          speedY: (Math.random() - 0.5) * 1.5,
+          color: ['#FF6B35', '#FFA500', '#FFD700', '#FFFFFF', '#DC143C'][Math.floor(Math.random() * 5)],
+          opacity: Math.random() * 0.6 + 0.4,
+          wave: 0,
+          waveSpeed: Math.random() * 0.05 + 0.03,
+          tailWave: 0,
+          tailSpeed: Math.random() * 0.1 + 0.05
+        });
+      }
+      
+      // Función de animación
+      function animate() {
+        if (!canvas) return;
+        
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        // Fondo acuático sutil
+        const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+        gradient.addColorStop(0, 'rgba(78, 205, 196, 0.05)');
+        gradient.addColorStop(1, 'rgba(255, 215, 0, 0.03)');
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        
+        // Dibujar ondas de agua sutiles
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
+        ctx.lineWidth = 1;
+        for (let i = 0; i < 5; i++) {
+          ctx.beginPath();
+          ctx.arc(canvas.width * 0.2, canvas.height * 0.3, 50 + i * 30, 0, Math.PI * 2);
+          ctx.stroke();
+          
+          ctx.beginPath();
+          ctx.arc(canvas.width * 0.8, canvas.height * 0.7, 40 + i * 25, 0, Math.PI * 2);
+          ctx.stroke();
+        }
+        
+        koiParticles.forEach(p => {
+          // INTERACCIÓN CON EL MOUSE - LOS PECES HUYEN DEL CURSOR
+          const dx = p.x - mouse.x;
+          const dy = p.y - mouse.y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+          
+          if (distance < 100) {
+            const angle = Math.atan2(dy, dx);
+            const force = (100 - distance) / 100 * 2;
+            
+            // Los peces se alejan del cursor
+            p.speedX += Math.cos(angle) * force * 0.2;
+            p.speedY += Math.sin(angle) * force * 0.2;
+            
+            // Efecto visual: los peces se vuelven ligeramente más transparentes
+            p.opacity = Math.max(0.3, p.opacity - 0.02);
+          } else {
+            // Recuperar opacidad normal gradualmente
+            p.opacity = Math.min(0.8, p.opacity + 0.01);
+          }
+          
+          // Limitar velocidad máxima
+          const speed = Math.sqrt(p.speedX * p.speedX + p.speedY * p.speedY);
+          if (speed > 3) {
+            p.speedX = (p.speedX / speed) * 3;
+            p.speedY = (p.speedY / speed) * 3;
+          }
+          
+          ctx.save();
+          ctx.globalAlpha = p.opacity;
+          ctx.fillStyle = p.color;
+          
+          // Cuerpo del pez
+          ctx.beginPath();
+          ctx.ellipse(p.x, p.y, p.size, p.size * 0.5, 0, 0, Math.PI * 2);
+          ctx.fill();
+          
+          // Cola con movimiento ondulante
+          p.tailWave += p.tailSpeed;
+          const tailOffset = Math.sin(p.tailWave) * p.size * 0.3;
+          
+          ctx.beginPath();
+          ctx.moveTo(p.x - p.size, p.y);
+          ctx.quadraticCurveTo(
+            p.x - p.size * 1.8, 
+            p.y - p.size * 0.8 + tailOffset,
+            p.x - p.size * 2.2, 
+            p.y
+          );
+          ctx.quadraticCurveTo(
+            p.x - p.size * 1.8, 
+            p.y + p.size * 0.8 - tailOffset,
+            p.x - p.size, 
+            p.y
+          );
+          ctx.closePath();
+          ctx.fill();
+          
+          // Ojo del pez
+          ctx.fillStyle = '#000';
+          ctx.beginPath();
+          ctx.arc(p.x + p.size * 0.3, p.y - p.size * 0.1, p.size * 0.15, 0, Math.PI * 2);
+          ctx.fill();
+          
+          ctx.restore();
+          
+          // Actualizar posición con movimiento ondulante
+          p.x += p.speedX;
+          p.y += p.speedY + Math.sin(p.wave) * 0.5;
+          p.wave += p.waveSpeed;
+          
+          // Rebote en los bordes
+          if (p.x < -30) p.x = canvas.width + 30;
+          if (p.x > canvas.width + 30) p.x = -30;
+          if (p.y < -30) p.y = canvas.height + 30;
+          if (p.y > canvas.height + 30) p.y = -30;
+        });
+        
+        requestAnimationFrame(animate);
+      }
+      
+      animate();
+    }
+    
+    // PARTÍCULAS DEL FOOTER - CON PECES KOI
+    function initFooterParticles() {
+      const fCanvas = document.getElementById('footer-canvas');
+      if (!fCanvas) return;
+      
+      const fc = fCanvas.getContext('2d');
+      const footer = document.querySelector('footer');
+      
+      let footerParticles = [];
+      
+      // Ajustar tamaño del canvas
+      function resizeFooter() {
+        fCanvas.width = footer.offsetWidth;
+        fCanvas.height = footer.offsetHeight;
+      }
+      
+      resizeFooter();
+      window.addEventListener('resize', resizeFooter);
+      
+      // Crear partículas koi para el footer
+      for (let i = 0; i < 12; i++) {
+        footerParticles.push({
+          x: Math.random() * fCanvas.width,
+          y: Math.random() * fCanvas.height,
+          size: Math.random() * 4 + 2,
+          speedX: (Math.random() - 0.5) * 0.8,
+          speedY: (Math.random() - 0.5) * 0.8,
+          color: ['#FF6B35', '#FFA500', '#FFD700', '#FFFFFF'][Math.floor(Math.random() * 4)],
+          opacity: Math.random() * 0.5 + 0.3,
+          wave: 0,
+          waveSpeed: Math.random() * 0.03 + 0.02
+        });
+      }
+      
+      // Función de animación
+      function drawFooter() {
+        fc.clearRect(0, 0, fCanvas.width, fCanvas.height);
+        
+        footerParticles.forEach(p => {
+          fc.save();
+          fc.globalAlpha = p.opacity;
+          fc.fillStyle = p.color;
+          
+          // Forma de koi
+          fc.beginPath();
+          fc.ellipse(p.x, p.y, p.size, p.size * 0.6, 0, 0, Math.PI * 2);
+          fc.fill();
+          
+          // Aleta de koi
+          fc.beginPath();
+          fc.moveTo(p.x - p.size, p.y);
+          fc.lineTo(p.x - p.size * 1.5, p.y - p.size * 0.8);
+          fc.lineTo(p.x - p.size * 1.5, p.y + p.size * 0.8);
+          fc.closePath();
+          fc.fill();
+          
+          fc.restore();
+          
+          // Actualizar posición con movimiento ondulante
+          p.x += p.speedX;
+          p.y += p.speedY + Math.sin(p.wave) * 0.3;
+          p.wave += p.waveSpeed;
+          
+          // Rebote en los bordes
+          if (p.x < -20) p.x = fCanvas.width + 20;
+          if (p.x > fCanvas.width + 20) p.x = -20;
+          if (p.y < -20) p.y = fCanvas.height + 20;
+          if (p.y > fCanvas.height + 20) p.y = -20;
+        });
+        
+        requestAnimationFrame(drawFooter);
+      }
+      
+      drawFooter();
+    }
+
+    // Efectos de scroll
+    function initScrollEffects() {
+      // Botón volver arriba
+      const backToTop = document.getElementById('backToTop');
+      
+      window.addEventListener('scroll', function() {
+        // Mostrar/ocultar botón volver arriba
+        if (window.pageYOffset > 300) {
+          backToTop.classList.add('visible');
+        } else {
+          backToTop.classList.remove('visible');
+        }
+      });
+      
+      // Scroll suave para enlaces internos
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault();
+          
+          const targetId = this.getAttribute('href');
+          if (targetId === '#') return;
+          
+          const targetElement = document.querySelector(targetId);
+          if (targetElement) {
+            window.scrollTo({
+              top: targetElement.offsetTop - 80,
+              behavior: 'smooth'
+            });
+          }
+        });
+      });
+    }
+    
+    // Inicializar todo cuando el DOM esté listo
+    document.addEventListener('DOMContentLoaded', function() {
+      initHeaderEffects();
+      initInteractiveGallery();
+      initKoiParticles();
+      initFooterParticles();
+      initScrollEffects();
+    });
+  </script>
 </body>
 </html>
