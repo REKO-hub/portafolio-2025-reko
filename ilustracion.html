@@ -147,25 +147,29 @@
       transition: all 0.3s ease;
     }
 
-    nav ul li:nth-child(1) a::before {
-      content: '🏠';
+nav ul li:nth-child(1) a::before {
+  content: '🏠';
+}
+
+nav ul li:nth-child(2) a::before {
+  content: '📢';
+}
+
+nav ul li:nth-child(3) a::before {
+  content: '🎨';
+}
+
+nav ul li:nth-child(4) a::before {
+  content: '🎥';
+}
+
+nav ul li:nth-child(5) a::before {
+  content: '📷';
+}
+nav ul li:nth-child(6) a::before {
+      content: '🌐';
     }
 
-    nav ul li:nth-child(2) a::before {
-      content: '📢';
-    }
-
-    nav ul li:nth-child(3) a::before {
-      content: '🎨';
-    }
-
-    nav ul li:nth-child(4) a::before {
-      content: '🎥';
-    }
-
-    nav ul li:nth-child(5) a::before {
-      content: '📷';
-    }
 
     /* Efecto de fondo animado */
     nav ul li a::after {
@@ -413,13 +417,9 @@
       100% { transform: translateY(0px); }
     }
 
-    /* HERO SECTION CORREGIDO */
+    /* ========== HERO SECTION COMPLETAMENTE CORREGIDA ========== */
     .hero {
-      background: url('imagen/P.IL@72x.png');
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      background-attachment: fixed;
+      background: url('imagen/P.IL@72x.png') center/cover no-repeat;
       color: var(--light-text);
       text-align: center;
       height: 100vh;
@@ -436,6 +436,8 @@
     .hero-content {
       max-width: 800px;
       padding: 0 var(--spacing-md);
+      position: relative;
+      z-index: 2;
     }
 
     .hero h1 { 
@@ -444,6 +446,7 @@
       font-weight: 800; 
       animation: float 4s ease-in-out infinite;
       line-height: 1.2;
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.8);
     }
 
     .hero p { 
@@ -453,6 +456,7 @@
       opacity: 0.9; 
       animation: float 5s ease-in-out infinite 0.5s;
       line-height: 1.5;
+      text-shadow: 1px 1px 4px rgba(0,0,0,0.7);
     }
 
     /* ========== GALERÍA 3D INTERACTIVA ========== */
@@ -852,18 +856,6 @@
       z-index: 1;
     }
 
-    /* Partículas Koi para la sección de proyectos */
-    .koi-particles {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 1;
-      opacity: 0.6;
-    }
-
     /* ========== RESPONSIVE PARA TABLET ========== */
     @media (max-width: 1024px) {
       .hero {
@@ -891,7 +883,7 @@
       header.scrolled {
         padding: 0.5rem var(--spacing-md);
         backdrop-filter: blur(10px);
-        background-color: #090211;
+        background-color: #6c0c80;
       }
       
       .nav-container {
@@ -906,30 +898,36 @@
         width: 35px;
       }
       
-      /* HERO RESPONSIVE CORREGIDO */
+      /* HERO RESPONSIVE COMPLETAMENTE CORREGIDO */
       .hero {
-        background: url('imagen/ILUSTRACION@72x.png');
-        background-size: cover;
-        background-position: center;
-        background-attachment: fixed;
+        background: url('imagen/ILUSTRACION@72x.png') center/cover no-repeat !important;
         height: 100vh;
+        min-height: -webkit-fill-available;
         margin: 0;
         padding: 0;
+        position: relative;
       }
+      
+      /* Fondo de respaldo en caso de que la imagen no cargue */
+  
       
       .hero-content {
         padding: 0 1rem;
+        position: relative;
+        z-index: 2;
       }
       
       .hero h1 { 
         font-size: 2.5rem; 
         margin-bottom: 1rem;
         line-height: 1.2;
+        text-shadow: 2px 2px 6px rgba(0,0,0,0.8);
       }
       
       .hero p { 
         font-size: 1rem; 
         line-height: 1.4;
+        text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
       }
       
       /* Responsive para la galería 3D */
@@ -949,6 +947,17 @@
       .koi-legend {
         font-size: 1.1rem;
         padding: 0 1rem;
+      }
+
+      /* Ajustes para filtros en móvil */
+      .category-filters {
+        gap: 0.7rem;
+        margin-bottom: var(--spacing-md);
+      }
+      
+      .category-filter {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.9rem;
       }
 
       .social-links {
@@ -1019,6 +1028,42 @@
       }
     }
 
+    /* ========== RESPONSIVE ESPECÍFICO PARA IPHONE ========== */
+    @media (max-width: 768px) and (orientation: portrait) {
+      .hero {
+        background: url('imagen/ILUSTRACION@72x.png') center/cover no-repeat !important;
+        height: 100vh;
+        min-height: -webkit-fill-available;
+      }
+      
+      .hero-content {
+        margin-top: -1rem;
+      }
+      
+      .hero h1 {
+        font-size: 2.2rem;
+      }
+      
+      .hero p {
+        font-size: 0.95rem;
+      }
+    }
+
+    @media (max-width: 768px) and (orientation: landscape) {
+      .hero {
+        height: 100vh;
+        min-height: 100vh;
+      }
+      
+      .hero h1 {
+        font-size: 2rem;
+      }
+      
+      .hero p {
+        font-size: 0.9rem;
+      }
+    }
+
     /* ========== RESPONSIVE PARA TELÉFONOS PEQUEÑOS ========== */
     @media (max-width: 480px) {
       .hero h1 { 
@@ -1041,6 +1086,16 @@
       
       .gallery-item {
         height: 250px;
+      }
+
+      /* Mejoras específicas para iPhone pequeño */
+      .category-filters {
+        gap: 0.5rem;
+      }
+      
+      .category-filter {
+        padding: 0.5rem 1rem;
+        font-size: 0.85rem;
       }
 
       /* Footer responsive para pantallas muy pequeñas */
@@ -1088,6 +1143,35 @@
       .gallery-item {
         height: 220px;
       }
+      
+      /* Ajustes finales para iPhone muy pequeño */
+      .category-filters {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .category-filter {
+        width: 80%;
+        text-align: center;
+      }
+    }
+
+    /* ========== MEJORAS ESPECÍFICAS PARA SAFARI iOS ========== */
+    @supports (-webkit-touch-callout: none) {
+      body {
+        -webkit-font-smoothing: antialiased;
+        -webkit-overflow-scrolling: touch;
+      }
+      
+      .hero {
+        -webkit-backface-visibility: hidden;
+        -webkit-transform: translateZ(0);
+        background-attachment: scroll !important;
+      }
+      
+      .gallery-item {
+        -webkit-transform: translateZ(0);
+      }
     }
   </style>
 </head>
@@ -1117,6 +1201,7 @@
           <li><a href="ilustracion.html" class="active">Ilustración</a></li>
           <li><a href="multimedia.html">Multimedia</a></li>
           <li><a href="Fotografias.html">Fotografías</a></li>
+          <li><a href="web.html">Web</a></li>
         </ul>
       </nav>
     </div>
@@ -1124,17 +1209,18 @@
 
   <!-- Sidebar móvil MEJORADO -->
   <div class="sidebar" id="sidebar">
-    <button class="close-sidebar" onclick="toggleMenu()">✕</button>
     <div class="logo">
       <img src="imagen/responsive 2@72x.png" alt="Logo">
       <span></span>
     </div>
+    <button class="close-sidebar" onclick="toggleMenu()">✕</button>
     <ul>
       <li><a href="index.html" onclick="toggleMenu()">🏠 Inicio</a></li>
       <li><a href="publicidad.html" onclick="toggleMenu()">📢 Publicidad</a></li>
       <li><a href="ilustracion.html" onclick="toggleMenu()" class="active">🎨 Ilustración</a></li>
       <li><a href="multimedia.html" onclick="toggleMenu()">🎥 Multimedia</a></li>
       <li><a href="Fotografias.html" onclick="toggleMenu()">📷 Fotografías</a></li>
+      <li><a href="web.html" onclick="toggleMenu()">🌐 Web</a></li>
     </ul>
     
     <!-- Información adicional en sidebar -->
@@ -1168,6 +1254,7 @@
         <button class="category-filter" data-category="personajes">Personajes</button>
         <button class="category-filter" data-category="naturaleza">Naturaleza</button>
         <button class="category-filter" data-category="fantasia">Fantasía</button>
+        <button class="category-filter" data-category="stickers">Stickers</button>
       </div>
       
       <!-- Galería 3D interactiva -->
@@ -1190,7 +1277,7 @@
     <canvas id="footer-canvas" class="footer-particles"></canvas>
     <div class="footer-content">
       <h2>Contacto</h2>
-      <p>¿Te gustaría comunicarte conmigo? Aquí están mis redes y un formulario de contacto.</p>
+      <p>contactame en mis redes sociales</p>
     
       <div class="social-links">
         <a href="#" title="Email">📧</a>
@@ -1280,6 +1367,20 @@
           category: "fantasia"
         },
         {
+        src: "imagen/Imagen de WhatsApp 2025-10-26 a las 19.05.58_0719e29c.jpg",
+          alt: "Personaje Fantástico",
+          title: "Personaje Fantástico",
+          description: "Creación de personaje con elementos surrealistas y mágicos",
+          category: "fantasia"
+        },
+        {
+        src: "imagen/1000155746.jpg",
+          alt: "Personaje Fantástico",
+          title: "Personaje Fantástico",
+          description: "Creación de personaje con elementos surrealistas y mágicos",
+          category: "fantasia"
+        },
+        {
           src: "imagen/Recurso 1@72x.png",
           alt: "Ilustración Digital 3",
           title: "Arte Abstracto Digital",
@@ -1287,12 +1388,22 @@
           category: "digital"
         },
         {
+          src: "imagen/yo y melani finalizado 2.jpg",
+          alt: "Retrato Digital",
+          title: "Retrato Estilizado",
+          description: "Retrato digital con enfoque en expresiones y estilo único",
+          category: "personajes"
+        },
+        
+        {
           src: "imagen/Recurso 5@72x.png",
           alt: "Retrato Digital",
           title: "Retrato Estilizado",
           description: "Retrato digital con enfoque en expresiones y estilo único",
           category: "personajes"
         },
+        
+        
       ];
       
       let currentCategory = 'all';
@@ -1341,7 +1452,8 @@
           'digital': 'Digital',
           'personajes': 'Personajes',
           'naturaleza': 'Naturaleza',
-          'fantasia': 'Fantasía'
+          'fantasia': 'Fantasía',
+          'stickers' : 'Stickers'
         };
         return names[category] || category;
       }

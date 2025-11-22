@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador QR Avanzado - REKO</title>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: #fff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 450px;
+            gap: 30px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #ff6b6b, #ffbc21);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-align: center;
+            grid-column: 1 / -1;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            opacity: 0.8;
+            text-align: center;
+            grid-column: 1 / -1;
+        }
+
+        .qr-preview {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .qr-display {
+            width: 350px;
+            height: 350px;
+            margin: 0 auto 30px;
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .controls {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .control-group {
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .control-group h3 {
+            color: #ffbc21;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        .color-controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .color-picker {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .color-picker label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            min-width: 80px;
+        }
+
+        .color-input {
+            width: 40px;
+            height: 40px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            background: transparent;
+        }
+
+        .shape-controls {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+        }
+
+        .shape-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 8px 5px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.8rem;
+            text-align: center;
+        }
+
+        .shape-btn.active {
+            background: linear-gradient(45deg, #ff6b6b, #ffbc21);
+            border-color: #ff6b6b;
+        }
+
+        .shape-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .logo-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .file-input {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px dashed rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .file-input:hover {
+            border-color: #ff6b6b;
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .file-input input {
+            display: none;
+        }
+
+        .logo-preview-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-preview {
+            width: 80px;
+            height: 80px;
+            border-radius: 10px;
+            overflow: hidden;
+            display: none;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .logo-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .logo-shape-controls {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #ff6b6b, #ffbc21);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 107, 107, 0.6);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .footer {
+            margin-top: 30px;
+            text-align: center;
+            opacity: 0.7;
+            font-size: 0.9rem;
+            grid-column: 1 / -1;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            margin: 10px 0;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1rem;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #ff6b6b;
+        }
+
+        .warning {
+            color: #ff6b6b;
+            font-size: 0.8rem;
+            margin-top: 5px;
+        }
+
+        .slider-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .slider-value {
+            min-width: 40px;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+            
+            .qr-display {
+                width: 280px;
+                height: 280px;
+            }
+            
+            .color-controls {
+                grid-template-columns: 1fr;
+            }
+            
+            .shape-controls {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Generador QR Avanzado</h1>
+        <p class="subtitle">Crea códigos QR únicos y funcionales</p>
+        
+        <div class="qr-preview">
+            <div class="qr-display" id="qr-display">
+                <!-- El QR se generará aquí -->
+            </div>
+            <div class="action-buttons">
+                <button class="btn" onclick="downloadQR()">Descargar QR</button>
+                <button class="btn btn-secondary" onclick="resetCustomization()">Restablecer</button>
+            </div>
+        </div>
+        
+        <div class="controls">
+            <div class="control-group">
+                <h3>Contenido del QR</h3>
+                <input type="text" id="qr-content" value="https://reko-hub.github.io/portafolio-2025-reko/index.html" 
+                       placeholder="Ingresa la URL o texto">
+            </div>
+            
+            <div class="control-group">
+                <h3>Colores</h3>
+                <div class="color-controls">
+                    <div class="color-picker">
+                        <label>Color QR:</label>
+                        <input type="color" id="qr-color" value="#ff6b6b" class="color-input">
+                    </div>
+                    <div class="color-picker">
+                        <label>Fondo:</label>
+                        <input type="color" id="bg-color" value="#ffffff" class="color-input">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="control-group">
+                <h3>Forma de los Módulos</h3>
+                <div class="shape-controls">
+                    <button class="shape-btn active" data-shape="square">Cuadrados</button>
+                    <button class="shape-btn" data-shape="circle">Círculos</button>
+                    <button class="shape-btn" data-shape="rounded">Redondeados</button>
+                    <button class="shape-btn" data-shape="diamond">Diamantes</button>
+                    <button class="shape-btn" data-shape="star">Estrellas</button>
+                    <button class="shape-btn" data-shape="heart">Corazones</button>
+                    <button class="shape-btn" data-shape="triangle">Triángulos</button>
+                    <button class="shape-btn" data-shape="hexagon">Hexágonos</button>
+                </div>
+            </div>
+            
+            <div class="control-group">
+                <h3>Logo Central</h3>
+                <div class="logo-controls">
+                    <div class="file-input" onclick="document.getElementById('logo-upload').click()">
+                        <p>Haz clic para subir un logo</p>
+                        <small>PNG, JPG (Máx. 2MB)</small>
+                        <input type="file" id="logo-upload" accept="image/*">
+                    </div>
+                    
+                    <div class="logo-preview-container">
+                        <div class="logo-preview" id="logo-preview">
+                            <img id="logo-image" src="" alt="Logo preview">
+                        </div>
+                        <div>
+                            <div class="slider-container">
+                                <label for="logo-size">Tamaño:</label>
+                                <input type="range" id="logo-size" min="10" max="25" value="15">
+                                <span class="slider-value" id="logo-size-value">15%</span>
+                            </div>
+                            <p class="warning">Máximo 25% para mantener funcionalidad</p>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4>Forma del Logo</h4>
+                        <div class="logo-shape-controls">
+                            <button class="shape-btn active" data-logo-shape="square">Cuadrado</button>
+                            <button class="shape-btn" data-logo-shape="circle">Círculo</button>
+                            <button class="shape-btn" data-logo-shape="rounded">Redondeado</button>
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-secondary" onclick="removeLogo()">Quitar Logo</button>
+                </div>
+            </div>
+            
+            <div class="control-group">
+                <h3>Marcadores de Posición</h3>
+                <div class="shape-controls">
+                    <button class="shape-btn active" data-marker-shape="square">Cuadrados</button>
+                    <button class="shape-btn" data-marker-shape="circle">Círculos</button>
+                    <button class="shape-btn" data-marker-shape="rounded">Redondeados</button>
+                    <button class="shape-btn" data-marker-shape="diamond">Diamantes</button>
+                </div>
+            </div>
+            
+            <div class="control-group">
+                <h3>Opciones Avanzadas</h3>
+                <div>
+                    <div class="slider-container">
+                        <label for="qr-size">Tamaño QR:</label>
+                        <input type="range" id="qr-size" min="200" max="500" value="350">
+                        <span class="slider-value" id="qr-size-value">350px</span>
+                    </div>
+                    <div class="slider-container">
+                        <label for="qr-margin">Margen:</label>
+                        <input type="range" id="qr-margin" min="0" max="40" value="20">
+                        <span class="slider-value" id="qr-margin-value">20px</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>© 2025 REKO Portafolio. Todos los derechos reservados.</p>
+        </div>
+    </div>
+
+    <script>
+        // Configuración por defecto
+        const config = {
+            content: "https://reko-hub.github.io/portafolio-2025-reko/index.html",
+            darkColor: "#ff6b6b",
+            lightColor: "#ffffff",
+            shape: "square",
+            markerShape: "square",
+            logo: null,
+            logoSize: 15,
+            logoShape: "square",
+            qrSize: 350,
+            margin: 20
+        };
+
+        // Inicializar
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeControls();
+            generateQR();
+        });
+
+        // Inicializar controles
+        function initializeControls() {
+            // Contenido del QR
+            document.getElementById('qr-content').addEventListener('input', function() {
+                config.content = this.value;
+                generateQR();
+            });
+
+            // Colores
+            document.getElementById('qr-color').addEventListener('input', function() {
+                config.darkColor = this.value;
+                generateQR();
+            });
+
+            document.getElementById('bg-color').addEventListener('input', function() {
+                config.lightColor = this.value;
+                generateQR();
+            });
+
+            // Formas de módulos
+            document.querySelectorAll('.shape-btn[data-shape]').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.shape-btn[data-shape]').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    config.shape = this.dataset.shape;
+                    generateQR();
+                });
+            });
+
+            // Formas de marcadores
+            document.querySelectorAll('.shape-btn[data-marker-shape]').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.shape-btn[data-marker-shape]').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    config.markerShape = this.dataset.markerShape;
+                    generateQR();
+                });
+            });
+
+            // Formas de logo
+            document.querySelectorAll('.shape-btn[data-logo-shape]').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.shape-btn[data-logo-shape]').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    config.logoShape = this.dataset.logoShape;
+                    generateQR();
+                });
+            });
+
+            // Logo
+            document.getElementById('logo-upload').addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    if (file.size > 2 * 1024 * 1024) {
+                        alert('El archivo es demasiado grande. Máximo 2MB.');
+                        return;
+                    }
+                    
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        config.logo = e.target.result;
+                        document.getElementById('logo-image').src = config.logo;
+                        document.getElementById('logo-preview').style.display = 'block';
+                        generateQR();
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            // Tamaño del logo (limitado al 25% para mantener funcionalidad)
+            document.getElementById('logo-size').addEventListener('input', function() {
+                config.logoSize = parseInt(this.value);
+                document.getElementById('logo-size-value').textContent = this.value + '%';
+                generateQR();
+            });
+
+            // Tamaño del QR
+            document.getElementById('qr-size').addEventListener('input', function() {
+                config.qrSize = parseInt(this.value);
+                document.getElementById('qr-size-value').textContent = this.value + 'px';
+                document.getElementById('qr-display').style.width = this.value + 'px';
+                document.getElementById('qr-display').style.height = this.value + 'px';
+                generateQR();
+            });
+
+            // Margen
+            document.getElementById('qr-margin').addEventListener('input', function() {
+                config.margin = parseInt(this.value);
+                document.getElementById('qr-margin-value').textContent = this.value + 'px';
+                generateQR();
+            });
+        }
+
+        // Generar QR
+        function generateQR() {
+            const qrContainer = document.getElementById('qr-display');
+            qrContainer.innerHTML = '';
+            
+            // Crear canvas
+            const canvas = document.createElement('canvas');
+            const size = config.qrSize - (config.margin * 2);
+            canvas.width = size;
+            canvas.height = size;
+            const ctx = canvas.getContext('2d');
+            
+            // Generar QR
+            const qr = qrcode(0, 'H'); // Usar corrección de errores alta
+            qr.addData(config.content);
+            qr.make();
+            
+            const moduleCount = qr.getModuleCount();
+            const moduleSize = size / moduleCount;
+            
+            // Dibujar fondo
+            ctx.fillStyle = config.lightColor;
+            ctx.fillRect(0, 0, size, size);
+            
+            // Dibujar módulos según la forma seleccionada
+            ctx.fillStyle = config.darkColor;
+            
+            for (let row = 0; row < moduleCount; row++) {
+                for (let col = 0; col < moduleCount; col++) {
+                    if (qr.isDark(row, col)) {
+                        // Verificar si es un marcador de posición
+                        const isPositionMarker = 
+                            (row < 7 && col < 7) || 
+                            (row < 7 && col > moduleCount - 8) || 
+                            (row > moduleCount - 8 && col < 7);
+                        
+                        const shape = isPositionMarker ? config.markerShape : config.shape;
+                        drawModule(ctx, col * moduleSize, row * moduleSize, moduleSize, shape);
+                    }
+                }
+            }
+            
+            qrContainer.appendChild(canvas);
+            
+            // Agregar logo si existe
+            if (config.logo) {
+                addLogoToQR(qrContainer, canvas);
+            }
+        }
+
+        // Dibujar módulo según la forma
+        function drawModule(ctx, x, y, size, shape) {
+            ctx.save();
+            
+            switch (shape) {
+                case 'circle':
+                    ctx.beginPath();
+                    ctx.arc(x + size/2, y + size/2, size/2, 0, 2 * Math.PI);
+                    ctx.fill();
+                    break;
+                    
+                case 'rounded':
+                    const radius = size / 4;
+                    ctx.beginPath();
+                    ctx.moveTo(x + radius, y);
+                    ctx.lineTo(x + size - radius, y);
+                    ctx.quadraticCurveTo(x + size, y, x + size, y + radius);
+                    ctx.lineTo(x + size, y + size - radius);
+                    ctx.quadraticCurveTo(x + size, y + size, x + size - radius, y + size);
+                    ctx.lineTo(x + radius, y + size);
+                    ctx.quadraticCurveTo(x, y + size, x, y + size - radius);
+                    ctx.lineTo(x, y + radius);
+                    ctx.quadraticCurveTo(x, y, x + radius, y);
+                    ctx.closePath();
+                    ctx.fill();
+                    break;
+                    
+                case 'diamond':
+                    ctx.beginPath();
+                    ctx.moveTo(x + size/2, y);
+                    ctx.lineTo(x + size, y + size/2);
+                    ctx.lineTo(x + size/2, y + size);
+                    ctx.lineTo(x, y + size/2);
+                    ctx.closePath();
+                    ctx.fill();
+                    break;
+                    
+                case 'star':
+                    drawStar(ctx, x + size/2, y + size/2, size/2, size/4, 5);
+                    ctx.fill();
+                    break;
+                    
+                case 'heart':
+                    drawHeart(ctx, x + size/2, y + size/2, size/2);
+                    ctx.fill();
+                    break;
+                    
+                case 'triangle':
+                    ctx.beginPath();
+                    ctx.moveTo(x + size/2, y);
+                    ctx.lineTo(x + size, y + size);
+                    ctx.lineTo(x, y + size);
+                    ctx.closePath();
+                    ctx.fill();
+                    break;
+                    
+                case 'hexagon':
+                    drawHexagon(ctx, x + size/2, y + size/2, size/2);
+                    ctx.fill();
+                    break;
+                    
+                default: // square
+                    ctx.fillRect(x, y, size, size);
+            }
+            
+            ctx.restore();
+        }
+
+        // Función para dibujar estrella
+        function drawStar(ctx, cx, cy, outerRadius, innerRadius, points) {
+            ctx.beginPath();
+            for (let i = 0; i < 2 * points; i++) {
+                const angle = (i * Math.PI) / points;
+                const radius = i % 2 === 0 ? outerRadius : innerRadius;
+                const x = cx + Math.cos(angle) * radius;
+                const y = cy + Math.sin(angle) * radius;
+                if (i === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            }
+            ctx.closePath();
+        }
+
+        // Función para dibujar corazón
+        function drawHeart(ctx, x, y, size) {
+            ctx.beginPath();
+            const topCurveHeight = size * 0.3;
+            ctx.moveTo(x, y + size/3);
+            // Curvas izquierda superior
+            ctx.bezierCurveTo(
+                x, y, 
+                x - size/2, y, 
+                x - size/2, y + size/3
+            );
+            // Curvas izquierda inferior
+            ctx.bezierCurveTo(
+                x - size/2, y + size/2, 
+                x, y + size, 
+                x, y + size
+            );
+            // Curvas derecha inferior
+            ctx.bezierCurveTo(
+                x, y + size, 
+                x + size/2, y + size/2, 
+                x + size/2, y + size/3
+            );
+            // Curvas derecha superior
+            ctx.bezierCurveTo(
+                x + size/2, y, 
+                x, y, 
+                x, y + size/3
+            );
+            ctx.closePath();
+        }
+
+        // Función para dibujar hexágono
+        function drawHexagon(ctx, x, y, size) {
+            ctx.beginPath();
+            for (let i = 0; i < 6; i++) {
+                const angle = (i * 2 * Math.PI) / 6;
+                const px = x + size * Math.cos(angle);
+                const py = y + size * Math.sin(angle);
+                if (i === 0) {
+                    ctx.moveTo(px, py);
+                } else {
+                    ctx.lineTo(px, py);
+                }
+            }
+            ctx.closePath();
+        }
+
+        // Agregar logo al QR
+        function addLogoToQR(container, qrCanvas) {
+            const logoImg = new Image();
+            logoImg.onload = function() {
+                const logoSize = (config.qrSize * config.logoSize) / 100;
+                const logoX = (config.qrSize - logoSize) / 2;
+                const logoY = (config.qrSize - logoSize) / 2;
+                
+                const logoCanvas = document.createElement('canvas');
+                logoCanvas.width = config.qrSize;
+                logoCanvas.height = config.qrSize;
+                const logoCtx = logoCanvas.getContext('2d');
+                
+                // Dibujar el QR
+                logoCtx.drawImage(qrCanvas, config.margin, config.margin, config.qrSize - (config.margin * 2), config.qrSize - (config.margin * 2));
+                
+                // Dibujar fondo blanco para el logo
+                const bgSize = logoSize + 8;
+                const bgX = logoX - 4;
+                const bgY = logoY - 4;
+                logoCtx.fillStyle = config.lightColor;
+                
+                // Aplicar forma al fondo del logo
+                logoCtx.save();
+                applyShapeToContext(logoCtx, bgX, bgY, bgSize, bgSize, config.logoShape);
+                logoCtx.fill();
+                logoCtx.restore();
+                
+                // Recortar el logo según la forma seleccionada
+                logoCtx.save();
+                applyShapeToContext(logoCtx, logoX, logoY, logoSize, logoSize, config.logoShape);
+                logoCtx.clip();
+                logoCtx.drawImage(logoImg, logoX, logoY, logoSize, logoSize);
+                logoCtx.restore();
+                
+                // Reemplazar el canvas original
+                container.innerHTML = '';
+                container.appendChild(logoCanvas);
+            };
+            logoImg.src = config.logo;
+        }
+
+        // Aplicar forma al contexto para clipping
+        function applyShapeToContext(ctx, x, y, width, height, shape) {
+            ctx.beginPath();
+            
+            switch (shape) {
+                case 'circle':
+                    const radius = Math.min(width, height) / 2;
+                    ctx.arc(x + width/2, y + height/2, radius, 0, 2 * Math.PI);
+                    break;
+                    
+                case 'rounded':
+                    const cornerRadius = Math.min(width, height) / 8;
+                    ctx.moveTo(x + cornerRadius, y);
+                    ctx.lineTo(x + width - cornerRadius, y);
+                    ctx.quadraticCurveTo(x + width, y, x + width, y + cornerRadius);
+                    ctx.lineTo(x + width, y + height - cornerRadius);
+                    ctx.quadraticCurveTo(x + width, y + height, x + width - cornerRadius, y + height);
+                    ctx.lineTo(x + cornerRadius, y + height);
+                    ctx.quadraticCurveTo(x, y + height, x, y + height - cornerRadius);
+                    ctx.lineTo(x, y + cornerRadius);
+                    ctx.quadraticCurveTo(x, y, x + cornerRadius, y);
+                    break;
+                    
+                default: // square
+                    ctx.rect(x, y, width, height);
+            }
+            
+            ctx.closePath();
+        }
+
+        // Quitar logo
+        function removeLogo() {
+            config.logo = null;
+            document.getElementById('logo-preview').style.display = 'none';
+            document.getElementById('logo-upload').value = '';
+            generateQR();
+        }
+
+        // Descargar QR
+        function downloadQR() {
+            const container = document.getElementById('qr-display');
+            const canvas = container.querySelector('canvas');
+            
+            if (canvas) {
+                const link = document.createElement('a');
+                link.download = 'qr-personalizado-reko.png';
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            } else {
+                alert('Primero genera un código QR');
+            }
+        }
+
+        // Restablecer personalización
+        function resetCustomization() {
+            config.darkColor = "#ff6b6b";
+            config.lightColor = "#ffffff";
+            config.shape = "square";
+            config.markerShape = "square";
+            config.logo = null;
+            config.logoSize = 15;
+            config.logoShape = "square";
+            config.qrSize = 350;
+            config.margin = 20;
+            
+            // Actualizar controles
+            document.getElementById('qr-color').value = config.darkColor;
+            document.getElementById('bg-color').value = config.lightColor;
+            document.getElementById('logo-size').value = config.logoSize;
+            document.getElementById('qr-size').value = config.qrSize;
+            document.getElementById('qr-margin').value = config.margin;
+            
+            document.getElementById('logo-size-value').textContent = config.logoSize + '%';
+            document.getElementById('qr-size-value').textContent = config.qrSize + 'px';
+            document.getElementById('qr-margin-value').textContent = config.margin + 'px';
+            
+            // Actualizar botones activos
+            document.querySelectorAll('.shape-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            document.querySelector(`.shape-btn[data-shape="${config.shape}"]`).classList.add('active');
+            document.querySelector(`.shape-btn[data-marker-shape="${config.markerShape}"]`).classList.add('active');
+            document.querySelector(`.shape-btn[data-logo-shape="${config.logoShape}"]`).classList.add('active');
+            
+            document.getElementById('logo-preview').style.display = 'none';
+            document.getElementById('logo-upload').value = '';
+            
+            document.getElementById('qr-display').style.width = config.qrSize + 'px';
+            document.getElementById('qr-display').style.height = config.qrSize + 'px';
+            
+            generateQR();
+        }
+    </script>
+</body>
+</html>

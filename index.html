@@ -6,7 +6,7 @@
   <title>Portafolio 2025 - REKO</title>
   <!-- Favicon -->
   <link rel="icon" href="imagen/responsive 2@72x.png" type="image/png">
-
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     /* Variables de colores y estilos */
     /* Variables de colores y estilos */
@@ -319,8 +319,17 @@ header.scrolled .nav-container {
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
+  margin-left: -110px;
 }
-
+/* 🔸 En pantallas pequeñas (mobile), el logo se queda fijo sin moverse */
+@media (max-width: 768px) {
+  .logo {
+    margin-left: 0;      /* lo regresa a su posición normal */
+    transform: none;     /* desactiva cualquier movimiento */
+    animation: none;     /* si no quieres que flote en móvil */
+    justify-content: center; /* opcional: centra el logo en móvil */
+  }
+}
 header.scrolled .logo {
   font-size: 1.5rem;
 }
@@ -411,6 +420,9 @@ nav ul li:nth-child(4) a::before {
 nav ul li:nth-child(5) a::before {
   content: '📷';
 }
+nav ul li:nth-child(6) a::before {
+      content: '🌐';
+    }
 
 /* Efecto de fondo animado */
 nav ul li a::after {
@@ -660,13 +672,10 @@ nav ul li a.active ~ ::after {
   100% { transform: translateY(0px); }
 }
 
-/* Hero - CORRECCIÓN ESPECÍFICA PARA IPHONE */
+/* Hero con Video - CORREGIDO */
+/* Hero con Video - MEJORADO PARA MÓVIL */
 .hero {
-  background: url('imagen/PORTADA REKO@72x-100.jpg');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
+  position: relative;
   color: var(--light-text);
   padding: var(--spacing-lg) var(--spacing-md);
   text-align: center;
@@ -675,50 +684,110 @@ nav ul li a.active ~ ::after {
   flex-direction: column; 
   justify-content: center; 
   align-items: center;
-  position: relative;
+  overflow: hidden;
 }
 
-.hero::before {
-  content: '';
+/* Video de escritorio (oculto en móvil) */
+.hero-video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  z-index: 1;
+  object-fit: cover;
+}
+
+/* Video para móvil (oculto en escritorio) */
+.hero-video-mobile {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  object-fit: cover;
+}
+
+.hero-overlay {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.4) 100%);
-  z-index: 1;
+  background: radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.6) 100%);
+  z-index: 2;
 }
 
-.hero h1 { 
+.hero-content {
+  position: relative;
+  z-index: 3;
+  max-width: 800px;
+}
+
+.hero-content h1 { 
   font-size: 4rem; 
   margin-bottom: var(--spacing-sm); 
   font-weight: 800; 
   letter-spacing: 3px; 
-  position: relative;
-  z-index: 2;
   animation: float 4s ease-in-out infinite;
   text-shadow: 0 5px 15px rgba(0,0,0,0.5);
 }
-.hero h2 { 
+
+.hero-content h2 { 
   font-size: 2.5rem; 
   font-weight: 300; 
   margin-bottom: var(--spacing-md); 
   color: var(--accent-color); 
-  position: relative;
-  z-index: 2;
   animation: float 5s ease-in-out infinite 0.5s;
 }
-.hero p { 
+
+.hero-content p { 
   font-size: 1.2rem; 
-  max-width: 600px; 
   margin: 0 auto var(--spacing-md); 
   opacity: 0.9; 
-  position: relative;
-  z-index: 2;
 }
+/* MEDIA QUERY PARA MÓVIL - CORREGIDA */
+@media (max-width: 768px) {
+  .hero {
+    background: none; /* Eliminar el background fallback */
+    padding: var(--spacing-md) var(--spacing-sm);
+  }
+  
+  /* Ocultar video de escritorio en móvil */
+  .hero-video {
+    display: none;
+  }
+  
+  /* Mostrar video optimizado para móvil */
+  .hero-video-mobile {
+    display: block;
+  }
+  
+  .hero-content h1 { 
+    font-size: 2.8rem; 
+    padding: 0 1rem;
+  }
+  
+  .hero-content h2 { 
+    font-size: 1.6rem; 
+    padding: 0 1rem;
+  }
+  
+  .hero-content p { 
+    font-size: 1rem; 
+    padding: 0 1.5rem;
+  }
+}
+/* Alternativa usando transform para mayor control - CORREGIDA */
 .cta-button {
   display: inline-block; 
-  background-color: var(--accent-color);
+  background: transparent; /* FONDO TRANSPARENTE */
   color: var(--light-text); 
   padding: 0.8rem 2rem;
   border-radius: 50px; 
@@ -727,12 +796,13 @@ nav ul li a.active ~ ::after {
   transition: var(--transition); 
   margin-top: var(--spacing-sm);
   position: relative;
-  z-index: 2;
-  animation: float 3s ease-in-out infinite 1s;
+  z-index: 3;
   box-shadow: 0 5px 15px rgba(255,107,107,0.4);
   overflow: hidden;
   -webkit-tap-highlight-color: transparent;
+  border: 2px solid rgba(255, 255, 255, 0.3); /* Borde sutil para visibilidad */
 }
+
 .cta-button::before {
   content: '';
   position: absolute;
@@ -740,17 +810,82 @@ nav ul li a.active ~ ::after {
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
   transition: left 0.5s;
+  z-index: -1;
 }
+
 .cta-button:hover::before {
   left: 100%;
 }
+
 .cta-button:hover { 
   transform: translateY(-3px) scale(1.05); 
   box-shadow: 0 10px 25px rgba(255,107,107,0.6); 
+  border-color: rgba(255, 255, 255, 0.6); /* Borde más visible al hover */
+  background: rgba(255, 255, 255, 0.1); /* Fondo sutil al hover */
 }
 
+/* Escritorio - SUBIR MUCHO MÁS con transform */
+@media (min-width: 769px) {
+  .cta-button {
+    transform: translateY(-3rem); /* Sube 3rem en PC */
+    margin-top: 2rem;
+    animation: float-pc 3s ease-in-out infinite 1s; /* Animación específica para PC */
+  }
+  
+  .cta-button:hover {
+    transform: translateY(-3.2rem) scale(1.05);
+    animation: none; /* Detener animación al hover */
+  }
+}
+
+/* Móvil - BAJAR MUCHO MÁS con transform */
+@media (max-width: 768px) {
+  .cta-button {
+    transform: translateY(3rem); /* Baja 3rem en móvil */
+    margin-top: 2rem;
+    animation: float-mobile 3s ease-in-out infinite 1s; /* Animación específica para móvil */
+  }
+  
+  .cta-button:hover {
+    transform: translateY(2.8rem) scale(1.05);
+    animation: none; /* Detener animación al hover */
+  }
+}
+
+/* ANIMACIONES CORREGIDAS que respetan la posición base */
+@keyframes float-pc {
+  0% { transform: translateY(-3rem); }
+  50% { transform: translateY(-3.5rem); } /* Flotar desde -3rem */
+  100% { transform: translateY(-3rem); }
+}
+
+@keyframes float-mobile {
+  0% { transform: translateY(3rem); }
+  50% { transform: translateY(2.5rem); } /* Flotar desde +3rem */
+  100% { transform: translateY(3rem); }
+}
+
+/* Para pantallas muy pequeñas - aún más bajo */
+@media (max-width: 480px) {
+  .cta-button {
+    transform: translateY(4rem);
+    margin-top: 2.5rem;
+    animation: float-mobile-small 3s ease-in-out infinite 1s;
+  }
+  
+  .cta-button:hover {
+    transform: translateY(3.8rem) scale(1.05);
+    animation: none;
+  }
+}
+
+@keyframes float-mobile-small {
+  0% { transform: translateY(4rem); }
+  50% { transform: translateY(3.5rem); } /* Flotar desde +4rem */
+  100% { transform: translateY(4rem); }
+}
 /* Botón para volver arriba */
 .back-to-top {
   position: fixed;
@@ -923,7 +1058,7 @@ nav ul li a.active ~ ::after {
   font-size: 1.4rem;
   text-align: center;
   margin-bottom: 1.5rem;
-  background: linear-gradient(135deg, #ff6b6b, #ffbc21);
+  background: linear-gradient(135deg, #8008f0, #ffbc21);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -1242,57 +1377,133 @@ footer p {
   margin-right: auto;
 }
 
+/* Estilos para los logos de redes sociales */
 .social-links {
-  display: flex;
-  justify-content: center;
-  gap: var(--spacing-md);
-  margin: var(--spacing-md) 0;
-  flex-wrap: wrap;
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin: var(--spacing-md) 0;
+    flex-wrap: wrap;
+    align-items: center;
 }
 
 .social-links a {
-  color: var(--light-text);
-  font-size: 1.8rem;
-  transition: var(--transition);
-  padding: 10px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.1);
-  width: 50px;
-  height: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  animation: float 4s ease-in-out infinite;
-  position: relative;
-  overflow: hidden;
-  -webkit-tap-highlight-color: transparent;
+    color: var(--light-text);
+    font-size: 1.5rem;
+    transition: var(--transition);
+    padding: 12px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: float 4s ease-in-out infinite;
+    position: relative;
+    overflow: hidden;
+    -webkit-tap-highlight-color: transparent;
+    text-decoration: none;
 }
+
 .social-links a:nth-child(2) { animation-delay: 0.2s; }
 .social-links a:nth-child(3) { animation-delay: 0.4s; }
 .social-links a:nth-child(4) { animation-delay: 0.6s; }
-.social-links a:nth-child(5) { animation-delay: 0.8s; }
 
 .social-links a::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-  transition: left 0.5s;
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    transition: left 0.5s;
 }
+
 .social-links a:hover::before {
-  left: 100%;
+    left: 100%;
+}
+
+/* Colores específicos para cada red social al hacer hover */
+.social-email:hover {
+    background: #ea4335;
+    color: white;
+}
+
+.social-linkedin:hover {
+    background: #0077b5;
+    color: white;
+}
+
+.social-instagram:hover {
+    background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+    color: white;
+}
+
+.social-facebook:hover {
+    background: #1877f2;
+    color: white;
 }
 
 .social-links a:hover {
-  color: var(--accent-color);
-  background: rgba(255, 255, 255, 0.2);
-  transform: translateY(-5px) scale(1.1);
-  box-shadow: 0 5px 15px rgba(255,107,107,0.4);
+    transform: translateY(-5px) scale(1.1);
+    box-shadow: 0 5px 15px rgba(255,107,107,0.4);
 }
 
+/* Texto de las redes sociales */
+.social-text {
+    position: absolute;
+    bottom: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.8rem;
+    background: rgba(0, 0, 0, 0.8);
+    padding: 0.4rem 0.8rem;
+    border-radius: 4px;
+    opacity: 0;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    pointer-events: none;
+    color: white;
+    font-weight: 500;
+}
+
+.social-links a:hover .social-text {
+    opacity: 1;
+    bottom: -50px;
+}
+
+/* Para el enlace de email que tiene texto largo */
+.social-email .social-text {
+    width: max-content;
+    max-width: 200px;
+    white-space: normal;
+    text-align: center;
+    line-height: 1.3;
+}
+
+/* Responsive para móviles */
+@media (max-width: 768px) {
+    .social-links {
+        gap: 1rem;
+    }
+    
+    .social-links a {
+        width: 50px;
+        height: 50px;
+        font-size: 1.3rem;
+    }
+    
+    .social-text {
+        font-size: 0.7rem;
+        padding: 0.3rem 0.6rem;
+    }
+    
+    .social-links a:hover .social-text {
+        bottom: -45px;
+    }
+}
 .copyright {
   margin-top: var(--spacing-md);
   opacity: 0.7;
@@ -1346,42 +1557,32 @@ footer p {
     padding: 0.7rem 1rem;
   }
   
-  /* CORRECCIÓN ESPECÍFICA PARA LA IMAGEN DE PORTADA EN MÓVIL */
+  /* Hero con Video - Responsive */
   .hero {
-    background: url('imagen/p.a.rsive@72x.png');
+    background: url('imagen/V_deo reko logo peque_o.mp4');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    background-attachment: fixed;
-    color: var(--light-text);
     padding: var(--spacing-md) var(--spacing-sm);
-    text-align: center;
-    min-height: 100vh;
-    display: flex; 
-    flex-direction: column; 
-    justify-content: center; 
-    align-items: center;
-    position: relative;
   }
   
-  .hero h1 { 
+  .hero-video {
+    display: none; /* Ocultar video en móvil para mejor rendimiento */
+  }
+  
+  .hero-content h1 { 
     font-size: 2.8rem; 
-    margin-bottom: 1rem;
     padding: 0 1rem;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
   }
   
-  .hero h2 { 
+  .hero-content h2 { 
     font-size: 1.6rem; 
-    margin-bottom: 1.5rem;
     padding: 0 1rem;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
   }
   
-  .hero p { 
+  .hero-content p { 
     font-size: 1rem; 
     padding: 0 1.5rem;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
   }
   
   /* Sección ¿Quién soy? - Correcciones para móvil */
@@ -1622,12 +1823,12 @@ footer p {
 
 /* Ajustes adicionales para pantallas muy pequeñas */
 @media (max-width: 390px) {
-  .hero h1 { 
+  .hero-content h1 { 
     font-size: 2.5rem; 
     padding: 0 0.5rem;
   }
   
-  .hero h2 { 
+  .hero-content h2 { 
     font-size: 1.4rem; 
     padding: 0 0.5rem;
   }
@@ -1722,7 +1923,7 @@ footer p {
   }
   
   /* Asegurar que las animaciones funcionen en iOS */
-  .logo, .hero h1, .hero h2, .cta-button {
+  .logo, .hero-content h1, .hero-content h2, .cta-button {
     animation-duration: 6s;
   }
   
@@ -1794,6 +1995,7 @@ footer p {
             <li><a href="ilustracion.html">Ilustración</a></li>
             <li><a href="multimedia.html">Multimedia</a></li>
             <li><a href="Fotografias.html">Fotografías</a></li>
+            <li><a href="web.html">Web</a></li>
           </ul>
         </nav>
       </div>
@@ -1807,11 +2009,14 @@ footer p {
       </div>
       <button class="close-sidebar" onclick="toggleMenu()">✕</button>
       <ul>
+        <li><a href="index.html"class="active" onclick="toggleMenu()">🏠 Inicio</a></li>
+        <li><a href="publicidad.html" onclick="toggleMenu()">📢 Publicidad</a></li>
         <li><a href="ilustracion.html" onclick="toggleMenu()">🎨 Ilustración</a></li>
         <li><a href="multimedia.html" onclick="toggleMenu()">🎥 Multimedia</a></li>
         <li><a href="Fotografias.html" onclick="toggleMenu()">📷 Fotografías</a></li>
-        <li><a href="publicidad.html" onclick="toggleMenu()">📢 Publicidad</a></li>
-        <li><a href="index.html"class="active" onclick="toggleMenu()">🏠 Inicio</a></li>
+        <li><a href="web.html" onclick="toggleMenu()">🌐 Web</a></li>
+        
+        
       </ul>
       
       <!-- Información adicional en sidebar -->
@@ -1823,11 +2028,31 @@ footer p {
     <!-- Botón para volver arriba -->
     <a href="#hero-section" class="back-to-top" id="backToTop">↑</a>
 
-    <!-- Hero -->
-    <section class="hero" id="hero-section">
-      
-      <a href="#proyectos-section" class="cta-button">Ver Proyectos</a>
-    </section>
+   <!-- Hero con Video MEJORADO -->
+<section class="hero" id="hero-section">
+  <!-- Video de fondo para ESCRITORIO -->
+  <video class="hero-video" autoplay muted loop playsinline>
+    <source src="imagen/animacion rapida.mp4" type="video/mp4">
+    Tu navegador no soporta el elemento de video.
+  </video>
+  
+  <!-- Video de fondo para MÓVIL -->
+  <video class="hero-video-mobile" autoplay muted loop playsinline>
+    <source src="imagen/V_deo reko logo peque_o.mp4" type="video/mp4">
+    Tu navegador no soporta el elemento de video.
+  </video>
+  
+  <!-- Overlay para mejor contraste -->
+  <div class="hero-overlay"></div>
+  
+  <!-- Contenido del hero -->
+  <div class="hero-content">
+    <h1></h1>
+    <h2></h2>
+    <p></p>
+    <a href="#proyectos-section" class="cta-button">Ver Proyectos</a>
+  </div>
+</section>
 
     <!-- Sección Quién Soy MEJORADA -->
     <section class="quien-soy" id="quien-soy-section">
@@ -1840,7 +2065,7 @@ footer p {
     
         <!-- Texto (ahora a la izquierda) -->
         <div class="quien-soy-texto">
-          <p><strong>Soy Rebeca, estudiante de Diseño Gráfico Web Multimedia en la Universidad Francisco Gavidia.</strong></p>
+          <p><strong>Soy Rebeca, estudiante de Diseño Gráfico Web.</strong></p>
           <p>En este portafolio presento mi estilo, mi identidad y mi visión creativa, con un enfoque en el área multimedia, explorando recursos audiovisuales e interactivos que transmiten ideas de forma dinámica y atractiva, y a su vez integrando el área web con propuestas funcionales e intuitivas.</p>
           <p>De esta experiencia surge Reko, mi marca personal, inspirada en la historia del pez koi que, con esfuerzo y perseverancia, logra transformarse en dragón. Ese significado representa mi propio proceso de crecimiento, superación y evolución dentro del diseño web multimedia, proyectando cada proyecto como un paso más en esa transformación.</p>
           
@@ -1897,24 +2122,34 @@ footer p {
     </section>
 
     <!-- Footer con imagen personalizada -->
-    <footer id="contacto-section">
+    <footer>
       <canvas id="footer-canvas" class="footer-particles"></canvas>
       <div class="footer-content">
-        <h2>Contacto</h2>
-            <p>¿Te gustaría comunicarte conmigo? Aquí están mis redes y un formulario de contacto.</p>
+          <h2>Contacto</h2>
+          <p>contáctame en mis redes sociales.</p>
+      
+          <div class="social-links">
+              <a href="mailto:reyesrebeca599@gmail.com" title="Email" class="social-email">
+                  <i class="fas fa-envelope"></i>
+                  <span class="social-text">reyesrebeca599@gmail.com</span>
+              </a>
+              <a href="#" title="LinkedIn" class="social-linkedin">
+                  <i class="fab fa-linkedin-in"></i>
+                  <span class="social-text">LinkedIn</span>
+              </a>
+              <a href="https://www.instagram.com/rebe8047/" title="Instagram" class="social-instagram">
+                  <i class="fab fa-instagram"></i>
+                  <span class="social-text">@rebe8047</span>
+              </a>
+              <a href="https://www.facebook.com/share/179HkoPbXb/?mibextid=wwXIfr" title="Facebook" class="social-facebook">
+                  <i class="fab fa-facebook-f"></i>
+                  <span class="social-text">Facebook</span>
+              </a>
+          </div>
           
-        <div class="social-links">
-          <a href="#" title="Email">📧</a>
-          <a href="#" title="LinkedIn">💼</a>
-          <a href="#" title="Twitter">🐦</a>
-          <a href="#" title="Instagram">📷</a>
-          <a href="#" title="Behance">🎨</a>
-        </div>
-        
-        <p class="copyright">© 2025 REKO Portafolio. Todos los derechos reservados.</p>
+          <p class="copyright">© 2025 REKO Portafolio. Todos los derechos reservados.</p>
       </div>
-    </footer>
-  </div>
+  </footer>
 
   <script>
     // Variables para el tutorial
@@ -1959,6 +2194,7 @@ footer p {
         // Inicializar el contenido principal
         document.getElementById("content").style.display = "block";
         initHeaderEffects(); // Inicializar efectos del header
+        initHeroVideo(); // Inicializar video del hero
         initKoiParticles();
         initFooterParticles();
         initScrollEffects();
@@ -1992,6 +2228,62 @@ footer p {
         }
       });
     }
+
+// Inicializar video del hero MEJORADO
+function initHeroVideo() {
+  const desktopVideo = document.querySelector('.hero-video');
+  const mobileVideo = document.querySelector('.hero-video-mobile');
+  
+  // Detectar si es móvil
+  const isMobile = window.innerWidth <= 768;
+  
+  if (isMobile) {
+    // En móvil: usar video optimizado
+    if (mobileVideo) {
+      mobileVideo.play().catch(error => {
+        console.log('Auto-play prevenido en móvil:', error);
+        // Fallback a imagen de fondo si el video falla
+        document.querySelector('.hero').style.backgroundImage = "url('imagen/PORTADA REKO@72x-100.jpg')";
+      });
+      
+      // Ocultar video de escritorio
+      if (desktopVideo) {
+        desktopVideo.style.display = 'none';
+      }
+    }
+  } else {
+    // En escritorio: usar video original
+    if (desktopVideo) {
+      desktopVideo.play().catch(error => {
+        console.log('Auto-play prevenido en escritorio:', error);
+        // Fallback a imagen de fondo si el video falla
+        document.querySelector('.hero').style.backgroundImage = "url('imagen/PORTADA REKO@72x-100.jpg')";
+      });
+      
+      // Ocultar video móvil
+      if (mobileVideo) {
+        mobileVideo.style.display = 'none';
+      }
+    }
+  }
+  
+  // Manejar cambios de tamaño de ventana
+  window.addEventListener('resize', function() {
+    const isNowMobile = window.innerWidth <= 768;
+    
+    if (desktopVideo && mobileVideo) {
+      if (isNowMobile) {
+        desktopVideo.style.display = 'none';
+        mobileVideo.style.display = 'block';
+        mobileVideo.play().catch(e => console.log('Error al reproducir video móvil:', e));
+      } else {
+        mobileVideo.style.display = 'none';
+        desktopVideo.style.display = 'block';
+        desktopVideo.play().catch(e => console.log('Error al reproducir video escritorio:', e));
+      }
+    }
+  });
+}
     
     // Cerrar sidebar al hacer clic fuera de él
     document.addEventListener('click', function(event) {
@@ -2045,6 +2337,7 @@ footer p {
       // Inicializar el contenido principal
       document.getElementById("content").style.display = "block";
       initHeaderEffects(); // Inicializar efectos del header
+      initHeroVideo(); // Inicializar video del hero
       initKoiParticles();
       initFooterParticles();
       initScrollEffects();
@@ -2182,7 +2475,7 @@ function init3DCarousel() {
     {
       title: "Publicidad y Redes Sociales",
       description: "Campañas publicitarias creativas y estrategias de redes sociales.",
-      image: "imagen/publicidad/post  para marketplace/post 1 marketplace.png",
+      image: "imagen/publi4.png",
       link: "publicidad.html"
     },
     {
@@ -2206,10 +2499,10 @@ function init3DCarousel() {
     {
       title: "Web",
       description: "Diseño y desarrollo de sitios web responsivos.",
-      image: "🌐",
+      image: "imagen/web 2.png",
       link: "web.html"
     },
-    {
+    /*{
       title: "Currículum",
       description: "Mi experiencia profesional y trayectoria.",
       image: "📄",
@@ -2221,6 +2514,7 @@ function init3DCarousel() {
       image: "💡",
       link: "publicidad.html"
     }
+      */
   ];
   
   let currentIndex = 0;

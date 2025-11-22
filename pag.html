@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Footer con Partículas y Logos Reales</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #1a1a2e;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .main-content {
+            flex: 1;
+            padding: 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .main-content h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(to right, #4cc9f0, #4361ee);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 1rem;
+        }
+        
+        .main-content p {
+            max-width: 600px;
+            line-height: 1.6;
+            color: #e0e0e0;
+        }
+        
+        footer {
+            position: relative;
+            background: linear-gradient(to right, #0f3460, #16213e);
+            padding: 3rem 2rem;
+            overflow: hidden;
+            box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .footer-particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        
+        .footer-content {
+            position: relative;
+            z-index: 2;
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .footer-content h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, #4cc9f0, #4361ee);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        
+        .footer-content p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            color: #e0e0e0;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            color: white;
+            font-size: 1.8rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Colores específicos para cada red social */
+        .social-links a.email:hover {
+            background: #ea4335;
+        }
+        
+        .social-links a.linkedin:hover {
+            background: #0077b5;
+        }
+        
+        .social-links a.instagram:hover {
+            background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+        }
+        
+        .social-links a.behance:hover {
+            background: #0057ff;
+        }
+        
+        .social-links a.facebook:hover {
+            background: #1877f2;
+        }
+        
+        .social-links a:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .social-links a span {
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.8rem;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+            opacity: 0;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+        
+        .social-links a:hover span {
+            opacity: 1;
+            bottom: -40px;
+        }
+        
+        .copyright {
+            margin-top: 2.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #a0a0a0;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .footer-content h2 {
+                font-size: 2rem;
+            }
+            
+            .social-links a {
+                width: 50px;
+                height: 50px;
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-content">
+        <div>
+            <h1>Mi Portafolio</h1>
+            <p>Este es un ejemplo de página con un footer moderno que incluye partículas interactivas y logos reales de redes sociales.</p>
+        </div>
+    </div>
+    
+    <footer>
+        <canvas id="footer-canvas" class="footer-particles"></canvas>
+        <div class="footer-content">
+            <h2>Contacto</h2>
+            <p>Contáctame en mis redes sociales. Estaré encantado de responder a tus preguntas y colaborar en proyectos interesantes.</p>
+            
+            <div class="social-links">
+                <a href="#" class="email" title="Email">
+                    <i class="fas fa-envelope"></i>
+                    <span>Email</span>
+                </a>
+                <a href="#" class="linkedin" title="LinkedIn">
+                    <i class="fab fa-linkedin-in"></i>
+                    <span>LinkedIn</span>
+                </a>
+                <a href="#" class="instagram" title="Instagram">
+                    <i class="fab fa-instagram"></i>
+                    <span>Instagram</span>
+                </a>
+                <a href="#" class="behance" title="Behance">
+                    <i class="fab fa-behance"></i>
+                    <span>Behance</span>
+                </a>
+                <a href="#" class="facebook" title="Facebook">
+                    <i class="fab fa-facebook-f"></i>
+                    <span>Facebook</span>
+                </a>
+            </div>
+            
+            <div class="copyright">
+                &copy; 2023 Todos los derechos reservados
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const canvas = document.getElementById('footer-canvas');
+            const ctx = canvas.getContext('2d');
+            const footer = document.querySelector('footer');
+            
+            // Ajustar tamaño del canvas
+            function resizeCanvas() {
+                canvas.width = canvas.offsetWidth;
+                canvas.height = canvas.offsetHeight;
+            }
+            
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+            
+            // Configuración de partículas
+            const particles = [];
+            const particleCount = 50;
+            const colors = ['#4cc9f0', '#4361ee', '#3a0ca3', '#7209b7', '#f72585'];
+            
+            // Crear partículas
+            for (let i = 0; i < particleCount; i++) {
+                particles.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    size: Math.random() * 3 + 1,
+                    speedX: Math.random() * 1 - 0.5,
+                    speedY: Math.random() * 1 - 0.5,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    opacity: Math.random() * 0.5 + 0.2
+                });
+            }
+            
+            // Dibujar partículas
+            function drawParticles() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                particles.forEach(particle => {
+                    ctx.beginPath();
+                    ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+                    ctx.fillStyle = particle.color;
+                    ctx.globalAlpha = particle.opacity;
+                    ctx.fill();
+                    
+                    // Actualizar posición
+                    particle.x += particle.speedX;
+                    particle.y += particle.speedY;
+                    
+                    // Rebotar en los bordes
+                    if (particle.x < 0 || particle.x > canvas.width) particle.speedX *= -1;
+                    if (particle.y < 0 || particle.y > canvas.height) particle.speedY *= -1;
+                    
+                    // Conectar partículas cercanas
+                    particles.forEach(otherParticle => {
+                        const dx = particle.x - otherParticle.x;
+                        const dy = particle.y - otherParticle.y;
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+                        
+                        if (distance < 100) {
+                            ctx.beginPath();
+                            ctx.strokeStyle = particle.color;
+                            ctx.globalAlpha = 0.1 * (1 - distance / 100);
+                            ctx.lineWidth = 0.5;
+                            ctx.moveTo(particle.x, particle.y);
+                            ctx.lineTo(otherParticle.x, otherParticle.y);
+                            ctx.stroke();
+                        }
+                    });
+                });
+                
+                requestAnimationFrame(drawParticles);
+            }
+            
+            drawParticles();
+            
+            // Efecto de interacción con el mouse
+            let mouseX = 0;
+            let mouseY = 0;
+            let mouseInFooter = false;
+            
+            footer.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX - footer.getBoundingClientRect().left;
+                mouseY = e.clientY - footer.getBoundingClientRect().top;
+                mouseInFooter = true;
+            });
+            
+            footer.addEventListener('mouseleave', () => {
+                mouseInFooter = false;
+            });
+            
+            // Añadir efecto de repulsión a las partículas cuando el mouse está cerca
+            function interactWithParticles() {
+                if (mouseInFooter) {
+                    particles.forEach(particle => {
+                        const dx = particle.x - mouseX;
+                        const dy = particle.y - mouseY;
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+                        
+                        if (distance < 100) {
+                            const angle = Math.atan2(dy, dx);
+                            const force = (100 - distance) / 100;
+                            
+                            particle.x += Math.cos(angle) * force * 2;
+                            particle.y += Math.sin(angle) * force * 2;
+                        }
+                    });
+                }
+                
+                requestAnimationFrame(interactWithParticles);
+            }
+            
+            interactWithParticles();
+        });
+    </script>
+</body>
+</html>
