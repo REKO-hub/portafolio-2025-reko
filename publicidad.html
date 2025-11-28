@@ -737,9 +737,9 @@ nav ul li a.active ~ ::after {
 /* Botón para volver arriba */
 .back-to-top {
   position: fixed;
-  bottom: 2rem;
-  right: 2rem;
-  background-color: var(--accent-color);
+  bottom: 5rem !important;  /* CAMBIADO: de 4rem a 6rem */
+  right: 1.3rem;
+  background-color: #3f1a1a;
   color: white;
   width: 50px;
   height: 50px;
@@ -1155,7 +1155,24 @@ footer p {
     -webkit-tap-highlight-color: transparent;
   }
 }
-  </style>
+</style>
+  <!-- === AQUÍ VA EL SCRIPT DEL CHAT BOT === -->
+  <script type="text/javascript">
+    (function(d, t) {
+        var v = d.createElement(t), s = d.getElementsByTagName(t)[0];
+        v.onload = function() {
+          window.voiceflow.chat.load({
+            verify: { projectID: '692988c1d526f7542832202f' },
+            url: 'https://general-runtime.voiceflow.com',
+            versionID: 'production',
+            voice: {
+              url: "https://runtime-api.voiceflow.com"
+            }
+          });
+        }
+        v.src = "https://cdn.voiceflow.com/widget-next/bundle.mjs"; v.type = "text/javascript"; s.parentNode.insertBefore(v, s);
+    })(document, 'script');
+  </script>
 </head>
 <body>
   <!-- Overlay para sidebar -->
@@ -1891,6 +1908,12 @@ footer p {
       initKoiParticles();
       initFooterParticles();
       initScrollEffects();
+    });
+  // === AQUÍ VA EL CONTROL DEL CHAT BOT ===
+  document.getElementById('chat-toggle').addEventListener('click', function() {
+      if (window.voiceflow && window.voiceflow.chat) {
+        window.voiceflow.chat.open();
+      }
     });
   </script>
 </body>

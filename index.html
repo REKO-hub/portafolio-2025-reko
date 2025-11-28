@@ -889,9 +889,9 @@ nav ul li a.active ~ ::after {
 /* Botón para volver arriba */
 .back-to-top {
   position: fixed;
-  bottom: 2rem;
-  right: 2rem;
-  background-color: var(--accent-color);
+  bottom: 5rem !important;  /* CAMBIADO: de 4rem a 6rem */
+  right: 1.3rem;
+  background-color: #510c8a;
   color: white;
   width: 50px;
   height: 50px;
@@ -1732,13 +1732,15 @@ footer p {
   }
 
   /* Botón volver arriba en móvil */
+  @media (max-width: 768px) {
   .back-to-top {
-    bottom: 1rem;
-    right: 1rem;
+    bottom: 5rem !important;  /* CAMBIADO: de 1rem a 6rem */
+    right: 1.3rem;
     width: 45px;
     height: 45px;
     font-size: 1.2rem;
   }
+}
   
   /* Tutorial en móvil */
   #tutorial-container {
@@ -1934,6 +1936,23 @@ footer p {
 }
   
   </style>
+  <!-- === AQUÍ VA EL SCRIPT DEL CHAT BOT === -->
+  <script type="text/javascript">
+    (function(d, t) {
+        var v = d.createElement(t), s = d.getElementsByTagName(t)[0];
+        v.onload = function() {
+          window.voiceflow.chat.load({
+            verify: { projectID: '692988c1d526f7542832202f' },
+            url: 'https://general-runtime.voiceflow.com',
+            versionID: 'production',
+            voice: {
+              url: "https://runtime-api.voiceflow.com"
+            }
+          });
+        }
+        v.src = "https://cdn.voiceflow.com/widget-next/bundle.mjs"; v.type = "text/javascript"; s.parentNode.insertBefore(v, s);
+    })(document, 'script');
+  </script>
 </head>
 <body>
   <!-- Pantalla de video -->
@@ -2150,7 +2169,8 @@ footer p {
           <p class="copyright">© 2025 REKO Portafolio. Todos los derechos reservados.</p>
       </div>
   </footer>
-
+ 
+  
   <script>
     // Variables para el tutorial
     let currentTutorialStep = 0;
@@ -3005,6 +3025,11 @@ function init3DCarousel() {
         });
       });
     }
+    // === AQUÍ VA EL CONTROL DEL CHAT BOT ===
+    document.getElementById('chat-toggle').addEventListener('click', function() {
+      if (window.voiceflow && window.voiceflow.chat) {
+        window.voiceflow.chat.open();
+      }
+    });
   </script>
-</body>
 </html>
