@@ -1261,6 +1261,8 @@ footer p {
         <button class="category-filter" data-category="paisajes">Paisajes</button>
         <button class="category-filter" data-category="urbano">Urbano</button>
         <button class="category-filter" data-category="abstracto">Abstracto</button>
+        <button class="category-filter" data-category="animales">Animales</button>
+        <button class="category-filter" data-category="simbolico">Simbolico</button>
       </div>
       
       <!-- Galería 3D interactiva -->
@@ -1369,14 +1371,14 @@ footer p {
       
       // Datos de las fotografías
       const fotos = [
-        { src: "imagen/DSC_0023.JPG", title: "Composición #0023", description: "Fotografía artística con enfoque en detalles y texturas", category: "abstracto" },
+        { src: "imagen/DSC_0023.JPG", title: "Composición #0023", description: "Fotografía de una majestuosa de ave", category: "animales" },
         //{ src: "imagen/DSC_0024.JPG", title: "Composición #0024", description: "Captura que explora la relación entre luz y sombra", category: "abstracto" },
         //{ src: "imagen/DSC_0035.JPG", title: "Composición #0035", description: "Perspectiva única con elementos arquitectónicos", category: "urbano" },
         { src: "imagen/DSC_0055.JPG", title: "Composición #0055", description: "Juego de colores y formas en ambiente natural", category: "paisajes" },
         //{ src: "imagen/DSC_0068.JPG", title: "Composición #0068", description: "Captura de movimiento y dinamismo visual", category: "retratos" },
-        { src: "imagen/DSC_0095.JPG", title: "Composición #0095", description: "Enfoque minimalista con espacios negativos", category: "abstracto" },
+        { src: "imagen/DSC_0095.JPG", title: "Composición #0095", description: "un bellontapiro", category: "animales" },
         //{ src: "imagen/DSC_0096.JPG", title: "Composición #0096", description: "Detalles macro con texturas interesantes", category: "abstracto" },
-        { src: "imagen/DSC_0113.JPG", title: "Composición #0113", description: "Retrato ambiental con narrativa visual", category: "retratos" },
+        { src: "imagen/DSC_0113.JPG", title: "Composición #0113", description: "un majestuoso reptile", category: "animales" },
         //{ src: "imagen/DSC_0115.JPG", title: "Composición #0115", description: "Composición geométrica con líneas definidas", category: "urbano" },
         //{ src: "imagen/DSC_0119.JPG", title: "Composición #0119", description: "Captura espontánea con emociones genuinas", category: "retratos" },
         //{ src: "imagen/DSC_0126.JPG", title: "Composición #0126", description: "Paisaje urbano con perspectiva interesante", category: "urbano" },
@@ -1384,30 +1386,30 @@ footer p {
         //{ src: "imagen/DSC_0158.JPG", title: "Composición #0158", description: "Retrato con iluminación dramática", category: "retratos" },
         //{ src: "imagen/DSC_0159.JPG", title: "Composición #0159", description: "Composición abstracta con formas orgánicas", category: "abstracto" },
         //{ src: "imagen/DSC_0163.JPG", title: "Composición #0163", description: "Captura de ambiente con atmósfera única", category: "paisajes" },
-        { src: "imagen/DSC_0170.JPG", title: "Composición #0170", description: "Fotografía conceptual con narrativa visual", category: "abstracto" },
+        { src: "imagen/DSC_0170.JPG", title: "Composición #0170", description: "El Gigante de Cayalá es una obra escultórica", category: "simbólico" },
         //{ src: "imagen/DSC_0171.JPG", title: "Composición #0171", description: "Perspectiva aérea con patrones interesantes", category: "paisajes" },
         //{ src: "imagen/DSC_0174.JPG", title: "Composición #0174", description: "Detalle arquitectónico con precisión", category: "urbano" },
         //{ src: "imagen/DSC_0186.JPG", title: "Composición #0186", description: "Retrato ambiental con contexto narrativo", category: "retratos" },
         //{ src: "imagen/DSC_0188.JPG", title: "Composición #0188", description: "Composición simétrica con balance visual", category: "abstracto" },
-        { src: "imagen/DSC_0189.JPG", title: "Composición #0189", description: "Captura de momento decisivo", category: "retratos" },
+        { src: "imagen/DSC_0189.JPG", title: "Composición #0189", description: "bella composicion de arquitectura", category: "paisajes" },
         //{ src: "imagen/DSC_0192.JPG", title: "Composición #0192", description: "Fotografía de producto con estilo", category: "abstracto" },
-        { src: "imagen/DSC_0196.JPG", title: "Composición #0196", description: "Retrato con expresión auténtica", category: "retratos" },
+        { src: "imagen/DSC_0196.JPG", title: "Composición #0196", description: "arquitectura urbana", category: "urbano" },
         //{ src: "imagen/DSC_0198.JPG", title: "Composición #0198", description: "Paisaje natural con profundidad", category: "paisajes" },
-        { src: "imagen/DSC_0199.JPG", title: "Composición #0199", description: "Composición abstracta experimental", category: "abstracto" },
+        { src: "imagen/DSC_0199.JPG", title: "Composición #0199", description: "Composición de arquitectura urbana", category: "urbano" },
         { src: "imagen/DSC_0286.JPG", title: "Composición #0286", description: "Silueta con contraluz dramático", category: "retratos" },
         { src: "imagen/DSC_0373.JPG", title: "Composición #0373", description: "Captura urbana con vida callejera", category: "urbano" },
-        { src: "imagen/DSC_0640.JPG", title: "Composición #0640", description: "Detalle arquitectónico minimalista", category: "urbano" },
+        { src: "imagen/DSC_0640.JPG", title: "Composición #0640", description: "paisaje con colores relajantes", category: "paisaje" },
         //{ src: "imagen/DSC_0843.JPG", title: "Composición #0843", description: "Paisaje con efectos de luz natural", category: "paisajes" },
         { src: "imagen/DSC_0845.JPG", title: "Composición #0845", description: "Retrato con iluminación suave", category: "retratos" },
-        { src: "imagen/DSC_0853.JPG", title: "Composición #0853", description: "Composición geométrica urbana", category: "urbano" },
+        { src: "imagen/DSC_0853.JPG", title: "Composición #0853", description: "Una mirada que desafía al espectador y establece un diálogo silencioso pero cargado de presencia.", category: "retratos " },
         //{ src: "imagen/DSC_0860.JPG", title: "Composición #0860", description: "Captura de ambiente nocturno", category: "urbano" },
-        { src: "imagen/DSC_0873.JPG", title: "Composición #0873", description: "Detalle textural macro", category: "abstracto" },
+        { src: "imagen/DSC_0873.JPG", title: "Composición #0873", description: "Mirada frontal, desafío silencioso.", category: "retratos" },
         //{ src: "imagen/DSC_0878.JPG", title: "Composición #0878", description: "Perspectiva arquitectónica única", category: "urbano" },
         //{ src: "imagen/DSC_0882.JPG", title: "Composición #0882", description: "Composición con líneas conductoras", category: "abstracto" },
         //{ src: "imagen/DSC_0902.JPG", title: "Composición #0902", description: "Retrato ambiental narrativo", category: "retratos" },
         //{ src: "imagen/DSC_0906.JPG", title: "Composición #0906", description: "Paisaje con profundidad de campo", category: "paisajes" },
         //{ src: "imagen/DSC_0908.JPG", title: "Composición #0908", description: "Captura de movimiento creativo", category: "retratos" },
-        { src: "imagen/DSC_0937.JPG", title: "Composición #0937", description: "Composición final de la serie", category: "abstracto" }
+        { src: "imagen/DSC_0937.JPG", title: "Composición #0937", description: "Luz suave que esculpe timides", category: "retratos" }
       ];
       
       let currentCategory = 'all';
@@ -1456,7 +1458,9 @@ footer p {
           'retratos': 'Retratos',
           'paisajes': 'Paisajes',
           'urbano': 'Urbano',
-          'abstracto': 'Abstracto'
+          'abstracto': 'Abstracto',
+          'animales' : 'Animales',
+          'simbólico' : 'simbólico'
         };
         return names[category] || category;
       }
