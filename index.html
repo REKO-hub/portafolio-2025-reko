@@ -1934,7 +1934,128 @@ footer p {
     -webkit-transform-style: preserve-3d;
   }
 }
+  /* ========== CORRECCIONES ESPECÍFICAS PARA iOS - BOTONES DEL CARRUSEL ========== */
+
+/* 1. Hacer que los botones sean realmente clickeables en iOS */
+.carousel-btn {
+  cursor: pointer !important;
+  -webkit-tap-highlight-color: rgba(255, 107, 107, 0.3) !important;
+  min-height: 44px !important; /* Tamaño mínimo para toque en iOS (44x44px) */
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  position: relative !important;
+  z-index: 100 !important;
+  pointer-events: auto !important;
+}
+
+/* 2. El texto NO debe bloquear los clics - permite clics a través del texto */
+.carousel-content h3,
+.carousel-content p {
+  pointer-events: none !important;
+}
+
+/* 3. El botón SÍ debe recibir clics */
+.carousel-content .carousel-btn {
+  pointer-events: auto !important;
+  z-index: 20 !important;
+}
+
+/* 4. Mejorar la respuesta táctil en móvil/tablet */
+@media (max-width: 768px) {
+  .carousel-btn {
+    min-height: 44px !important;
+    padding: 12px 20px !important;
+    font-size: 1rem !important;
+  }
   
+  /* Asegurar que el contenido del carrusel sea clickeable */
+  .carousel-content {
+    pointer-events: auto !important;
+    z-index: 10 !important;
+    position: relative !important;
+  }
+  
+  /* Mejorar la respuesta táctil del botón al ser presionado */
+  .carousel-btn:active {
+    transform: scale(0.95) !important;
+    transition: transform 0.1s !important;
+    background: linear-gradient(135deg, #ff5252, #ffa726) !important;
+  }
+}
+
+/* 5. Solución para el problema de hover en dispositivos táctiles */
+@media (hover: none) and (pointer: coarse) {
+  .carousel-btn:hover {
+    transform: none !important;
+  }
+  
+  .carousel-btn:active {
+    transform: scale(0.95) !important;
+    background: linear-gradient(135deg, #ff5252, #ffa726) !important;
+  }
+}
+
+/* 6. Prevenir el comportamiento de doble toque en iOS */
+.carousel-item {
+  -webkit-touch-callout: none !important;
+  -webkit-user-select: none !important;
+  user-select: none !important;
+}
+
+/* 7. Asegurar que el botón tenga suficiente área táctil incluso en pantallas pequeñas */
+@media (max-width: 390px) {
+  .carousel-btn {
+    padding: 10px 16px !important;
+    font-size: 0.9rem !important;
+    min-height: 40px !important;
+  }
+  
+  /* Reducir el espacio entre elementos para que el botón sea más accesible */
+  .carousel-content {
+    padding: 0.8rem 1rem !important;
+    height: 42% !important;
+  }
+  
+  .carousel-content p {
+    margin-bottom: 0.8rem !important;
+    max-height: 50px !important;
+    overflow: hidden !important;
+  }
+}
+
+/* 8. Corrección específica para Safari iOS - scroll suave */
+@supports (-webkit-touch-callout: none) {
+  .carousel-btn {
+    -webkit-appearance: none !important;
+    border-radius: 30px !important;
+  }
+  
+  /* Mejorar rendimiento en iOS */
+  .carousel-3d-container {
+    -webkit-overflow-scrolling: touch !important;
+  }
+}
+
+/* 9. Asegurar que el enlace dentro del botón ocupe todo el espacio */
+.carousel-btn {
+  display: block !important;
+  width: 100% !important;
+  text-decoration: none !important;
+}
+
+/* 10. Efecto visual para confirmar que el botón es clickeable */
+.carousel-btn::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 30px;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.3);
+  pointer-events: none;
+}
   </style>
   <!-- === AQUÍ VA EL SCRIPT DEL CHAT BOT === -->
   <script type="text/javascript">
@@ -2084,7 +2205,7 @@ footer p {
     
         <!-- Texto (ahora a la izquierda) -->
         <div class="quien-soy-texto">
-          <p><strong>Soy Rebeca,Estudiante de Diseño Gráfico Web Multimedia.</strong></p>
+          <p><strong>Soy Rebeca, Estudiante de Diseño Gráfico Web Multimedia.</strong></p>
           <p>En este portafolio presento mi estilo, mi identidad y mi visión creativa, con un enfoque en el área multimedia, explorando recursos audiovisuales e interactivos que transmiten ideas de forma dinámica y atractiva, y a su vez integrando el área web con propuestas funcionales e intuitivas.</p>
           <p>De esta experiencia surge Reko, mi marca personal, inspirada en la historia del pez koi que, con esfuerzo y perseverancia, logra transformarse en dragón. Ese significado representa mi propio proceso de crecimiento, superación y evolución dentro del diseño web multimedia, proyectando cada proyecto como un paso más en esa transformación.</p>
           
@@ -2482,7 +2603,7 @@ function initHeroVideo() {
       }
     }
 
-// INICIALIZACIÓN DEL CARRUSEL 3D CORREGIDA
+// INICIALIZACIÓN DEL CARRUSEL 3D CORREGIDA PARA iOS
 function init3DCarousel() {
   const carousel = document.getElementById('carousel3D');
   const carouselContainer = document.getElementById('carouselContainer');
@@ -2522,19 +2643,6 @@ function init3DCarousel() {
       image: "imagen/web 2.png",
       link: "web.html"
     },
-    /*{
-      title: "Currículum",
-      description: "Mi experiencia profesional y trayectoria.",
-      image: "📄",
-      link: "cv.html"
-    },
-    {
-      title: "Proyectos Integrales",
-      description: "Soluciones completas combinando todas las áreas.",
-      image: "💡",
-      link: "publicidad.html"
-    }
-      */
   ];
   
   let currentIndex = 0;
@@ -2543,12 +2651,14 @@ function init3DCarousel() {
   let startX = 0;
   let dragDistance = 0;
   const dragThreshold = 50;
+  let touchStartTime = 0;
+  let isTap = false;
   
   // Limpiar contenedores existentes
   carousel.innerHTML = '';
   indicatorsContainer.innerHTML = '';
   
-  // Crear elementos del carrusel - SOLO 7 ELEMENTOS
+  // Crear elementos del carrusel
   projects.forEach((project, index) => {
     const item = document.createElement('div');
     item.className = 'carousel-item';
@@ -2559,6 +2669,7 @@ function init3DCarousel() {
       ? `<img src="${project.image}" alt="${project.title}">`
       : `<div style="display:flex; align-items:center; justify-content:center; height:100%; font-size:80px;">${project.image}</div>`;
     
+    // IMPORTANTE: onclick="event.stopPropagation()" en el botón
     item.innerHTML = `
       <div class="carousel-image">
         ${imageContent}
@@ -2566,21 +2677,35 @@ function init3DCarousel() {
       <div class="carousel-content">
         <h3>${project.title}</h3>
         <p>${project.description}</p>
-        <a href="${project.link}" class="carousel-btn">Ver Proyecto</a>
+        <a href="${project.link}" class="carousel-btn" onclick="event.stopPropagation(); return true;">Ver Proyecto</a>
       </div>
     `;
     
-    // Hacer clicable toda la tarjeta
+    // Evento de clic/touch para iOS - MODIFICADO
     item.addEventListener('click', (e) => {
-      // Prevenir navegación si estamos arrastrando
-      if (!isDragging && Math.abs(dragDistance) < 10) {
+      // Solo navegar si fue un toque claro (no arrastre) y NO fue en el botón
+      if (isTap && Math.abs(dragDistance) < 5 && !e.target.closest('.carousel-btn')) {
         window.location.href = project.link;
       }
     });
     
+    // Evento específico para touch en iOS
+    item.addEventListener('touchend', (e) => {
+      const touchDuration = Date.now() - touchStartTime;
+      
+      // Si fue un toque rápido (menos de 200ms) y no se arrastró mucho
+      if (touchDuration < 200 && Math.abs(dragDistance) < 10) {
+        // Y si el toque fue en el botón
+        if (e.target.closest('.carousel-btn')) {
+          e.preventDefault();
+          window.location.href = project.link;
+        }
+      }
+    }, { passive: false });
+    
     carousel.appendChild(item);
     
-    // Crear indicadores - SOLO 7 INDICADORES
+    // Crear indicadores
     const indicator = document.createElement('div');
     indicator.className = 'carousel-indicator';
     if (index === 0) indicator.classList.add('active');
@@ -2600,7 +2725,7 @@ function init3DCarousel() {
       // Remover todas las clases de posición
       item.classList.remove('active', 'prev', 'next', 'far-prev', 'far-next', 'hidden');
       
-      // Asignar clases según la posición - SOLO PARA 7 ELEMENTOS
+      // Asignar clases según la posición
       if (position === 0) {
         item.classList.add('active');
       } else if (position === 1) {
@@ -2640,36 +2765,30 @@ function init3DCarousel() {
     goToSlide(currentIndex - 1);
   }
   
-  // Event listeners para las flechas - CORREGIDOS
+  // Event listeners para las flechas
   prevBtn.addEventListener('click', (e) => {
     e.stopPropagation();
+    e.preventDefault();
     prevSlide();
   });
   
   nextBtn.addEventListener('click', (e) => {
     e.stopPropagation();
+    e.preventDefault();
     nextSlide();
   });
   
-  // ========== FUNCIONALIDAD DE ARRASTRE ==========
-  
-  // Eventos para mouse
-  carouselContainer.addEventListener('mousedown', startDrag);
-  document.addEventListener('mousemove', drag);
-  document.addEventListener('mouseup', endDrag);
-  
-  // Eventos para touch
-  carouselContainer.addEventListener('touchstart', startDrag);
-  document.addEventListener('touchmove', drag);
-  document.addEventListener('touchend', endDrag);
+  // ========== FUNCIONALIDAD DE ARRASTRE MEJORADA PARA iOS ==========
   
   function startDrag(e) {
     isDragging = true;
+    isTap = true;
     carouselContainer.classList.add('dragging');
     
     // Obtener posición inicial
     startX = getClientX(e);
     dragDistance = 0;
+    touchStartTime = Date.now();
     
     // Detener el desplazamiento automático
     stopAutoSlide();
@@ -2681,14 +2800,19 @@ function init3DCarousel() {
     const clientX = getClientX(e);
     dragDistance = clientX - startX;
     
+    // Si se arrastró más de 10px, no es un toque
+    if (Math.abs(dragDistance) > 10) {
+      isTap = false;
+    }
+    
     // Solo aplicar transformación visual durante el arrastre
-    // sin afectar la lógica del carrusel
     carousel.style.transform = `translateX(${dragDistance}px)`;
   }
   
   function endDrag() {
     if (!isDragging) return;
     
+    const touchDuration = Date.now() - touchStartTime;
     isDragging = false;
     carouselContainer.classList.remove('dragging');
     
@@ -2696,13 +2820,20 @@ function init3DCarousel() {
     carousel.style.transform = '';
     
     // Determinar si el arrastre fue suficiente para cambiar de slide
-    if (Math.abs(dragDistance) > dragThreshold) {
+    if (!isTap && Math.abs(dragDistance) > dragThreshold) {
+      e.preventDefault();
       if (dragDistance > 0) {
         prevSlide();
       } else {
         nextSlide();
       }
     }
+    
+    // Resetear después de un breve momento
+    setTimeout(() => {
+      isTap = false;
+      dragDistance = 0;
+    }, 100);
     
     // Reanudar desplazamiento automático
     startAutoSlide();
@@ -2712,6 +2843,23 @@ function init3DCarousel() {
   function getClientX(e) {
     return e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
   }
+  
+  // Eventos para mouse
+  carouselContainer.addEventListener('mousedown', startDrag);
+  document.addEventListener('mousemove', drag);
+  document.addEventListener('mouseup', endDrag);
+  
+  // Eventos para touch - MEJORADOS PARA iOS
+  carouselContainer.addEventListener('touchstart', startDrag, { passive: true });
+  carouselContainer.addEventListener('touchmove', drag, { passive: true });
+  carouselContainer.addEventListener('touchend', endDrag, { passive: false });
+  
+  // Prevenir comportamiento por defecto en iOS
+  carouselContainer.addEventListener('touchmove', (e) => {
+    if (isDragging && Math.abs(dragDistance) > 10) {
+      e.preventDefault();
+    }
+  }, { passive: false });
   
   // Desplazamiento automático
   function startAutoSlide() {
@@ -2729,6 +2877,12 @@ function init3DCarousel() {
   carouselContainer.addEventListener('mouseenter', stopAutoSlide);
   carouselContainer.addEventListener('mouseleave', startAutoSlide);
   
+  // Pausar cuando se toca en iOS
+  carouselContainer.addEventListener('touchstart', stopAutoSlide, { passive: true });
+  carouselContainer.addEventListener('touchend', () => {
+    setTimeout(startAutoSlide, 3000);
+  }, { passive: true });
+  
   // Navegación con teclado
   document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowLeft') prevSlide();
@@ -2737,6 +2891,11 @@ function init3DCarousel() {
   
   // Inicializar carrusel
   updateCarousel();
+  
+  // Añadir clase para iOS
+  if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
+    carouselContainer.classList.add('ios-device');
+  }
 }
 
     // SISTEMA DE PARTÍCULAS KOI - PECES INTERACTIVOS CON MOUSE
